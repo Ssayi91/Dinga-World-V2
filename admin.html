@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="admin-style.css">
+</head>
+<body>
+    <div class="admin-container">
+        <!-- Sidebar Navigation -->
+        <nav class="sidebar">
+            <h2>Dinga World Dashboard</h2>
+            <ul>
+                <li><a href="#">Dashboard</a></li>
+                <li><a href="#">Manage Cars</a></li>
+                <li><a href="#">User Management</a></li>
+                <li><a href="#">Blog Management</a></li>
+                <li><a href="#">Settings</a></li>
+            </ul>
+        </nav>
+
+        <!-- Main Content Area -->
+        <div class="main-content">
+            <header>
+                <h1>Welcome, Admin</h1>
+            </header>
+
+            <!-- User Management Section -->
+            <section class="user-management">
+                <h2>User Management</h2>
+                <form class="add-user-form">
+                    <h3>Add New User</h3>
+                    <input type="text" placeholder="Username" required>
+                    <input type="email" placeholder="Email" required>
+                    <input type="password" placeholder="Password" required>
+                    
+                    <h3>Assign Rights</h3>
+                    <label>
+                        <input type="checkbox" name="rights" value="upload_cars"> Upload Cars
+                    </label>
+                    <label>
+                        <input type="checkbox" name="rights" value="upload_details"> Upload Details
+                    </label>
+                    <label>
+                        <input type="checkbox" name="rights" value="manage_blog"> Manage Blog Platform
+                    </label>
+                    
+                    <button type="submit">Add User</button>
+                </form>
+
+                <h3>Existing Users</h3>
+                <ul class="user-list">
+                    <li>John Doe - <span>Rights: Upload Cars, Manage Blog</span></li>
+                    <li>Jane Smith - <span>Rights: Upload Details</span></li>
+                    <!-- Add more users here -->
+                </ul>
+            </section>
+        </div>
+    </div>
+</body>
+</html>

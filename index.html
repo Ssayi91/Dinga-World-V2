@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dinga World</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon/fonts/remixicon.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="logo">
+                <h1>Dinga <span>World</span></h1>
+            </div>
+            <div class="menu-toggle" id="menu-toggle">
+                <i class="ri-menu-line"></i>
+                <span>Menu</span>
+            </div>
+            <ul class="nav-links" id="nav-links">
+                <li class="close-menu" id="close-menu"><i class="ri-close-line"></i></li>
+                <li><a href="#">All Cars</a></li>
+                <li><a href="#">Import Your Car</a></li>
+                <li><a href="#">Dinga World Stock</a></li>
+                <li><a href="#">Car Reviews</a></li>
+                <li><a href="#">Report Frauds</a></li>
+                <li><a href="#"><i class="ri-account-circle-line"></i> <span class="login-text">Login</span>
+                </a></li>
+            </ul>
+        </nav>
+    </header>
+    <section class="banner">
+        <div class="search-filter">
+            <h2>Find Your Car</h2>
+            <form>
+                <div class="input-row">
+                    <input type="text" placeholder="Car Name">
+                    <input type="text" placeholder="Car Model">
+                </div>
+                <div class="input-row">
+                    <input type="text" placeholder="Year">
+                    <input type="text" placeholder="Price Range">
+                </div>
+                <button type="submit">Search</button>
+            </form>
+        </div>
+        <div class="car-image">
+            <img src="Assets/banner dinga world 2.png" alt="Car Image">
+            <p class="tagline">Drive Your Dream <br> <span>Car</span></p>
+        </div>
+    </section>
+     <!-- Second Banner Section -->
+     <section class="banner">
+        <div class="search-filter">
+            <h2>Sell Your Car</h2>
+            <form>
+                <div class="input-row">
+                    <input type="text" placeholder="Car Brand">
+                    <input type="text" placeholder="Car Model">
+                </div>
+                <div class="input-row">
+                    <input type="text" placeholder="Transmission">
+                    <input type="text" placeholder="Fuel Type">
+                </div>
+                <div class="input-row">
+                    <input type="text" placeholder="Body Type">
+                    <input type="text" placeholder="Mileage">
+                </div>
+                <button type="submit">Sell your <br> Car</button>
+            </form>
+        </div>
+        <div class="car-image">
+            <img src="Assets/banner 2.png" alt="Second Car Image">
+            <p class="tagline">Best photos finds a <br> <span>Buyer</span></p>
+        </div>
+    </section>
+    <section class="car-gallery">
+        <h2>All Cars</h2>
+        <div id="car-container" class="car-container"> 
+            <!-- Car 1 -->
+            <div class="car-item" data-id="1">
+                <div class="car-images">
+                    <img src="Assets/audi 2017 a4.webp" alt="Car Image 1">
+                    <img src="Assets/audi 2017 a4.webp" alt="Car Image 2">
+                    <img src="Assets/audi a4 front 2017.webp" alt="Car Image 3">
+                    <img src="Assets/audi a3 2016 front.webp" alt="Car Image 4">
+                    <img src="Assets/audi a3 2016 back.webp" alt="Car Image">
+                </div>
+                <div class="car-details">
+                    <h3>Audi A4</h3>
+                    <p>Engine Capacity: 2.0L</p>
+                    <p>4 door</p>
+                    <p>petrol</p>
+                    <p>Price: $20,000</p>
+                </div>
+            </div>
+            <!-- Repeat for more cars -->
+            <div class="car-item" data-id="2">
+                <div class="car-images">
+                    <img src="Assets/audi q5 back side 2016.webp" alt="Car Image 1">
+                    <img src="Assets/audi q5 front 2016.webp" alt="Car Image 2">
+                    <img src="Assets/audi sq 5 2016 back side.webp" alt="Car Image 3">
+                    <img src="Assets/audi sq5 2016.webp" alt="Car Image 4">
+                </div>
+                <div class="car-details">
+                    <h3>Audi Q5</h3>
+                    <p>Engine Capacity: 3.0L</p>
+                    <p>5 door</p>
+                    <p>petrol</p>
+                    <p>Price: $15,000</p>
+                </div>
+            </div>
+            <!-- Add more car items as needed -->
+            <div class="car-item" data-id="3">
+                <div class="car-images">
+                    <img src="Assets/range sport 1.webp" alt="Car Image 1">
+                    <img src="Assets/range 2.webp" alt="Car Image 2">
+                    <img src="Assets/range 3.webp" alt="Car Image 3">
+                    <img src="Assets/range 4.webp" alt="Car Image 4">
+                    <img src="Assets/range 5.webp" alt="car image 5">
+                </div>
+                <div class="car-details">
+                    <h3>Rangerover Sport SVR</h3>
+                    <p>Engine Capacity: 5.0L</p>
+                    <p>5 door</p>
+                    <p>petrol</p>
+                    <p>Price: $115,000</p>
+                </div>
+            </div>
+        </div>
+        <button id="load-more-btn">Load More Cars</button>
+    </section>
+    <!-- Modal Structure -->
+    <div id="car-modal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <!-- Content will be injected here dynamically -->
+    </div>
+</div>
+ <!-- Footer Section -->
+ <footer>
+    <div class="footer-container">
+        <!-- Contact Details -->
+        <div class="contact-details">
+            <h3>Contact Us</h3>
+            <p><span>Email:</span> <a href="mailto:info@dingaworld.com">info@dingaworld.com</a></p>
+            <p><span>Phone:</span> <a href="tel:+1234567890">+123-456-7890</a></p>
+            <p><span>Address:</span> 123 Ngong Road, Nairobi County</p>
+        </div>
+
+        <!-- Social Media Links -->
+        <div class="social-media">
+            <h3>Follow Us</h3>
+            <a href="https://facebook.com" target="_blank" class="social-icon"><i class="ri-facebook-fill"></i></a>
+            <a href="https://twitter.com" target="_blank" class="social-icon"><i class="ri-twitter-fill"></i></a>
+            <a href="https://instagram.com" target="_blank" class="social-icon"><i class="ri-instagram-fill"></i></a>
+            <a href="https://linkedin.com" target="_blank" class="social-icon"><i class="ri-linkedin-fill"></i></a>
+        </div>
+
+        <!-- Map Section -->
+        <div class="map">
+            <h3>Find Us</h3>
+            <iframe 
+                src="https://www.google.com/maps/embed/v1/place?q=123+Car+Street,+City,+Country&key=YOUR_API_KEY" 
+                width="600" 
+                height="450" 
+                style="border:0;" 
+                allowfullscreen="" 
+                loading="lazy">
+            </iframe>
+        </div>
+    </div>
+</footer>
+<div class="copyright">
+    <h1> &#169;</h1>
+    <p>rights reserved <br> by <br> Dinga<span>World</span>
+    </p>
+</div>
+</section>
+
+    <script src="script.js"></script>
+</body>
+</html>
