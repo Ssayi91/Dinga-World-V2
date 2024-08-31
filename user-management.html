@@ -3,34 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Dashboard</title>
-    <link rel="stylesheet" href="admin-style.css">
+    <title>User Management</title>
+    <link rel="stylesheet" href="user-management.css">
 </head>
 <body>
     <div class="admin-container">
         <!-- Sidebar Navigation -->
         <nav class="sidebar">
-            <h2>Dinga World Dashboard</h2>
+            <h2>Admin Dashboard</h2>
             <ul>
-                <li><a href="admin.html">Dashboard</a></li>
+                <li><a href="dashboard.html">Dashboard</a></li>
                 <li><a href="manage-cars.html">Manage Cars</a></li>
-                <li><a href="user-management.html">User Management</a></li>
-                <li><a href="#">Blog Management</a></li>
-                <li><a href="#">Settings</a></li>
+                <li><a href="user-management.html" class="active">User Management</a></li>
+                <li><a href="blog-management.html">Blog Management</a></li>
+                <li><a href="settings.html">Settings</a></li>
             </ul>
         </nav>
 
         <!-- Main Content Area -->
         <div class="main-content">
             <header>
-                <h1>Welcome, Admin</h1>
+                <h1>User Management</h1>
             </header>
 
-            <!-- User Management Section -->
-            <section class="user-management">
-                <h2>User Management</h2>
+            <!-- Add New User Section -->
+            <section class="add-user-section">
+                <h2>Add New User</h2>
                 <form class="add-user-form">
-                    <h3>Add New User</h3>
                     <input type="text" placeholder="Username" required>
                     <input type="email" placeholder="Email" required>
                     <input type="password" placeholder="Password" required>
@@ -48,12 +47,25 @@
                     
                     <button type="submit">Add User</button>
                 </form>
+            </section>
 
-                <h3>Existing Users</h3>
-                <ul class="user-list">
-                    <li>John Doe - <span>Rights: Upload Cars, Manage Blog</span></li>
-                    <li>Jane Smith - <span>Rights: Upload Details</span></li>
-                    <!-- Add more users here -->
+            <!-- Existing Users List -->
+            <section class="users-list-section">
+                <h2>Existing Users</h2>
+                <ul class="users-list">
+                    <li>
+                        <span>John Doe</span> 
+                        <span>Rights: Upload Cars, Manage Blog</span>
+                        <button class="edit-btn">Edit</button>
+                        <button class="delete-btn">Delete</button>
+                    </li>
+                    <li>
+                        <span>Jane Smith</span> 
+                        <span>Rights: Upload Details</span>
+                        <button class="edit-btn">Edit</button>
+                        <button class="delete-btn">Delete</button>
+                    </li>
+                    <!-- More users here -->
                 </ul>
             </section>
         </div>
