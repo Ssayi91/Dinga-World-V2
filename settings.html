@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings</title>
+    <link rel="stylesheet" href="settings.css">
+</head>
+<body>
+    <div class="admin-container">
+        <!-- Sidebar Navigation -->
+        <nav class="sidebar">
+            <h2>Dinga World Dashboard</h2>
+            <ul>
+                <li><a href="admin.html">Dashboard</a></li>
+                <li><a href="car-management.html">Manage Cars</a></li>
+                <li><a href="users-management.html">User Management</a></li>
+                <li><a href="blog-management.html">Blog Management</a></li>
+                <li><a href="settings.html" class="active">Settings</a></li>
+                <li><a href="reports.html">Reports</a></li>
+                <li><a href="logout.html">Logout</a></li>
+            </ul>
+        </nav>
+
+        <!-- Main Content Area -->
+        <div class="main-content">
+            <header>
+                <h1>Settings</h1>
+            </header>
+
+            <!-- General Settings Section -->
+            <section class="settings-section">
+                <h2>General Settings</h2>
+                <form class="settings-form">
+                    <label for="site-name">Site Name:</label>
+                    <input type="text" id="site-name" name="siteName" required>
+                    
+                    <label for="site-description">Site Description:</label>
+                    <textarea id="site-description" name="siteDescription" required></textarea>
+                    
+                    <label for="site-logo">Site Logo:</label>
+                    <input type="file" id="site-logo" name="siteLogo">
+                    
+                    <label for="site-email">Contact Email:</label>
+                    <input type="email" id="site-email" name="siteEmail" required>
+                    
+                    <button type="submit" class="save-settings-btn">Save Settings</button>
+                </form>
+            </section>
+
+            <!-- Security Settings Section -->
+            <section class="security-section">
+                <h2>Security Settings</h2>
+                <form class="security-form">
+                    <label for="admin-password">Admin Password:</label>
+                    <input type="password" id="admin-password" name="adminPassword" required>
+                    
+                    <label for="two-factor-auth">Two-Factor Authentication:</label>
+                    <select id="two-factor-auth" name="twoFactorAuth" required>
+                        <option value="enabled">Enabled</option>
+                        <option value="disabled">Disabled</option>
+                    </select>
+                    
+                    <button type="submit" class="save-security-btn">Save Security Settings</button>
+                </form>
+            </section>
+        </div>
+    </div>
+</body>
+</html>
