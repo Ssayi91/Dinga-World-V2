@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Users Management</title>
+    <link rel="stylesheet" href="users-management.css">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon/fonts/remixicon.css" rel="stylesheet">
+</head>
+<body>
+    <div class="admin-container">
+        <aside class="sidebar">
+            <div class="logo">
+                <h2>Admin Dashboard</h2>
+            </div>
+            <nav class="nav-links">
+                <ul>
+                    <li><a href="admin.html">Dashboard</a></li>
+                    <li><a href="users-management.html" class="active">Users Management</a></li>
+                    <li><a href="car-management.html">Car Management</a></li>
+                    <li><a href="blog-platform.html">Blog Platform</a></li>
+                    <li><a href="site-settings.html">Site Settings</a></li>
+                    <li><a href="reports.html">Reports</a></li>
+                    <li><a href="logout.html">Logout</a></li>
+                </ul>
+            </nav>
+        </aside>
+        <main class="content">
+            <header>
+                <h1>Users Management</h1>
+            </header>
+            <section class="user-management">
+                <button class="add-user-btn">Add New User</button>
+                <table class="users-table">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Role</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- User rows will go here -->
+                        <tr>
+                            <td>John Doe</td>
+                            <td>johndoe@example.com</td>
+                            <td>Admin</td>
+                            <td>Active</td>
+                            <td>
+                                <button class="edit-btn">Edit</button>
+                                <button class="delete-btn">Delete</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+        </main>
+    </div>
+
+    <!-- Modal for Adding/Editing Users -->
+    <div id="user-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <form class="user-form">
+                <h2>Add/Edit User</h2>
+                <label for="userName">Name:</label>
+                <input type="text" id="userName" name="userName" required>
+                
+                <label for="userEmail">Email:</label>
+                <input type="email" id="userEmail" name="userEmail" required>
+                
+                <label for="userRole">Role:</label>
+                <select id="userRole" name="userRole" required>
+                    <option value="Admin">Admin</option>
+                    <option value="Editor">Editor</option>
+                    <option value="User">User</option>
+                </select>
+                
+                <label for="userStatus">Status:</label>
+                <select id="userStatus" name="userStatus" required>
+                    <option value="Active">Active</option>
+                    <option value="Inactive">Inactive</option>
+                </select>
+                
+                <button type="submit" class="save-user-btn">Save User</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="admin-script.js"></script>
+</body>
+</html>

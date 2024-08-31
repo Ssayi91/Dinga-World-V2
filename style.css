@@ -187,7 +187,12 @@ button {
 }
 
 button:hover {
-    background-color: #444; /* Darker shade of black for hover */
+    background-color: var(--bg-color); /* Darker shade of black for hover */
+    color: var(--main-color);
+    border: 1px solid var(--text-color);
+    font-size: 18px;
+    font-weight: 700;
+    transition: ease .5s;
 }
 
 /* Car Image Section */
@@ -351,7 +356,9 @@ button:hover {
 }
 
 #load-more-btn:hover {
-    background-color: var(--main-color);
+    background-color: var(--bg-color);
+    color: var(--main-color);
+    border: 1px solid var(--text-color);
     transition: ease .5s;
 }
 /* General Footer Styles */

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Cars</title>
+    <link rel="stylesheet" href="manage-cars.css">
+</head>
+<body>
+    <div class="admin-container">
+        <!-- Sidebar Navigation -->
+        <nav class="sidebar">
+            <h2>Dinga World Dashboard</h2>
+            <ul>
+                <li><a href="admin.html">Dashboard</a></li>
+                <li><a href="manage-cars.html" class="active">Manage Cars</a></li>
+                <li><a href="user-management.html">User Management</a></li>
+                <li><a href="blog-management.html">Blog Management</a></li>
+                <li><a href="settings.html">Settings</a></li>
+            </ul>
+        </nav>
+
+        <!-- Main Content Area -->
+        <div class="main-content">
+            <header>
+                <h1>Manage Cars</h1>
+            </header>
+
+            <!-- Car Management Section -->
+            <section class="car-management">
+                <div class="top-actions">
+                    <button class="add-car-btn">Add New Car</button>
+                    <input type="search" placeholder="Search Cars..." class="search-cars">
+                </div>
+
+                <!-- Car List Table -->
+                <table class="cars-table">
+                    <thead>
+                        <tr>
+                            <th>Car Name</th>
+                            <th>Model</th>
+                            <th>Brand</th>
+                            <th>Year</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Example Car Row -->
+                        <tr>
+                            <td>Tesla Model S</td>
+                            <td>S</td>
+                            <td>Tesla</td>
+                            <td>2022</td>
+                            <td>Available</td>
+                            <td>
+                                <button class="edit-btn">Edit</button>
+                                <button class="delete-btn">Delete</button>
+                            </td>
+                        </tr>
+                        <!-- Add more car rows here -->
+                    </tbody>
+                </table>
+            </section>
+        </div>
+    </div>
+
+    <!-- Modal for Adding/Editing Cars -->
+    <div id="car-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <form class="car-form">
+                <h2>Add/Edit Car</h2>
+                <label for="carName">Car Name:</label>
+                <input type="text" id="carName" name="carName" required>
+                
+                <label for="carModel">Model:</label>
+                <input type="text" id="carModel" name="carModel" required>
+                
+                <label for="carBrand">Brand:</label>
+                <input type="text" id="carBrand" name="carBrand" required>
+                
+                <label for="carYear">Year:</label>
+                <input type="number" id="carYear" name="carYear" required>
+                
+                <label for="carStatus">Status:</label>
+                <select id="carStatus" name="carStatus" required>
+                    <option value="Available">Available</option>
+                    <option value="Sold">Sold</option>
+                    <option value="Pending">Pending</option>
+                </select>
+                
+                <button type="submit" class="save-car-btn">Save Car</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="admin-script.js"></script>
+</body>
+</html>
