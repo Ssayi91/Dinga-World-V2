@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap');
+/* @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap'); */
 
 * {
     margin: 0;
@@ -66,7 +66,6 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-bottom: 2px solid rgb(206, 201, 201);
 }
 .menu-toggle {
     display: none; /* Hide the menu toggle by default */
@@ -155,6 +154,14 @@ body {
     font-weight: 800;
     text-align: center;
 }
+.search-filter p{
+    margin-bottom: 20px;
+    color: var(--text-color);
+    font-size: 18px;
+    font-weight: 800;
+    text-align: center; 
+}
+
 
 form {
     display: flex;
@@ -205,7 +212,7 @@ button:hover {
 .car-image img {
     max-width: 100%;
     border-radius: 10px;
-    margin-top: 60px;
+    margin-top: 40px;
 }
 
 .tagline {
@@ -463,6 +470,7 @@ footer {
         position: relative;
         align-items: center;
         justify-content: center;
+        border-bottom: 2px solid rgb(206, 201, 201);
     }
 
     .nav-links {
@@ -578,10 +586,14 @@ footer {
 
     .car-details p {
         font-size: 14px; /* Adjust font size for mobile */
+        padding-bottom: 10px;
     }
     .car-description {
         font-size: 14px; /* Smaller font size for mobile */
         margin: 5px 0; /* Reduce margin on mobile */
+    }
+    .tagline {
+        margin-top: -30px;
     }
 
     /* footer */

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Settings</title>
+    <title>Admin Dashboard - Settings</title>
     <link rel="stylesheet" href="settings.css">
 </head>
 <body>
@@ -13,12 +13,10 @@
             <h2>Dinga World Dashboard</h2>
             <ul>
                 <li><a href="admin.html">Dashboard</a></li>
-                <li><a href="car-management.html">Manage Cars</a></li>
-                <li><a href="users-management.html">User Management</a></li>
+                <li><a href="manage-cars.html">Manage Cars</a></li>
+                <li><a href="user-management.html">User Management</a></li>
                 <li><a href="blog-management.html">Blog Management</a></li>
                 <li><a href="settings.html" class="active">Settings</a></li>
-                <li><a href="reports.html">Reports</a></li>
-                <li><a href="logout.html">Logout</a></li>
             </ul>
         </nav>
 
@@ -28,41 +26,76 @@
                 <h1>Settings</h1>
             </header>
 
-            <!-- General Settings Section -->
+            <!-- Settings Section -->
             <section class="settings-section">
-                <h2>General Settings</h2>
-                <form class="settings-form">
-                    <label for="site-name">Site Name:</label>
-                    <input type="text" id="site-name" name="siteName" required>
-                    
-                    <label for="site-description">Site Description:</label>
-                    <textarea id="site-description" name="siteDescription" required></textarea>
-                    
-                    <label for="site-logo">Site Logo:</label>
-                    <input type="file" id="site-logo" name="siteLogo">
-                    
-                    <label for="site-email">Contact Email:</label>
-                    <input type="email" id="site-email" name="siteEmail" required>
-                    
-                    <button type="submit" class="save-settings-btn">Save Settings</button>
-                </form>
-            </section>
+                <div class="settings-category">
+                    <h2>Site Settings</h2>
+                    <form>
+                        <label for="siteName">Site Name:</label>
+                        <input type="text" id="siteName" placeholder="Enter site name">
 
-            <!-- Security Settings Section -->
-            <section class="security-section">
-                <h2>Security Settings</h2>
-                <form class="security-form">
-                    <label for="admin-password">Admin Password:</label>
-                    <input type="password" id="admin-password" name="adminPassword" required>
-                    
-                    <label for="two-factor-auth">Two-Factor Authentication:</label>
-                    <select id="two-factor-auth" name="twoFactorAuth" required>
-                        <option value="enabled">Enabled</option>
-                        <option value="disabled">Disabled</option>
-                    </select>
-                    
-                    <button type="submit" class="save-security-btn">Save Security Settings</button>
-                </form>
+                        <label for="siteDescription">Site Description:</label>
+                        <textarea id="siteDescription" placeholder="Enter site description"></textarea>
+
+                        <label for="siteLogo">Upload Logo:</label>
+                        <input type="file" id="siteLogo">
+
+                        <label for="siteFavicon">Upload Favicon:</label>
+                        <input type="file" id="siteFavicon">
+
+                        <button type="submit">Save Changes</button>
+                    </form>
+                </div>
+
+                <div class="settings-category">
+                    <h2>User Account Settings</h2>
+                    <form>
+                        <label for="adminEmail">Admin Email:</label>
+                        <input type="email" id="adminEmail" placeholder="Enter admin email">
+
+                        <label for="password">Change Password:</label>
+                        <input type="password" id="password" placeholder="Enter new password">
+
+                        <label for="2fa">Enable Two-Factor Authentication:</label>
+                        <input type="checkbox" id="2fa">
+
+                        <button type="submit">Save Changes</button>
+                    </form>
+                </div>
+
+                <div class="settings-category">
+                    <h2>Security Settings</h2>
+                    <form>
+                        <label for="passwordPolicy">Password Policy:</label>
+                        <select id="passwordPolicy">
+                            <option value="strong">Strong</option>
+                            <option value="medium">Medium</option>
+                            <option value="weak">Weak</option>
+                        </select>
+
+                        <label for="ipWhitelist">IP Whitelisting:</label>
+                        <textarea id="ipWhitelist" placeholder="Enter allowed IP addresses"></textarea>
+
+                        <button type="submit">Save Changes</button>
+                    </form>
+                </div>
+
+                <div class="settings-category">
+                    <h2>Backup & Restore</h2>
+                    <form>
+                        <label for="backupFrequency">Backup Frequency:</label>
+                        <select id="backupFrequency">
+                            <option value="daily">Daily</option>
+                            <option value="weekly">Weekly</option>
+                            <option value="monthly">Monthly</option>
+                        </select>
+
+                        <label for="restoreBackup">Restore Backup:</label>
+                        <input type="file" id="restoreBackup">
+
+                        <button type="submit">Save Changes</button>
+                    </form>
+                </div>
             </section>
         </div>
     </div>

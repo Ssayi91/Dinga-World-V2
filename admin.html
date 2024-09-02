@@ -10,51 +10,60 @@
     <div class="admin-container">
         <!-- Sidebar Navigation -->
         <nav class="sidebar">
-            <h2>Dinga World Dashboard</h2>
+            <h2>Admin Dashboard</h2>
             <ul>
-                <li><a href="admin.html">Dashboard</a></li>
+                <li><a href="admin.html" class="active">Dashboard</a></li>
                 <li><a href="manage-cars.html">Manage Cars</a></li>
                 <li><a href="user-management.html">User Management</a></li>
                 <li><a href="blog-management.html">Blog Management</a></li>
                 <li><a href="settings.html">Settings</a></li>
+                <li><a href="reports.html">Reports</a></li>
+                <li><a href="logout.html">Logout</a></li>
             </ul>
         </nav>
 
         <!-- Main Content Area -->
         <div class="main-content">
             <header>
-                <h1>Welcome, Admin</h1>
+                <h1>Welcome to Your Admin Dashboard</h1>
+                <p>Manage your website efficiently using the dashboard options below.</p>
             </header>
 
-            <!-- User Management Section -->
-            <section class="user-management">
-                <h2>User Management</h2>
-                <form class="add-user-form">
-                    <h3>Add New User</h3>
-                    <input type="text" placeholder="Username" required>
-                    <input type="email" placeholder="Email" required>
-                    <input type="password" placeholder="Password" required>
-                    
-                    <h3>Assign Rights</h3>
-                    <label>
-                        <input type="checkbox" name="rights" value="upload_cars"> Upload Cars
-                    </label>
-                    <label>
-                        <input type="checkbox" name="rights" value="upload_details"> Upload Details
-                    </label>
-                    <label>
-                        <input type="checkbox" name="rights" value="manage_blog"> Manage Blog Platform
-                    </label>
-                    
-                    <button type="submit">Add User</button>
-                </form>
+            <!-- Dashboard Overview -->
+            <section class="dashboard-overview">
+                <div class="overview-card">
+                    <h3>Total Cars</h3>
+                    <p>120</p>
+                </div>
+                <div class="overview-card">
+                    <h3>Registered Users</h3>
+                    <p>450</p>
+                </div>
+                <div class="overview-card">
+                    <h3>Blog Posts</h3>
+                    <p>32</p>
+                </div>
+                <div class="overview-card">
+                    <h3>Settings Updates</h3>
+                    <p>Last Updated: 3 days ago</p>
+                </div>
+            </section>
 
-                <h3>Existing Users</h3>
-                <ul class="user-list">
-                    <li>John Doe - <span>Rights: Upload Cars, Manage Blog</span></li>
-                    <li>Jane Smith - <span>Rights: Upload Details</span></li>
-                    <!-- Add more users here -->
-                </ul>
+            <!-- Quick Links -->
+            <section class="quick-links">
+                <h2>Quick Links</h2>
+                <div class="link-card">
+                    <a href="manage-cars.html">Manage Cars</a>
+                </div>
+                <div class="link-card">
+                    <a href="user-management.html">User Management</a>
+                </div>
+                <div class="link-card">
+                    <a href="blog-management.html">Manage Blog</a>
+                </div>
+                <div class="link-card">
+                    <a href="settings.html">Site Settings</a>
+                </div>
             </section>
         </div>
     </div>

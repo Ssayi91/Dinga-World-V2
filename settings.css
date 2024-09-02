@@ -52,8 +52,8 @@
     font-size: 18px;
 }
 
-.sidebar ul li a.active,
-.sidebar ul li a:hover {
+.sidebar ul li a:hover,
+.sidebar ul li a.active {
     text-decoration: underline;
 }
 
@@ -65,67 +65,69 @@
     margin-left: 250px;
 }
 
-header h1 {
+.main-content header h1 {
     margin-top: 0;
-    font-size: 28px;
-    color: var(--text-color);
+    font-size: 24px;
 }
 
-/* Settings Sections */
-.settings-section,
-.security-section {
+/* Settings Section */
+.settings-section {
     margin-top: 20px;
+}
+
+.settings-category {
+    background-color: #fff;
     padding: 20px;
-    background-color: var(--bg-color);
+    margin-bottom: 20px;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-.settings-section h2,
-.security-section h2 {
+.settings-category h2 {
     margin-bottom: 15px;
-    font-size: 24px;
-    color: var(--text-color);
+    font-size: 20px;
 }
 
-.settings-form label,
-.security-form label {
-    display: block;
-    margin-bottom: 10px;
+.settings-category form {
+    display: flex;
+    flex-direction: column;
+}
+
+.settings-category label {
+    margin-bottom: 8px;
     font-size: 16px;
-    color: var(--text-color);
 }
 
-.settings-form input[type="text"],
-.settings-form input[type="email"],
-.settings-form input[type="password"],
-.settings-form input[type="file"],
-.settings-form textarea,
-.security-form input[type="password"],
-.security-form select {
-    width: 100%;
+.settings-category input[type="text"],
+.settings-category input[type="email"],
+.settings-category input[type="password"],
+.settings-category input[type="file"],
+.settings-category textarea,
+.settings-category select {
     padding: 10px;
     margin-bottom: 15px;
-    border: 1px solid #ddd;
+    border: 1px solid #ccc;
     border-radius: 4px;
-    font-size: 16px;
-    color: var(--text-color);
+    width: 100%;
+    font-size: 14px;
 }
 
-.save-settings-btn,
-.save-security-btn {
+.settings-category textarea {
+    resize: vertical;
+}
+
+.settings-category button {
     background-color: var(--text-color);
     color: white;
     padding: 10px 20px;
     border: none;
     border-radius: 4px;
     cursor: pointer;
-    font-size: 16px;
+    align-self: flex-start;
 }
 
-.save-settings-btn:hover,
-.save-security-btn:hover {
-    background-color: var(--main-color);
+.settings-category button:hover {
+    background-color: darkred;
 }
 
 /* Responsive Styles */
@@ -154,12 +156,30 @@ header h1 {
         font-size: 16px;
     }
 
-    header h1 {
-        font-size: 24px;
+    .main-content header h1 {
+        font-size: 20px;
     }
 
-    .save-settings-btn,
-    .save-security-btn {
+    .settings-category h2 {
+        font-size: 18px;
+    }
+
+    .settings-category label {
+        font-size: 16px;
+    }
+
+    .settings-category input[type="text"],
+    .settings-category input[type="email"],
+    .settings-category input[type="password"],
+    .settings-category input[type="file"],
+    .settings-category textarea,
+    .settings-category select,
+    .settings-category button {
+        font-size: 14px;
+    }
+
+    .settings-category button {
         width: 100%;
+        padding: 12px;
     }
 }

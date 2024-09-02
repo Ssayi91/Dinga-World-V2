@@ -104,7 +104,8 @@
 .posts-table td button {
     background-color: var(--text-color);
     color: var(--bg-color);
-    padding: 6px 12px;
+    padding: 0 15px;
+    margin: 5px;
     border: none;
     border-radius: 4px;
     cursor: pointer;
