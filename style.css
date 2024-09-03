@@ -89,6 +89,9 @@ body {
 .logo h1 span{
     color: var(--main-color);
 }
+.logo a{
+    text-decoration: none;
+}
 
 .nav-links {
     list-style: none;
@@ -206,7 +209,7 @@ button:hover {
 .car-image img {
     max-width: 100%;
     border-radius: 10px;
-    margin-top: 60px;
+    margin-top: 5px;
 }
 
 .tagline {
@@ -485,6 +488,10 @@ footer {
 
     .nav-links li {
         margin: 10px 0;
+
+    }
+    .nav-links li i{
+        top: 5px;
     }
 
     .nav-links a {

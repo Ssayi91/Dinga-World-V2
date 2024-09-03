@@ -479,6 +479,9 @@ footer {
     .nav-links li {
         margin: 10px 0;
     }
+    .nav-links li i{
+        top: 5px;
+    }
 
     .nav-links a {
         display: block;

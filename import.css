@@ -505,6 +505,9 @@ footer {
         text-decoration: none;
         transition: background-color 0.5s;
     }
+    .nav-links li i{
+        top: 5px;
+    }
     .nav-links a:hover{
         color: var(--main-color);
     }
