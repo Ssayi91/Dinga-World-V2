@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Login</title>
+    <link rel="stylesheet" href="admin-login.css">
+</head>
+<body>
+    <div class="admin-login-container">
+        <h2>Admin Login</h2>
+        <form id="admin-login-form">
+            <label for="admin-username">Username:</label>
+            <input type="text" id="admin-username" name="admin-username" required>
+
+            <label for="admin-password">Password:</label>
+            <input type="password" id="admin-password" name="admin-password" required>
+
+            <button type="submit">Login</button>
+        </form>
+        <div class="switch-form">
+            <p>Not an admin? <a href="http://localhost:3000/index.html">Go to Client Side</a></p>
+        </div>
+    </div>
+    <script src="admin-login.js"></script>
+</body>
+</html>

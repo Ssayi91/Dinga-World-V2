@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="admin-style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <div class="admin-container">
+        <!-- Sidebar Navigation -->
+        <nav class="sidebar">
+            <h2>Admin Dashboard</h2>
+            <ul>
+                <li><a href="admin.html" class="active"><i class="fa-solid fa-table-columns"></i>
+                    <span class="tooltip">Dashboard</span></a></li>
+                <li><a href="manage-cars.html"><i class="fas fa-car">
+                    <span class="tooltip">Manage Cars</span>
+                </i> </a></li>
+                <li><a href="user-management.html"><i class="fas fa-users">
+                    <span class="tooltip">User Management</span>
+                </i> </a></li>
+                <li><a href="blog-management.html"><i class="fas fa-blog">
+                    <span class="tooltip">Blog Management</span>
+                </i> </a></li>
+                <li><a href="settings.html"><i class="fas fa-cog"></i>
+                    <span class="tooltip">Settings</span></a></li>
+                <li><a href="reports.html"><i class="fas fa-chart-line">
+                    <span class="tooltip">Reports</span>
+                </i> </a></li>
+                <li><a href="logout.html"><i class="fas fa-sign-out-alt">
+                    <span class="tooltip">Logout</span>
+                </i></a></li>
+            </ul>
+        </nav>
+        
+
+        <!-- Main Content Area -->
+        <div class="main-content">
+            <header>
+                <h1>Welcome to Your Admin Dashboard</h1>
+                <p>Manage your website efficiently using the dashboard options below.</p>
+            </header>
+
+            <!-- Dashboard Overview -->
+            <section class="dashboard-overview">
+                <div class="overview-card">
+                    <h3>Total Cars</h3>
+                    <p>120</p>
+                </div>
+                <div class="overview-card">
+                    <h3>Registered Users</h3>
+                    <p>450</p>
+                </div>
+                <div class="overview-card">
+                    <h3>Blog Posts</h3>
+                    <p>32</p>
+                </div>
+                <div class="overview-card">
+                    <h3>Settings Updates</h3>
+                    <p>Last Updated: 3 days ago</p>
+                </div>
+            </section>
+
+            <!-- Quick Links -->
+            <section class="quick-links">
+                <h2>Quick Links</h2>
+                <div class="link-card">
+                    <a href="manage-cars.html">Manage Cars</a>
+                </div>
+                <div class="link-card">
+                    <a href="user-management.html">User Management</a>
+                </div>
+                <div class="link-card">
+                    <a href="blog-management.html">Manage Blog</a>
+                </div>
+                <div class="link-card">
+                    <a href="settings.html">Site Settings</a>
+                </div>
+            </section>
+        </div>
+    </div>
+    <script src="admin-access.js"></script>
+</body>
+</html>
