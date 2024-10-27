@@ -239,7 +239,7 @@ function attachLoadMoreButtons() {
     }
 
     // Server-Sent Events for real-time updates
-    const sse = new EventSource('/public/cars/stream');
+    const sse = new EventSource('https://dinga-world.onrender.com/public/cars/stream');
 
     sse.onmessage = function (event) {
         const updatedCars = JSON.parse(event.data);
@@ -271,7 +271,7 @@ document.getElementById('car-form').addEventListener('submit', function(event) {
 
 
     // Send form data to the server
-    fetch('/public/cars/add', {
+    fetch('https://dinga-world.onrender.com/public/cars/add', {
         method: 'POST',
         body: formData
     })
@@ -352,7 +352,7 @@ document.getElementById('images').addEventListener('change', function(event) {
 });
 
 
-const sse = new EventSource('/admin/cars/stream');  // or for the public side
+const sse = new EventSource('https://dinga-world.onrender.com/admin/cars/stream');  // or for the public side
 sse.onmessage = function(event) {
     const updatedCars = JSON.parse(event.data);
     fetchAndDisplayCars(updatedCars);  // Function to update the car list dynamically
