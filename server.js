@@ -8,8 +8,6 @@ const cors = require('cors');
 const Car = require('./models/car'); // Correct path to the Car model
 const EventEmitter = require('events'); // For handling custom events
 
-
-
 const app = express();
 const PORT = process.env.PORT || 3000;
 const carEventEmitter = new EventEmitter(); // EventEmitter instance
@@ -34,19 +32,9 @@ if (!mongoURI) {
 }
 
 // Connect to MongoDB
-// mongoose.connect('mongodb://localhost:27017/carDB', {
-//     useNewUrlParser: true,
-//     useUnifiedTopology: true
-// }).then(() => console.log('Connected to MongoDB'))
-//   .catch(err => console.error('Error connecting to MongoDB:', err));
-
-
-  mongoose.connect(mongoURI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-})
-.then(() => console.log('Connected to MongoDB'))
-.catch(err => console.error('Could not connect to MongoDB', err));
+mongoose.connect(mongoURI)
+    .then(() => console.log('Connected to MongoDB'))
+    .catch(err => console.error('Could not connect to MongoDB', err));
 
 // Set up Multer for file uploads
 const storage = multer.diskStorage({
@@ -73,7 +61,7 @@ const upload = multer({
 });
 
 // POST route for adding a new car (with multiple images)
-app.post('https://dinga-world.onrender.com/admin/cars', upload.array('images', 15), async (req, res) => {
+app.post('/admin/cars', upload.array('images', 15), async (req, res) => {
     try {
         const { brand, model, year, price, registration, drivetrain, fuelType, transmission, mileage, description } = req.body;
 
@@ -115,7 +103,7 @@ app.post('https://dinga-world.onrender.com/admin/cars', upload.array('images', 1
 });
 
 // GET route to fetch all cars for admin with sorting and filtering
-app.get('https://dinga-world.onrender.com/admin/cars', async (req, res) => {
+app.get('/admin/cars', async (req, res) => {
     try {
         const { brand, model, year, price, sortBy, limit, skip } = req.query;
         const query = {};
@@ -134,7 +122,7 @@ app.get('https://dinga-world.onrender.com/admin/cars', async (req, res) => {
             sortOptions[sortBy] = 1; // Sorting in ascending order
         }
 
-        const limitValue = parseInt(limit) || 10000000000000; // Default limit
+        const limitValue = parseInt(limit) || 100; // Default limit
         const skipValue = parseInt(skip) || 0; // Default skip to 0
 
         const cars = await Car.find(query)
@@ -151,7 +139,7 @@ app.get('https://dinga-world.onrender.com/admin/cars', async (req, res) => {
 });
 
 // Public GET route to fetch all cars
-app.get('https://dinga-world.onrender.com/public/cars', async (req, res) => {
+app.get('/public/cars', async (req, res) => {
     try {
         const cars = await Car.find(); // Retrieve all cars without filters
         res.json(cars);
@@ -162,7 +150,7 @@ app.get('https://dinga-world.onrender.com/public/cars', async (req, res) => {
 });
 
 // GET route to fetch a car by ID for editing (with validation)
-app.get('https://dinga-world.onrender.com/admin/cars/:id', async (req, res) => {
+app.get('/admin/cars/:id', async (req, res) => {
     const carId = req.params.id;
 
     if (!mongoose.Types.ObjectId.isValid(carId)) {
@@ -182,7 +170,7 @@ app.get('https://dinga-world.onrender.com/admin/cars/:id', async (req, res) => {
 });
 
 // SSE endpoint for real-time updates
-app.get('https://dinga-world.onrender.com/events', (req, res) => {
+app.get('/events', (req, res) => {
     res.setHeader('Content-Type', 'text/event-stream');
     res.setHeader('Cache-Control', 'no-cache');
     res.setHeader('Connection', 'keep-alive');
@@ -221,23 +209,20 @@ app.get('https://dinga-world.onrender.com/events', (req, res) => {
 });
 
 // PUT route to update a car by ID (with validation)
-app.put('https://dinga-world.onrender.com/admin/cars/:id', upload.array('images', 15), async (req, res) => {
+app.put('/admin/cars/:id', upload.array('images', 15), async (req, res) => {
     const carId = req.params.id;
     const removedImages = JSON.parse(req.body.removedImages || '[]'); // Parse removed images
 
-    // Validate the car ID
     if (!mongoose.Types.ObjectId.isValid(carId)) {
         return res.status(400).json({ error: 'Invalid car ID format' });
     }
 
     try {
-        // Find the current car
         const currentCar = await Car.findById(carId);
         if (!currentCar) {
             return res.status(404).json({ error: 'Car not found' });
         }
 
-        // Prepare the updated data object
         const updatedData = {
             brand: req.body.brand,
             model: req.body.model,
@@ -252,17 +237,14 @@ app.put('https://dinga-world.onrender.com/admin/cars/:id', upload.array('images'
             images: [...currentCar.images], // Start with existing images
         };
 
-        // Handle adding new images
         if (req.files && req.files.length > 0) {
             updatedData.images = updatedData.images.concat(req.files.map(file => `/uploads/${file.filename}`));
         }
 
-        // Remove images that were marked for deletion
         if (removedImages.length > 0) {
             updatedData.images = updatedData.images.filter(img => !removedImages.includes(img));
         }
 
-        // Update the car in the database
         const updatedCar = await Car.findByIdAndUpdate(carId, updatedData, { new: true });
         carEventEmitter.emit('carUpdated', updatedCar);
         res.json(updatedCar);
@@ -272,9 +254,8 @@ app.put('https://dinga-world.onrender.com/admin/cars/:id', upload.array('images'
     }
 });
 
-
 // DELETE route to remove a car by ID (with validation)
-app.delete('https://dinga-world.onrender.com/admin/cars/:id', async (req, res) => {
+app.delete('/admin/cars/:id', async (req, res) => {
     const carId = req.params.id;
 
     if (!mongoose.Types.ObjectId.isValid(carId)) {
@@ -282,53 +263,19 @@ app.delete('https://dinga-world.onrender.com/admin/cars/:id', async (req, res) =
     }
 
     try {
-        const car = await Car.findByIdAndDelete(carId);
-        if (!car) {
+        const deletedCar = await Car.findByIdAndDelete(carId);
+        if (!deletedCar) {
             return res.status(404).json({ error: 'Car not found' });
         }
-
-        // Emit an event to notify public clients about the deletion
         carEventEmitter.emit('carDeleted', carId);
-
-        res.json({ success: true, message: 'Car deleted', car });
+        res.json({ message: 'Car deleted successfully', _id: carId });
     } catch (err) {
         console.error('Error deleting car:', err);
         res.status(500).json({ error: 'Failed to delete car', details: err.message });
     }
 });
-// public section car form
-app.post('https://dinga-world.onrender.com/public/cars/add', upload.array('images'), async (req, res) => {
-    try {
-        // Create a new car object
-        const newCar = new Car({
-            brand: req.body.brand,
-            model: req.body.model,
-            year: req.body.year,
-            price: req.body.price,
-            registration:req.body.registration,
-            drivetrain: req.body.drivetrain,
-            fuelType: req.body.fuelType,
-            transmission: req.body.transmission,
-            mileage: req.body.mileage,
-            description: req.body.description,
-            images: req.files.map(file => file.path),  // Save image paths
-            source: 'public',  // Mark this car as coming from the public
-        });
-        // Save the car to the database
-        await newCar.save();
 
-        // Send success response
-        res.json({ success: true });
-
-        // Here you can add logic for real-time updates using websockets or SSE
-
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ success: false });
-    }
-});
-
-// Start the server
-app.listen(port, '0.0.0.0', () => {
-    console.log(`Server running at http://0.0.0.0:${port}`);
+// Listen on the specified port
+app.listen(PORT, '0.0.0.0', () => {
+    console.log(`Server running at http://0.0.0.0:${PORT}`);
 });
