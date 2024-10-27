@@ -207,22 +207,24 @@ app.get('/events', (req, res) => {
         res.end();
     });
 });
-
 // PUT route to update a car by ID (with validation)
 app.put('/admin/cars/:id', upload.array('images', 15), async (req, res) => {
     const carId = req.params.id;
     const removedImages = JSON.parse(req.body.removedImages || '[]'); // Parse removed images
 
+    // Validate car ID format
     if (!mongoose.Types.ObjectId.isValid(carId)) {
         return res.status(400).json({ error: 'Invalid car ID format' });
     }
 
     try {
+        // Find the current car
         const currentCar = await Car.findById(carId);
         if (!currentCar) {
             return res.status(404).json({ error: 'Car not found' });
         }
 
+        // Prepare updated data
         const updatedData = {
             brand: req.body.brand,
             model: req.body.model,
@@ -237,19 +239,30 @@ app.put('/admin/cars/:id', upload.array('images', 15), async (req, res) => {
             images: [...currentCar.images], // Start with existing images
         };
 
+        // Append new images if any
         if (req.files && req.files.length > 0) {
             updatedData.images = updatedData.images.concat(req.files.map(file => `/uploads/${file.filename}`));
         }
 
+        // Remove images that were marked for deletion
         if (removedImages.length > 0) {
             updatedData.images = updatedData.images.filter(img => !removedImages.includes(img));
         }
 
+        // Update the car
         const updatedCar = await Car.findByIdAndUpdate(carId, updatedData, { new: true });
+        if (!updatedCar) {
+            return res.status(404).json({ error: 'Car update failed' });
+        }
+
+        // Emit event if using an event system
         carEventEmitter.emit('carUpdated', updatedCar);
+
+        // Send back the updated car
         res.json(updatedCar);
     } catch (err) {
         console.error('Error updating car:', err);
+        // Return an error response with details
         res.status(500).json({ error: 'Failed to update car', details: err.message });
     }
 });

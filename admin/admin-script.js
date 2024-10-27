@@ -403,6 +403,9 @@ window.editCar = function(carId) {
 document.getElementById('car-form').addEventListener('submit', function(event) {
     event.preventDefault(); // Prevent default form submission
 
+    const submitBtn = document.getElementById('submit-btn');
+    submitBtn.disabled = true; // Disable the button
+
     const formData = new FormData(this);
     formData.append('removedImages', JSON.stringify(removedImages)); // Send removed images
 
@@ -414,6 +417,15 @@ document.getElementById('car-form').addEventListener('submit', function(event) {
     .then(data => {
         console.log('Car updated successfully:', data);
         // Optionally: refresh the car list or give feedback to the user
+    })
+    .then(text => {
+        try {
+            const data = JSON.parse(text); // Try to parse JSON
+            console.log('Car updated successfully:', data);
+        } catch (error) {
+            console.error('Failed to parse JSON:', error);
+            console.error('Response text:', text); // Log the response text to see what's returned
+        }
     })
     .catch(error => console.error('Error updating car:', error));
 });
