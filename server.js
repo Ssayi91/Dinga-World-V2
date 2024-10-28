@@ -102,6 +102,50 @@ app.post('/admin/cars', upload.array('images', 15), async (req, res) => {
     }
 });
 
+// POST route to add a car from the public side
+app.post('/public/cars/add', upload.array('images', 15), async (req, res) => {
+    try {
+        const { brand, model, year, price, registration, drivetrain, fuelType, transmission, mileage, description } = req.body;
+
+        // Validate required fields
+        if (!brand || !model || !year || !price) {
+            return res.status(400).json({ error: 'Brand, model, year, and price are required.' });
+        }
+
+        // Process uploaded images
+        const images = req.files ? req.files.map(file => `/uploads/${file.filename}`) : [];
+
+        // Create a new car instance
+        const newCar = new Car({
+            brand,
+            model,
+            year,
+            price,
+            registration,
+            drivetrain,
+            fuelType,
+            transmission,
+            mileage,
+            description,
+            images,
+            source: 'public' // Mark this as uploaded from the public side
+        });
+
+        // Save the car to the database
+        const car = await newCar.save();
+        console.log('Car added successfully from public side:', car);
+
+        // Emit event if needed
+        carEventEmitter.emit('carAdded', car);
+
+        // Send a success response
+        res.status(201).json(car);
+    } catch (err) {
+        console.error('Error adding car from public side:', err);
+        res.status(500).json({ error: 'Failed to add car', details: err.message });
+    }
+});
+
 // GET route to fetch all cars for admin with sorting and filtering
 app.get('/admin/cars', async (req, res) => {
     try {
