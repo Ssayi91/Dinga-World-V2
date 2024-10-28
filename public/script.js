@@ -271,7 +271,7 @@ document.getElementById('car-form').addEventListener('submit', function(event) {
 
 
     // Send form data to the server
-    fetch('https://dinga-world.onrender.com/public/cars/add', {
+    fetch('/public/cars/add', {
         method: 'POST',
         body: formData
     })
