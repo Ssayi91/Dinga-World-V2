@@ -404,7 +404,7 @@ document.getElementById('car-form').addEventListener('submit', function(event) {
     event.preventDefault(); // Prevent default form submission
 
     const submitBtn = document.getElementById('submit-btn');
-    submitBtn.disabled = true; // Disable the button
+    submitBtn.disabled = true; // Disable the button to prevent double submission
 
     const formData = new FormData(this);
     formData.append('removedImages', JSON.stringify(removedImages)); // Send removed images
@@ -413,22 +413,22 @@ document.getElementById('car-form').addEventListener('submit', function(event) {
         method: 'PUT',
         body: formData
     })
-    .then(response => response.json())
+    .then(response => {
+        if (!response.ok) throw new Error('Failed to update car');
+        return response.json();
+    })
     .then(data => {
         console.log('Car updated successfully:', data);
         // Optionally: refresh the car list or give feedback to the user
     })
-    .then(text => {
-        try {
-            const data = JSON.parse(text); // Try to parse JSON
-            console.log('Car updated successfully:', data);
-        } catch (error) {
-            console.error('Failed to parse JSON:', error);
-            console.error('Response text:', text); // Log the response text to see what's returned
-        }
+    .catch(error => {
+        console.error('Error updating car:', error);
     })
-    .catch(error => console.error('Error updating car:', error));
+    .finally(() => {
+        submitBtn.disabled = false; // Re-enable button after request completes
+    });
 });
+
 
 
 // Adjust form submission to handle images conditionally
