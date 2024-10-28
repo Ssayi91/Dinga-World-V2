@@ -14,11 +14,16 @@ document.addEventListener('DOMContentLoaded', () => {
     const filterBtn = document.getElementById('filter-btn');
     const brandSelect = document.getElementById('filter-brand');
     const totalCarsElement = document.getElementById('total-cars');
+    const carId = document.getElementById('car-id').value; // Get car ID
+    const method = carId ? 'PUT' : 'POST'; // Use PUT if editing
+    const url = carId ? `/admin/cars/${carId}` : '/admin/cars'; // Dynamic URL
+
 
     let currentImageIndex = 0;
     let currentImages = [];
     let removedImages = [];  // Array to store removed images
-    let expandedCarStates = {}; // Object to store expanded state of cars
+    
+
 
     // Toggle form visibility
     toggleFormBtn.addEventListener('click', () => {
@@ -28,9 +33,13 @@ document.addEventListener('DOMContentLoaded', () => {
     // Image preview feature
     carForm.images.addEventListener('change', handleImagePreview);
 
+    // Handle form submission
+    carForm.addEventListener('submit', handleFormSubmission);
+
     // Load cars with sorting and filtering functionality
     function loadCars(sortBy = '', brand = '', model = '', year = '', price = '') {
         const url = `https://dinga-world.onrender.com/admin/cars?sortBy=${sortBy}&brand=${brand}&model=${model}&year=${year}&price=${price}`;
+    
         fetch(url)
             .then(handleResponse)
             .then(cars => {
@@ -59,74 +68,70 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Combined form submission handler
-    function handleFormSubmission(event) {
-        event.preventDefault();
-        const submitButton = document.getElementById('submit-btn');
-        submitButton.disabled = true;
-        submitButton.textContent = 'Uploading...';
+ // Handle form submission
+ function handleFormSubmission(e) {
+    e.preventDefault();
+    const submitButton = document.getElementById('submit-btn');
+    submitButton.disabled = true;
+    submitButton.textContent = 'Uploading...';
 
-        const formData = new FormData(carForm);
-        const carId = document.getElementById('car-id').value;
-        
-        // Append removed images to the form data if in edit mode
-        if (carId) {
-            formData.append('removedImages', JSON.stringify(removedImages));
-            const imagesInput = document.getElementById('images');
-            if (imagesInput.files.length === 0) {
-                formData.delete('images'); // Prevent mandatory new image upload on edit
+    const formData = new FormData(carForm);
+    const carId = document.getElementById('car-id').value; // Get car ID to check if editing
+
+      // Add removed images to the form data
+      if (removedImages.length > 0) {
+        formData.append('removedImages', JSON.stringify(removedImages));
+    }
+
+    const method = carId ? 'PUT' : 'POST'; // Use PUT if editing, POST if adding
+    const url = carId ? `https://dinga-world.onrender.com/admin/cars/${carId}` : '/admin/cars'; // Dynamic URL based on edit or add
+
+    fetch(url, { method: method, body: formData })
+        .then(handleResponse)
+        .then(car => {
+            if (carId) {
+                alert('Car updated successfully!');
+            } else if (car._id) {
+                alert('Car added successfully!');
+            } else {
+                alert('Failed to save car');
             }
-        }
 
-        const method = carId ? 'PUT' : 'POST'; // Use PUT if editing, POST if adding
-        const url = carId ? `https://dinga-world.onrender.com/admin/cars/${carId}` : '/admin/cars';
+            carForm.reset();
+            imagePreview.innerHTML = '';
+            formSection.style.display = 'none';
 
-        fetch(url, { method, body: formData })
-            .then(handleResponse)
-            .then(car => {
-                if (carId) {
-                    alert('Car updated successfully!');
-                } else if (car._id) {
-                    alert('Car added successfully!');
-                } else {
-                    alert('Failed to save car');
-                }
+            // Refetch cars after upload or update
+            loadCars();
 
-                // Reset form and preview
-                carForm.reset();
-                imagePreview.innerHTML = '';
-                formSection.style.display = 'none';
+            if (!carId) {
+                // Update public section with the newly added car
+                updatePublicSection(car);
+                // Update total cars count directly
+                totalCarsElement.textContent = parseInt(totalCarsElement.textContent) + 1;
+            }
+        })
+        .catch(handleError)
+        .finally(() => {
+            submitButton.disabled = false;
+            submitButton.textContent = carId ? 'Save Changes' : 'Add Car'; // Reset button text
+        });
+}
 
-                // Refetch cars after upload or update
-                loadCars();
-                
-                if (!carId) {
-                    updatePublicSection(car); // Add new car to public section
-                    totalCarsElement.textContent = parseInt(totalCarsElement.textContent) + 1;
-                }
-            })
-            .catch(handleError)
-            .finally(() => {
-                submitButton.disabled = false;
-                submitButton.textContent = carId ? 'Save Changes' : 'Add Car';
-            });
+
+// Handle response from fetch requests
+function handleResponse(response) {
+    if (!response.ok) {
+        return handleError(response); // Handle the error if response is not ok
     }
+    return response.json();
+}
 
-    carForm.addEventListener('submit', handleFormSubmission); // Single listener for form submission
-
-    // Handle response from fetch requests
-    function handleResponse(response) {
-        if (!response.ok) {
-            return handleError(response); // Handle the error if response is not ok
-        }
-        return response.json();
-    }
-
-    // Define handleError to log or display the error
-    function handleError(error) {
-        console.error('An error occurred:', error);
-        alert('An error occurred: ' + error.message);
-    }
+// Define handleError to log or display the error
+function handleError(error) {
+    console.error('An error occurred:', error);
+    alert('An error occurred: ' + error.message);
+}
 
     // Render cars in the container
     function renderCars(cars) {
@@ -136,24 +141,29 @@ document.addEventListener('DOMContentLoaded', () => {
         cars.forEach(car => {
             const carItem = createCarItem(car);
             carContainer.appendChild(carItem);
+      
+    
+    // Restore expanded state if previously expanded
+        const carId = car._id;
+        const isExpanded = expandedCarStates[carId];
 
-            const carId = car._id;
-            const isExpanded = expandedCarStates[carId];
-            if (isExpanded) {
-                const moreInfo = carItem.querySelector('.more-info');
-                carItem.classList.add('expanded');
-                moreInfo.style.display = 'block';
-                carItem.querySelector('.load-more-btn').innerText = 'Show Less';
-            }
-        });
+        if (isExpanded) {
+            const moreInfo = carItem.querySelector('.more-info');
+            carItem.classList.add('expanded');
+            moreInfo.style.display = 'block';
+            carItem.querySelector('.load-more-btn').innerText = 'Show Less';
+        }
+    });
 
         attachEventListenersToImages();
-        attachEventListenersToLoadMoreButtons();
+        attachEventListenersToLoadMoreButtons(); // Ensure this function is defined
     }
 
     // Function to update the public section with new car details
     function updatePublicSection(newCar) {
         const publicCarContainer = document.getElementById('car-container');
+    
+        // Add the new car to the public section
         publicCarContainer.appendChild(createCarItem(newCar));
     }
 
@@ -193,6 +203,8 @@ document.addEventListener('DOMContentLoaded', () => {
         return carItem;
     }
 
+
+
     // Attach event listeners to car images for modal
     function attachEventListenersToImages() {
         const carImages = document.querySelectorAll('.car-image');
@@ -205,22 +217,263 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    let expandedCarStates = {}; // Global object to store expanded state
+
     // Event listener for the Load More button
     function attachEventListenersToLoadMoreButtons() {
         const loadMoreButtons = document.querySelectorAll('.load-more-btn');
         loadMoreButtons.forEach(btn => {
             btn.addEventListener('click', function () {
-                const carItem = this.closest('.car-item');
-                const carId = carItem.dataset.id;
-                const moreInfo = carItem.querySelector('.more-info');
-                const isExpanded = carItem.classList.toggle('expanded');
+                const carItem = this.closest('.car-item'); // Get the closest car item
+                const carId = carItem.dataset.id; // Get the car ID to store its state
+                const moreInfo = carItem.querySelector('.more-info'); // Get the more-info div
+                const isExpanded = carItem.classList.toggle('expanded'); // Toggle the expanded class
 
-                expandedCarStates[carId] = isExpanded;
+                 // Store the expanded state
+            expandedCarStates[carId] = isExpanded;
+
+                // Show or hide the more-info div
+                moreInfo.style.display = isExpanded ? 'block' : 'none'; // Show or hide without overlap
                 this.innerText = isExpanded ? 'Show Less' : 'Load More';
-                moreInfo.style.display = isExpanded ? 'block' : 'none';
             });
         });
     }
 
+    // Open modal with images
+    function openModal(imagesArray, index) {
+        currentImages = imagesArray;
+        currentImageIndex = index;
+
+        modalImage.src = currentImages[currentImageIndex];
+        modal.style.display = 'block';
+
+        prevBtn.style.display = currentImages.length > 1 ? 'inline' : 'none';
+        nextBtn.style.display = currentImages.length > 1 ? 'inline' : 'none';
+    }
+
+    // Close modal
+    closeModal.addEventListener('click', () => {
+        modal.style.display = 'none';
+    });
+
+    // Previous image in modal
+    prevBtn.addEventListener('click', () => {
+        currentImageIndex = (currentImageIndex > 0) ? currentImageIndex - 1 : currentImages.length - 1;
+        modalImage.src = currentImages[currentImageIndex];
+    });
+
+    // Next image in modal
+    nextBtn.addEventListener('click', () => {
+        currentImageIndex = (currentImageIndex < currentImages.length - 1) ? currentImageIndex + 1 : 0;
+        modalImage.src = currentImages[currentImageIndex];
+    });
+
+    // Handle filter functionality
+    filterBtn.addEventListener('click', () => {
+        const year = yearInput.value;
+        const price = priceInput.value;
+        const brand = brandSelect.value;
+
+        loadCars('price', brand, '', year, price); // Adjust sort and filter as needed
+    });
+
+    // Delete car function
+    window.deleteCar = function(carId) {
+        const confirmation = confirm("Are you sure you want to delete this car?");
+        if (!confirmation) return;
+
+        fetch(`https://dinga-world.onrender.com/admin/cars/${carId}`, { method: 'DELETE' })
+            .then(handleResponse)
+            .then(() => {
+                alert('Car deleted successfully!');
+                loadCars(); // Refresh car list after deletion
+
+                // Optionally update the public section after deletion
+                updatePublicSectionAfterDelete(carId);
+            })
+            .catch(error => console.error('Error deleting car:', error));
+    };
+
+    // Function to update the public section after car deletion
+    function updatePublicSectionAfterDelete(carId) {
+        const publicCarContainer = document.getElementById('car-container');
+        const carItem = publicCarContainer.querySelector(`.car-item[data-id="${carId}"]`);
+
+        if (carItem) {
+            publicCarContainer.removeChild(carItem); // Remove the car from the public section
+        }
+    }
+
+    // Load initial cars on page load
     loadCars();
 });
+
+// Set up EventSource for real-time updates
+const eventSource = new EventSource('/events');
+
+eventSource.onmessage = function(event) {
+    const data = JSON.parse(event.data);
+
+    // Handle different event types
+    switch (event.type) {
+        case 'carAdded':
+            // Handle new car addition
+            updatePublicSection(data);
+            totalCarsElement.textContent = parseInt(totalCarsElement.textContent) + 1; // Increment total count
+            break;
+        case 'carUpdated':
+            // Update existing car on the public side
+            updatePublicSection(data);
+            break;
+        case 'carDeleted':
+            // Remove deleted car from the public side
+            updatePublicSectionAfterDelete(data._id);
+            totalCarsElement.textContent = parseInt(totalCarsElement.textContent) - 1; // Decrement total count
+            break;
+    }
+};
+
+// Close EventSource when no longer needed (optional)
+window.addEventListener('beforeunload', () => {
+    eventSource.close();
+});
+
+
+// Move editCar function outside the DOMContentLoaded event listener
+// Array to hold removed images
+const removedImages = [];
+
+// Move editCar function outside the DOMContentLoaded event listener
+window.editCar = function(carId) {
+    console.log('Editing car with ID:', carId); // Log the car ID
+    fetch(`https://dinga-world.onrender.com/admin/cars/${carId}`)
+        .then(response => response.json())
+        .then(car => {
+            // Populate form fields with car data
+            document.getElementById('brand').value = car.brand;
+            document.getElementById('model').value = car.model;
+            document.getElementById('year').value = car.year;
+            document.getElementById('price').value = car.price;
+            document.getElementById('registration').value = car.registration;
+            document.getElementById('drivetrain').value = car.drivetrain;
+            document.getElementById('fuelType').value = car.fuelType;
+            document.getElementById('transmission').value = car.transmission;
+            document.getElementById('mileage').value = car.mileage;
+            document.getElementById('description').value = car.description;
+            document.getElementById('car-id').value = car._id;  // Set the car ID for editing mode
+
+            // Show existing images with delete option
+            const imagePreview = document.getElementById('image-preview');
+            imagePreview.innerHTML = '';  // Clear current preview
+
+            car.images.forEach((image) => {
+                const imgElement = document.createElement('img');
+                imgElement.src = image;
+                imgElement.style.width = '100px';
+                imgElement.style.marginRight = '10px';
+
+                // Add delete button next to each image
+                const deleteBtn = document.createElement('button');
+                deleteBtn.textContent = 'X';
+                deleteBtn.style.marginLeft = '5px';
+                deleteBtn.addEventListener('click', () => {
+                    imgElement.remove(); // Remove from preview
+                    deleteBtn.remove();  // Remove delete button
+                    removedImages.push(image);  // Store removed images
+                });
+
+                imagePreview.appendChild(imgElement);
+                imagePreview.appendChild(deleteBtn);
+            });
+
+            // Show form in edit mode
+            document.querySelector('.form-section').style.display = 'block';
+            document.getElementById('submit-btn').textContent = 'Save Changes';
+
+            // Scroll to form
+            document.querySelector('.form-section').scrollIntoView({ behavior: 'smooth' });
+
+            // Remove "required" attribute from images input for editing
+            document.getElementById('images').removeAttribute('required');
+        })
+        .catch(error => console.error('Error loading car details for editing:', error));
+};
+
+// Handle form submission
+document.getElementById('car-form').addEventListener('submit', function(event) {
+    event.preventDefault(); // Prevent default form submission
+
+    const submitBtn = document.getElementById('submit-btn');
+    submitBtn.disabled = true; // Disable the button to prevent double submission
+
+    const formData = new FormData(this);
+    formData.append('removedImages', JSON.stringify(removedImages)); // Send removed images
+
+    fetch(`https://dinga-world.onrender.com/admin/cars/${document.getElementById('car-id').value}`, {
+        method: 'PUT',
+        body: formData
+    })
+    .then(response => {
+        if (!response.ok) throw new Error('Failed to update car');
+        return response.json();
+    })
+    .then(data => {
+        console.log('Car updated successfully:', data);
+        // Optionally: refresh the car list or give feedback to the user
+    })
+    .catch(error => {
+        console.error('Error updating car:', error);
+    })
+    .finally(() => {
+        submitBtn.disabled = false; // Re-enable button after request completes
+    });
+});
+
+
+
+// Adjust form submission to handle images conditionally
+document.getElementById('car-form').addEventListener('submit', (event) => {
+    event.preventDefault();
+
+    const formData = new FormData(event.target);
+    const carId = document.getElementById('car-id').value;
+
+    // Append removed images array to the form data if editing an existing car
+    if (carId) {
+        formData.append('removedImages', JSON.stringify(removedImages));
+
+        // Check if new images were added
+        const imagesInput = document.getElementById('images');
+        if (imagesInput.files.length === 0) {
+            formData.delete('images');  // Prevent mandatory new image upload on edit
+        }
+    }
+
+    fetch(carId ? `https://dinga-world.onrender.com/admin/cars/${carId}` : '/admin/cars', {
+        method: carId ? 'PUT' : 'POST',
+        body: formData,
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log('Car saved successfully:', data);
+        // Reset form and hide it after submission
+        event.target.reset();
+        document.querySelector('.form-section').style.display = 'none';
+    })
+    .catch(error => console.error('Error saving car:', error));
+});
+
+
+// public car form section
+// Car.find({ source: 'public' }).then(carsFromPublic => {
+//     // Display these cars with a special marker on the admin side
+// });
+
+const sse = new EventSource('https://dinga-world.onrender.com/admin/cars/stream');  // or for the public side
+sse.onmessage = function(event) {
+    const updatedCars = JSON.parse(event.data);
+    fetchAndDisplayCars(updatedCars);  // Function to update the car list dynamically
+};
+
+
+
