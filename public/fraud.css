@@ -1,0 +1,346 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Montserrat", sans-serif;
+    
+}
+
+
+:root{
+    --main-color:darkred;
+    --text-color:rgb(0, 0, 0);
+    --bg-color: white;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+}
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Header Styles */
+.header {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    padding: 20px 0;
+}
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid rgb(206, 201, 201);
+}
+.menu-toggle {
+    display: none; /* Hide the menu toggle by default */
+    cursor: pointer;
+}
+
+.menu-toggle i {
+    font-size: 24px;
+    color: var(--text-color);
+}
+.logo h1 {
+    font-size: 24px;
+    font-weight: 800;
+    color: var(--text-color);
+    margin-top: -30px;
+    padding: 10px 20px;
+}
+.logo h1 span{
+    color: var(--main-color);
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+}
+
+.nav-links li {
+    margin-left: 20px;
+}
+.nav-links li i{
+    font-size: 22px;
+    padding: 10px 70px;
+    position: relative;
+    top: -40px;
+    display: block;
+    text-align: center;
+}
+.login-text {
+    font-size: 14px; /* Smaller font size for "Login" text */
+    display: block;
+    text-align: center;
+    margin-top: -50px; /* Space between icon and text */
+}
+
+.nav-links li a {
+    font-weight: 700;
+    color: var(--text-color);
+    text-decoration: none;
+    padding: 5px;
+    transition: border-bottom 0.3s ease;
+}
+.nav-links li a.active,
+.nav-links li a:hover {
+    color: var(--main-color);
+}
+.close-menu {
+    display: none; /* Hide by default */
+}
+
+/* Main Content Styles */
+main {
+    padding: 40px 20px;
+}
+
+.report-frauds h2 {
+    font-size: 28px;
+    margin-bottom: 20px;
+    color: var(--text-color); /* Highlight color */
+}
+
+.report-frauds p {
+    font-size: 18px;
+    margin-bottom: 30px;
+    font-weight: 600;
+}
+
+.report-frauds form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.report-frauds label {
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.report-frauds input,
+.report-frauds textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid var(--text-color);
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+.report-frauds button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    background-color: var(--text-color); /* Button background color */
+    color:var(--bg-color); /* Button text color */
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.report-frauds button:hover {
+    background-color: var(--main-color); 
+    color: var(--bg-color);
+}
+
+/* Footer Styles */
+/* General Footer Styles */
+footer {
+    background-color: var(--text-color);
+    color: var(--bg-color);
+    padding: 20px;
+    text-align: center;
+}
+
+.footer-container {
+    display: flex;
+   justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: nowrap;
+    gap: 5px;
+}
+
+.contact-details, .social-media, .map {
+    margin-bottom: 20px;
+    margin-top: 20px;
+}
+.contact-details h3{
+    font-size: 20px;
+    font-weight: 700;
+    padding: 10px;
+    color: var(--main-color);
+}
+.contact-details p{
+    font-size: 18px;
+    font-weight: 600;
+    padding: 5px;
+}
+.contact-details span{
+    color: var(--main-color);
+}
+
+.contact-details a {
+    color: #fff;
+    text-decoration: none;
+}
+
+.contact-details a:hover {
+    text-decoration: underline;
+}
+
+.social-media {
+    font-size: 20px;
+    padding: 10px;
+    color: var(--main-color);
+}
+
+.social-icon {
+    color: #fff;
+    font-size: 26px;
+    text-decoration: none;
+    padding: 20px;
+}
+
+.social-icon:hover {
+    color: var(--main-color);
+}
+
+.map iframe {
+    max-width: 100%;
+    max-height: 200px;
+    border: none;
+    border-radius: 10px;
+}
+.map h3{
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--main-color);
+}
+/* copyright */
+.copyright{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding-bottom: 20px;
+}
+.copyright h1{
+    font-size: 20px;
+}
+.copyright p{
+    font-size: 18px;
+    font-weight: 800;
+}
+.copyright span{
+    color: var(--main-color);
+}
+
+
+/* Mobile Responsive Styles */
+@media (max-width: 768px) {
+    .navbar {
+        flex-direction: column;
+        align-items: flex-start;
+        position: relative;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .nav-links {
+        display: none; /* Hide the nav links by default */
+        position: fixed; /* Position fixed to cover the entire screen */
+        top: 0;
+        left: 0;
+        height: 100vh; /* Full viewport height */
+        width: 100vw; /* Full viewport width */
+        background-color: var(--bg-color);
+        flex-direction: column;
+        justify-content: center; /* Center the items vertically */
+        align-items: center; /* Center the items horizontally */
+        transform: translateX(-100%); /* Initially hidden off-screen */
+        transition: transform 0.3s ease; /* Smooth transition */
+        z-index: 1000;
+    }
+
+    .nav-links li {
+        margin: 10px 0;
+    }
+    .nav-links li i{
+        top: 5px;
+    }
+
+    .nav-links a {
+        display: block;
+        width: 100%;
+        text-align: center;
+        font-size: 22px;
+        padding: 10px 0;
+        text-decoration: none;
+        transition: background-color 0.5s;
+    }
+
+    .nav-links a:hover{
+        color: var(--main-color);
+    }
+    .menu-toggle {
+        display: block; /* Show the menu toggle on mobile */
+    }
+
+    .nav-links.show {
+        display: flex; /* Show the nav links when toggled */
+        transform: translateX(0);
+    }
+    .close-menu {
+        position: absolute;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        font-size: 24px;
+        color: var(--text-color);
+        top: 100px;
+        left: 110px;
+        display: flex;
+    }
+
+    .close-menu i {
+        font-size: 24px;
+    }
+    .logo h1 {
+       margin-top: 5px;
+       padding: 5px;
+    }
+
+    /* Hide the close button on desktop view */
+    @media (min-width: 769px) {
+        .close-menu {
+            display: none;
+        }
+    }
+
+    .nav-links a {
+        padding: 15px;
+        font-size: 18px;
+    }
+
+    main {
+        padding: 20px 10px;
+    }
+
+    .footer-container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .map iframe {
+        height: 200px;
+    }
+}

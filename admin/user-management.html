@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Management</title>
+    <link rel="stylesheet" href="user-management.css">
+</head>
+<body>
+    <div class="admin-container">
+        <!-- Sidebar Navigation -->
+        <nav class="sidebar">
+            <h2>DInga World Dashboard</h2>
+            <ul>
+                <li><a href="admin.html">Dashboard</a></li>
+                <li><a href="manage-cars.html">Manage Cars</a></li>
+                <li><a href="user-management.html" class="active">User Management</a></li>
+                <li><a href="blog-management.html">Blog Management</a></li>
+                <li><a href="settings.html">Settings</a></li>
+            </ul>
+        </nav>
+
+        <!-- Main Content Area -->
+        <div class="main-content">
+            <header>
+                <h1>User Management</h1>
+            </header>
+
+            <!-- Add New User Section -->
+            <section class="add-user-section">
+                <h2>Add New User</h2>
+                <form class="add-user-form" id="add-user-form">
+                    <label>Username: <input type="text" id="username" required /></label>
+                    <label>Email: <input type="email" id="email" required /></label>
+                    <label>Password: <input type="password" id="password" required /></label>
+                    <fieldset>
+                      <legend>Assign Permissions:</legend>
+                      <label><input type="checkbox" name="permissions" value="manage-cars" /> Manage Cars</label>
+                      <label><input type="checkbox" name="permissions" value="blog-management" /> Blog Management</label>
+                    </fieldset>
+                    <button type="submit">Add User</button>
+                  </form>
+            </section>
+
+            <!-- Existing Users List -->
+            <table id="user-table">
+                <thead>
+                  <tr>
+                    <th>Username</th>
+                    <th>Email</th>
+                    <th>Roles</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <!-- Users will be dynamically populated here -->
+                </tbody>
+              </table>
+              
+        </div>
+    </div>
+
+    <script src="user-management.js"></script>
+</body>
+</html>

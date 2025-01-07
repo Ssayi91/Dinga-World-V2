@@ -1,0 +1,513 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Montserrat", sans-serif;
+}
+
+:root {
+    --main-color: darkred;
+    --text-color: rgb(0, 0, 0);
+    --bg-color: white;
+}
+
+/* Header Styles */
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+}
+.header {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    border-bottom: 2px solid rgb(206, 201, 201);
+    padding: 20px 0;
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid rgb(206, 201, 201);
+}
+.menu-toggle {
+    display: none; /* Hide the menu toggle by default */
+    cursor: pointer;
+}
+
+.menu-toggle i {
+    font-size: 24px;
+    color: var(--text-color);
+}
+.logo h1 {
+    font-size: 24px;
+    font-weight: 800;
+    color: var(--text-color);
+    margin-top: -30px;
+    padding: 10px 20px;
+}
+.logo h1 span{
+    color: var(--main-color);
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+}
+
+.nav-links li {
+    margin-left: 20px;
+}
+.nav-links li i{
+    font-size: 22px;
+    padding: 10px 70px;
+    position: relative;
+    top: -40px;
+    display: block;
+    text-align: center;
+}
+.login-text {
+    font-size: 14px; /* Smaller font size for "Login" text */
+    display: block;
+    text-align: center;
+    margin-top: -50px; /* Space between icon and text */
+}
+
+.nav-links li a {
+    font-weight: 700;
+    color: var(--text-color);
+    text-decoration: none;
+    padding: 5px;
+    transition: border-bottom 0.3s ease;
+}
+.nav-links li a.active,
+.nav-links li a:hover {
+    color: var(--main-color);
+}
+.close-menu {
+    display: none; /* Hide by default */
+}
+/* Banner Section */
+.banner {
+    background-color: #222;
+    color: #fff;
+    padding: 60px 0;
+    text-align: center;
+    width: 100%;
+}
+
+.banner h1 {
+    font-size: 36px;
+    margin-bottom: 10px;
+}
+
+.banner p {
+    font-size: 18px;
+    color: var(--bg-color);
+}
+
+/* Search and Filter Section */
+.search-filter {
+    background-color: #fff;
+    padding: 20px 10px;
+    text-align: center;
+    margin-top: -30px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.search-filter form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+}
+
+.search-filter input,
+.search-filter select,
+.search-filter button {
+    width: 100%;
+    max-width: 300px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+.search-filter button {
+    background-color: var(--main-color);
+    color: #fff;
+    border: none;
+    cursor: pointer;
+}
+
+.search-filter button:hover {
+    background-color: var(--main-color);
+}
+
+/* Reviews Grid Section */
+.reviews-grid .container{
+    display: flex;
+    padding: 10px 5%;
+    margin-top: 50px;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+.reviews-grid {
+    padding: 40px 10px;
+    display: flex;
+    flex-wrap: wrap; /* Allows items to wrap to the next line if needed */
+    gap: 20px; /* Space between items */
+    justify-content: center; /* Center the items horizontally */
+}
+/* Individual blog item styling (cards) */
+#public-blog-list {
+    display: flex;
+    flex-wrap: wrap;  /* Allow items to wrap to the next line when needed */
+    gap: 20px;  /* Space between the cards */
+    justify-content: flex-start;  /* Align items to the left */
+    margin-top: 20px;
+    padding: 0 20px;  /* Optional padding for spacing */
+}
+/* Individual blog item styling (cards) */
+#public-blog-list > div {
+    background-color: var(--bg-color);
+    border: 1px solid var(--bg-color);
+    border-radius: 8px;
+    width: calc(33.333% - 20px); 
+    padding: 15px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    height: auto;
+    transition: all 0.3s ease;
+}
+
+/* Hover effect for card */
+#public-blog-list > div:hover {
+    transform: translateY(-5px);
+}
+
+/* Thumbnail image styling */
+.thumbnail {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+}
+
+/* Title and meta info */
+h2 {
+    font-size: 18px;
+    font-weight: 800;
+    margin-bottom: 10px;
+}
+
+p {
+    font-size: 14px;
+    color: var(--text-color);
+    font-weight: 500;
+}
+
+/* Truncated content styling */
+.truncated-content {
+    font-size: 14px;
+    color: var(--text-color);
+    font-weight: 600;
+    margin-bottom: 10px;
+    line-height: 1.5;
+}
+.full-content{
+    display: none;
+    font-size: 1em;
+    margin-top: 10px;
+    line-height: 2;
+    font-weight: 500;
+}
+
+/* Read More button styling */
+.read-more-btn {
+    background-color: var(--main-color);
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 14px;
+    font-weight: 700;
+    margin-top: 10px;
+    display: block;
+    width: 100%;
+}
+
+.read-more-btn:hover {
+    background-color: var(--bg-color);
+    color: var(--main-color);
+    border: 1px solid var(--text-color);
+}
+/* Ensure cards with expanded content do not affect other cards */
+#public-blog-list > div > p {
+    overflow: hidden;  /* Ensure content doesn't overflow and affect layout */
+    text-overflow: ellipsis;  /* For truncated content */
+    margin: 10px;
+    font-weight: 500;
+}
+
+/* Pagination Section */
+.pagination {
+    padding: 20px 10px;
+    text-align: center;
+}
+
+.pagination ul {
+    list-style: none;
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    padding: 0;
+    margin: 0;
+}
+
+.pagination ul li {
+    list-style: none;
+}
+
+.pagination ul li a {
+    padding: 10px 15px;
+    color: var(--bg-color);
+    background-color: var(--text-color);
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+.pagination ul li a:hover {
+    background-color: var(--main-color);
+}
+
+/* General Footer Styles */
+footer {
+    background-color: var(--text-color);
+    color: var(--bg-color);
+    padding: 20px;
+    text-align: center;
+}
+
+.footer-container {
+    display: flex;
+   justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: nowrap;
+    gap: 5px;
+}
+
+.contact-details, .social-media, .map {
+    margin-bottom: 20px;
+    margin-top: 20px;
+}
+.contact-details h3{
+    font-size: 20px;
+    font-weight: 700;
+    padding: 10px;
+    color: var(--main-color);
+}
+.contact-details p{
+    font-size: 18px;
+    font-weight: 600;
+    padding: 5px;
+}
+.contact-details span{
+    color: var(--main-color);
+}
+
+.contact-details a {
+    color: #fff;
+    text-decoration: none;
+}
+
+.contact-details a:hover {
+    text-decoration: underline;
+}
+
+.social-media {
+    font-size: 20px;
+   padding: 10px;
+   color: var(--main-color);
+}
+
+.social-icon {
+    color: #fff;
+    font-size: 26px;
+    text-decoration: none;
+    padding: 20px;
+}
+
+.social-icon:hover {
+    color: var(--main-color);
+}
+
+.map iframe {
+    max-width: 100%;
+    max-height: 200px;
+    border: none;
+    border-radius: 10px;
+}
+.map h3{
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--main-color);
+}
+.copyright{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding-bottom: 20px;
+}
+.copyright h1{
+    font-size: 20px;
+}
+.copyright p{
+    font-size: 18px;
+    font-weight: 800;
+}
+.copyright span{
+    color: var(--main-color);
+}
+
+/* Media Queries */
+@media (max-width: 768px) {
+    .navbar {
+        flex-direction: column;
+        align-items: stretch;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .nav-links {
+        display: none; /* Hide the nav links by default */
+        position: fixed; /* Position fixed to cover the entire screen */
+        top: 0;
+        left: 0;
+        height: 100vh; /* Full viewport height */
+        width: 100vw; /* Full viewport width */
+        background-color: var(--bg-color);
+        flex-direction: column;
+        justify-content: center; /* Center the items vertically */
+        align-items: center; /* Center the items horizontally */
+        transform: translateX(-100%); /* Initially hidden off-screen */
+        transition: transform 0.3s ease; /* Smooth transition */
+        z-index: 1000;
+    }
+
+    .nav-links li {
+        margin: 10px 0;
+    }
+    .nav-links li i{
+        top: 5px;
+    }
+
+    .nav-links a {
+        display: block;
+        width: 100%;
+        text-align: center;
+        font-size: 22px;
+        padding: 10px 0;
+        text-decoration: none;
+        transition: background-color 0.5s;
+    }
+    .nav-links a:hover{
+        color: var(--main-color);
+    }
+    .menu-toggle {
+        display: block; /* Show the menu toggle on mobile */
+    }
+
+    .nav-links.show {
+        display: flex; /* Show the nav links when toggled */
+        transform: translateX(0);
+    }
+    .close-menu {
+        position: absolute;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        font-size: 24px;
+        color: var(--text-color);
+        top: 100px;
+        left: 110px;
+        display: flex;
+    }
+
+    .close-menu i {
+        font-size: 24px;
+        color: var(--main-color);
+    }
+    .logo h1 {
+        margin-top: 5px;
+        padding: 5px;
+     }
+
+     .reviews-grid .container{
+        flex-direction: column;
+        flex-wrap: nowrap;
+    }
+
+    .reviews-grid  #public-blog-list{
+        margin-bottom: 20px;
+    }
+    #public-blog-list > div{
+        width: 100%;
+    }
+
+    .footer-container {
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .contact-details,
+    .social-media,
+    .map {
+        width: 100%;
+    }
+
+    .social-media {
+        font-size: 18px;
+    }
+
+    .social-icon {
+        font-size: 22px;
+    }
+
+    .blog-card {
+        flex: 1 1 calc(50% - 20px); /* 2 cards per row */
+        max-width: calc(50% - 20px);
+    }
+}
+
+
+@media (max-width: 480px) {
+    .banner h1 {
+        font-size: 28px;
+    }
+
+    .banner p {
+        font-size: 16px;
+    }
+
+    .reviews-grid .review-item h2 {
+        font-size: 20px;
+    }
+
+    .reviews-grid .review-item p {
+        font-size: 14px;
+    }
+
+    .blog-card {
+        flex: 1 1 100%; /* 1 card per row */
+        max-width: 100%;
+    }
+}

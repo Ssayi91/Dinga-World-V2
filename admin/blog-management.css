@@ -1,0 +1,299 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Montserrat", sans-serif;
+}
+
+:root {
+    --main-color: darkred;
+    --text-color: #302929;
+    --bg-color: #f9f9f9;
+    --white: #ffffff;
+}
+
+/* Admin Container */
+.admin-container {
+    display: flex;
+    flex-direction: row;
+    height: 100%;
+}
+
+/* Sidebar Navigation */
+.sidebar {
+    width: 200px;
+    background-color: var(--text-color);
+    color: white;
+    padding: 20px;
+    text-align: center;
+}
+
+.sidebar h2 {
+    color: #fff;
+    text-align: center;
+}
+
+.sidebar ul {
+    list-style-type: none;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+}
+
+.sidebar ul li {
+    margin: 15px 0;
+}
+
+.sidebar ul li a {
+    color: #fff;
+    text-decoration: none;
+    display: block;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.sidebar ul li a.active,
+.sidebar ul li a:hover {
+    background-color: var(--main-color);
+}
+/* Main Content Area */
+.main-content {
+    flex: 1;
+    padding: 20px;
+    background-color: var(--bg-color);
+}
+
+.main-content header h1 {
+    margin-bottom: 20px;
+}
+
+/* Blog Management Section */
+.blog-management {
+    flex-direction: row;
+    margin-top: 20px;
+}
+
+.add-post-btn {
+    background-color: var(--text-color);
+    color: var(--bg-color);
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.add-post-btn:hover {
+    background-color: var(--bg-color);
+    color: var(--main-color);
+    border: 1px solid var(--text-color);
+}
+
+.posts-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.posts-table th,
+.posts-table td {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+.posts-table th {
+    background-color: #333;
+    color: #fff;
+}
+
+/* Thumbnail Styling */
+.thumbnail {
+    width: 100px;
+    height: auto;
+    border-radius: 4px;
+}
+.posts-table td button {
+    background-color: var(--text-color);
+    color: var(--bg-color);
+    padding: 5px;
+    margin: 5px;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+.posts-table td button:hover {
+    background-color: var(--bg-color);
+    color: var(--main-color);
+    border: 1px solid var(--text-color);
+}
+.posts-table td .delete-btn{
+    background-color: var(--main-color);
+    color: var(--bg-color);
+}
+
+/* Modal Styles */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-content {
+    background-color: var(--white);
+    margin: 10% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 90%;
+    max-width: 600px;
+    border-radius: 8px;
+}
+
+.close-modal {
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.post-form label {
+    display: block;
+    margin-top: 10px;
+}
+
+.post-form input[type="text"], 
+.post-form textarea, 
+.post-form select {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.save-post-btn {
+    background-color: var(--main-color);
+    color: var(--white);
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 20px;
+}
+
+.save-post-btn:hover {
+    background-color:var(--bg-color);
+    color: var(--main-color);
+    border: 1px solid var(--text-color);
+}
+
+/* Responsive Styles */
+@media (max-width: 768px)  {
+    /* For medium-sized screens like tablets */
+    .admin-container {
+        flex-direction: column;
+    }
+
+    .sidebar {
+        width: 100%;
+        height: auto;
+        position: static;
+    }
+
+    .main-content {
+        margin-top: 20px;
+        width: auto;
+    }
+
+    .blog-management {
+        flex-direction: column;
+        width: 95%;
+    }
+
+    .posts-table th, .posts-table td {
+        font-size: 16px;
+        padding: 10px;
+    }
+    .sidebar h2 {
+        font-size: 22px;
+    }
+
+    .sidebar ul li a {
+        font-size: 16px;
+    }
+
+    .posts-table {
+        display: block; 
+    }
+
+    .posts-table thead {
+        display: none; /* Hide the table header */
+    }
+
+    .posts-table tbody {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .post-form input[type="text"], 
+    .post-form textarea, 
+    .post-form select {
+        padding: 8px;
+    }
+
+    .save-post-btn {
+        padding: 12px;
+        font-size: 16px;
+    }
+    .posts-table tr {
+        display: flex;
+        flex-direction: column;
+        border: 1px solid #ddd;
+        margin-bottom: 10px;
+        padding: 10px;
+        background-color: #fff;
+        border-radius: 4px;
+    }
+
+    .posts-table td {
+        display: flex;
+        flex-direction: column;
+        text-align: left;
+        padding: 8px 0;
+    }
+
+    .posts-table td img {
+        margin-bottom: 8px;
+    }
+
+    .posts-table td::before {
+        content: attr(data-label); /* Use data-label attribute */
+        font-weight: bold;
+        margin-bottom: 5px;
+        color: #666;
+        font-size: 14px;
+    }
+
+    .posts-table td:last-child {
+        display: flex;
+        gap: 8px;
+    }
+
+    /* Adjust button layout */
+    .posts-table td button {
+        width: auto;
+        flex: 1;
+    }
+}
+

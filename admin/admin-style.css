@@ -1,0 +1,225 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap');
+
+/* General Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Montserrat", sans-serif;
+}
+/* For WebKit-based browsers (Chrome, Safari, Edge) */
+.car-images::-webkit-scrollbar {
+    width: 3px; /* Thin scrollbar */
+}
+
+.car-images::-webkit-scrollbar-track {
+    background: transparent; /* Background of the scrollbar track */
+    border-radius: 8px; /* Rounded corners for the track */
+}
+
+.car-images::-webkit-scrollbar-thumb {
+    background-color: transparent; /* Scrollbar color */
+    border-radius: 10px; /* Rounded corners for the scrollbar thumb */
+    transition: background-color 0.5s ease;
+}
+/* Show scrollbar thumb on hover */
+.car-images:hover::-webkit-scrollbar-thumb {
+    background-color: var(--main-color); /* Scrollbar color when scrolling */
+}
+
+/* For Firefox */
+.car-images {
+    scrollbar-width: thin; /* Thin scrollbar */
+    scrollbar-color: transparent transparent; /* Thumb and track color */
+    transition: scrollbar-color 0.3s ease;
+}
+.car-images:hover {
+    scrollbar-color: var(--main-color) transparent; /* Show thumb color on hover */
+}
+
+/* Optional: Internet Explorer and Edge (before Chromium-based Edge) */
+.car-images {
+    -ms-overflow-style: -ms-autohiding-scrollbar; /* Auto-hiding scrollbar */
+}
+
+:root {
+    --main-color: darkred;
+    --text-color: rgb(48, 41, 41);
+    --bg-color: white;
+}
+
+/* Admin Container */
+.admin-container {
+    display: flex;
+    height: 100vh;
+}
+
+/* Sidebar */
+.sidebar {
+    width: 200px;
+    background-color: var(--text-color);
+    color: white;
+    text-align: center;
+    padding-top: 10px;
+
+}
+
+.sidebar h2 {
+    color: #fff;
+    text-align: center;
+}
+
+.sidebar ul {
+    list-style-type: none;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+}
+
+.sidebar ul li {
+    margin: 15px 0;
+}
+
+.sidebar ul li a {
+    color: #fff;
+    text-decoration: none;
+    display: block;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.sidebar ul li a.active,
+.sidebar ul li a:hover {
+    background-color: var(--main-color);
+}
+
+/* Main Content */
+.main-content {
+    flex: 1;
+    padding: 30px;
+    background-color: #f9f9f9;
+}
+
+.main-content header h1 {
+    font-size: 28px;
+    margin-bottom: 10px;
+}
+
+.main-content header p {
+    margin-bottom: 20px;
+    font-size: 18px;
+    color: var(--text-color);
+}
+
+/* Dashboard Overview */
+.dashboard-overview {
+    display: flex;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+    margin-bottom: 30px;
+}
+
+.overview-card {
+    background-color: var(--bg-color);
+    width: 15%;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.overview-card h3 {
+    margin-bottom: 10px;
+    font-size: 22px;
+    color: var(--main-color);
+}
+
+.overview-card p {
+    font-size: 24px;
+    color: var(--text-color);
+}
+
+/* Quick Links */
+.quick-links {
+    margin-bottom: 20px;
+}
+
+.quick-links h2 {
+    margin-bottom: 20px;
+    font-size: 24px;
+}
+
+.link-card {
+    background-color: var(--bg-color);
+    padding: 15px;
+    margin-bottom: 15px;
+    border-radius: 5px;
+    text-align: center;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.link-card a {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--text-color);
+    text-decoration: none;
+}
+
+.link-card a:hover {
+    text-decoration: underline;
+    color: var(--main-color);
+    font-size: 22px;
+    font-weight: 700;
+    transition: ease .5s;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+    .admin-container {
+        flex-direction: column;
+    }
+
+    .sidebar {
+        width: 100%;
+        padding: 10px;
+    }
+
+    .main-content {
+        padding: 15px;
+        margin-top: 20px;
+    }
+
+    .dashboard-overview {
+        flex-direction: column;
+    }
+
+    .overview-card {
+        width: 100%;
+        margin-bottom: 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    .sidebar h2 {
+        font-size: 20px;
+    }
+
+    .sidebar ul li a {
+        font-size: 16px;
+    }
+
+    .overview-card h3 {
+        font-size: 18px;
+    }
+
+    .overview-card p {
+        font-size: 20px;
+    }
+
+    .quick-links h2 {
+        font-size: 20px;
+    }
+}

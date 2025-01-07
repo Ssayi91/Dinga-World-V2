@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog Management</title>
+    <link rel="stylesheet" href="blog-management.css">
+</head>
+<body>
+    <div class="admin-container">
+        <!-- Sidebar Navigation -->
+        <nav class="sidebar">
+            <h2>Dinga World Dashboard</h2>
+            <ul>
+                <li><a href="admin.html">Dashboard</a></li>
+                <li><a href="manage-cars.html">Manage Cars</a></li>
+                <li><a href="user-management.html">User Management</a></li>
+                <li><a href="blog-management.html" class="active">Blog Management</a></li>
+            </ul>
+        </nav>
+
+        <!-- Main Content Area -->
+        <div class="main-content">
+            <header>
+                <h1>Blog Management</h1>
+            </header>
+
+            <!-- Blog Management Section -->
+            <section class="blog-management">
+                <button class="add-post-btn">Add New Post</button>
+                <table class="posts-table">
+                    <thead>
+                        <tr>
+                            <th>Title</th>
+                            <th>Author</th>
+                            <th>Date</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Blog posts rows go here -->
+                        
+                    </tbody>
+                </table>
+            </section>
+        </div>
+    </div>
+
+    <!-- Modal for Adding/Editing Blog Posts -->
+    <div id="post-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <form class="post-form" enctype="multipart/form-data">
+                <h2>Add/Edit Post</h2>
+                <label for="Thumbnail">Thumbnail Image:</label>
+                <input type="file" id="blog-t" name="thumbnail" accept="image/*">
+                
+                <label for="postTitle">Title:</label>
+                <input type="text" id="postTitle" name="postTitle" required>
+
+                <label for="postContent">Content:</label>
+                <textarea id="postContent" name="postContent" required></textarea>
+
+                <label for="postStatus">Status:</label>
+                <select id="postStatus" name="postStatus" required>
+                    <option value="Published">Published</option>
+                    <option value="Draft">Draft</option>
+                </select>
+
+                <button type="submit" class="save-post-btn">Save Post</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="blog-management.js"></script>
+</body>
+</html>

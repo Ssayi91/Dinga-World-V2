@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Cars - Admin Dashboard</title>
+    <link rel="stylesheet" href="manage-cars.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+</head>
+<body>
+    <div class="admin-container">
+        <!-- Sidebar Navigation -->
+        <nav class="sidebar">
+            <h2>Admin Dashboard</h2>
+            <ul>
+                <li><a href="admin.html">Dashboard</a></li>
+                <li><a href="manage-cars.html" class="active">Manage Cars</a></li>
+                <li><a href="user-management.html">User Management</a></li>
+                <li><a href="blog-management.html">Blog Management</a></li>
+            </ul>
+        </nav>
+
+        <!-- Main Content Area -->
+        <div class="main-content">
+            <header>
+                <h1>Manage Cars</h1>
+                <br>
+                <p>Add, view and manage car listings here.</p>
+                <br>
+                <section class="car-summary">
+                    <h1>Total Cars</h1>
+                    <div id="total-cars">0</div>
+                </section>
+            </header>
+
+            <!-- Toggle Button to Show/Hide Form -->
+            <button id="toggle-form-btn">Add a Car</button>
+            
+            <!-- Form Section (Initially Hidden) -->
+            <section class="form-section" style="display: none;">
+                <form id="car-form" enctype="multipart/form-data">
+                    <label for="brand">Brand:</label>
+                    <input type="text" id="brand" name="brand" required>
+
+                    <label for="model">Model:</label>
+                    <input type="text" id="model" name="model" required>
+
+                    <label for="year">Year:</label>
+                    <input type="number" id="year" name="year" required>
+
+                    <label for="price">Price (Kshs):</label>
+                    <input type="number" id="price" name="price" required>
+
+                    <label for="registration">Registration</label>
+                    <input type="text" name="registration" id="registration" required>
+
+
+                    <label for="drivetrain">Drivetrain:</label>
+                    <select id="drivetrain" name="drivetrain" required>
+                        <option value="AWD">AWD</option>
+                        <option value="4WD">4WD</option>
+                        <option value="FWD">FWD</option>
+                        <option value="RWD">RWD</option>
+                    </select> 
+
+                    <label for="fuelType">Fuel Type:</label>
+                    <select id="fuelType" name="fuelType" required>
+                        <option value="petrol">Petrol</option>
+                        <option value="diesel">Diesel</option>
+                        <option value="electric">Electric</option>
+                    </select>
+
+                    <label for="transmission">Transmission:</label>
+                    <select id="transmission" name="transmission" required>
+                        <option value="automatic">Automatic</option>
+                        <option value="manual">Manual</option>
+                    </select>
+
+                    <label for="mileage">Mileage:</label>
+                    <input type="number" id="mileage" name="mileage" required>
+
+                    <label for="description">Description:</label>
+                    <textarea id="description" name="description" rows="4" required></textarea>
+
+                    <label for="images">Car Images (Upload multiple):</label>
+                    <input type="file" id="images" name="images" accept="image/*" multiple required>
+                    <div id="image-preview"></div>
+
+                    <!-- Hidden field to store the car ID when editing -->
+                    <input type="hidden" id="car-id" name="car-id">
+
+                    <button type="submit" id="submit-btn">Add Car</button>
+                    <button type="button" id="import-btn">Import</button>
+                    <button id="close-form-btn" type="button"><i class="fa-solid fa-xmark"></i></button>
+                </form>
+            </section>
+
+            
+            
+
+            <div class="filter-section">
+                <select id="filter-brand">
+                    <option value="">Select Brand</option>
+                </select>
+                <input type="text" id="search-bar" placeholder="Search by model" />
+                <input type="number" id="filter-year" placeholder="Year" />
+                
+                <!-- Price Range Slider -->
+                <div class="price-filter-section">
+                    <label for="price-range">Price Range</label>
+                    <input type="range" id="price-range" min="0" value="0" step="1000" style="width: 100%;" />
+                    
+                    <div class="price-inputs">
+                        <input type="text" id="min-price" placeholder="Min Price" />
+                        <input type="text" id="max-price" placeholder="Max Price" />
+                    </div>
+                </div>
+                <button id="filter-btn">Filter</button>
+            </div>
+            
+            
+                <!-- Car Container Section -->
+                <section class="car-list">
+                    <h2>Existing Cars</h2>
+                    <div id="car-container" class="car-container">
+                        <!-- Car items will be dynamically added here -->
+                    </div>
+                </section>
+            </div>
+
+
+            <!-- Modal for fullscreen image view -->
+            <div id="image-modal" class="modal">
+                <span class="close" id="close-modal">&times;</span>
+                <div class="modal-content">
+                    <div class="modal-buttons">
+                        <button class="prev-btn">&#9664;</button>
+                        <button class="next-btn">&#9654;</button>
+                    </div>
+                    <img id="modal-image" src="" alt="Car Image">
+                </div>
+            </div>
+        </div>
+
+    <script src="admin-script.js"></script>
+    <!-- <script src="script.js"></script> -->
+</body>
+</html>
