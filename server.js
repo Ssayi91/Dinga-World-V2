@@ -35,26 +35,24 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'admin')));
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
-// MongoDB URI from environment variables
-const mongoURI = process.env.MONGO_URI;
+// MongoDB URI from environment variables or fallback to local
+const mongoURI = process.env.MONGO_URI || 'mongodb://127.0.0.1:27017/carDB';
 
-if (!mongoURI) {
-    console.error('MongoDB URI not defined!');
-    process.exit(1);
+if (!process.env.MONGO_URI) {
+    console.warn('Warning: Using local MongoDB URI (no environment variable defined).');
 }
 
 // MongoDB connection
-mongoose.connect('mongodb://127.0.0.1:27017/carDB', {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-}).then(() => console.log('Connected to MongoDB'))
-  .catch(err => console.error('Error connecting to MongoDB:', err));
-
-// MongoDB connection
-// mongoose.connect(mongoURI)
-//     .then(() => console.log('Connected to MongoDB'))
-//     .catch(err => console.error('Could not connect to MongoDB', err));
-
+mongoose
+    .connect(mongoURI, {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+    })
+    .then(() => console.log('Connected to MongoDB'))
+    .catch((err) => {
+        console.error('Error connecting to MongoDB:', err);
+        process.exit(1); // Exit if connection fails
+    });
 
 // Multer setup for image uploads
 const storage = multer.diskStorage({
