@@ -166,23 +166,25 @@ body {
 /* Individual blog item styling (cards) */
 #public-blog-list {
     display: flex;
-    flex-wrap: wrap;  /* Allow items to wrap to the next line when needed */
-    gap: 20px;  /* Space between the cards */
-    justify-content: flex-start;  /* Align items to the left */
+    flex-wrap: wrap; 
+    gap: 20px;
+    justify-content: flex-start;
+    align-items: stretch; /* Stretch cards to have the same height */
     margin-top: 20px;
-    padding: 0 20px;  /* Optional padding for spacing */
+    padding: 0 20px;
 }
 /* Individual blog item styling (cards) */
 #public-blog-list > div {
     background-color: var(--bg-color);
     border: 1px solid var(--bg-color);
     border-radius: 8px;
-    width: calc(33.333% - 20px); 
+    width: calc(30% - 20px);
     padding: 15px;
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
-    height: auto;
+    height: auto; /* Let content determine minimum height */
+    flex-grow: 1; /* Make cards grow to match the tallest card */
     transition: all 0.3s ease;
 }
 
@@ -193,9 +195,10 @@ body {
 
 /* Thumbnail image styling */
 .thumbnail {
-    max-width: 100%;
-    height: auto;
-    border-radius: 8px;
+    width: 100%; /* Stretch image to card width */
+    height: 300px; /* Fixed height to make images uniform */
+    object-fit: contain; /* Crop image to fit while maintaining aspect ratio */
+    border-radius: 18px; /* Match card border radius */
 }
 
 /* Title and meta info */
@@ -218,7 +221,13 @@ p {
     font-weight: 600;
     margin-bottom: 10px;
     line-height: 1.5;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 4; /* Limit to 4 lines */
+    -webkit-box-orient: vertical;
 }
+
 .full-content{
     display: none;
     font-size: 1em;

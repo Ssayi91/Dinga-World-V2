@@ -11,6 +11,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const importCarList = document.getElementById('import-car-list');  // import.html
 
+
     document.getElementById('menu-toggle').addEventListener('click', function() {
         const navLinks = document.getElementById('nav-links');
         navLinks.classList.toggle('show'); // Toggle the 'show' class
@@ -91,18 +92,29 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
 
-     // car sale form function
-     document.getElementById('toggle-form-btn').addEventListener('click', function () {
-        const formSection = document.querySelector('.form-section');
-        // Toggle the display property of the form section
-        if (formSection.style.display === 'none' || formSection.style.display === '') {
-            formSection.style.display = 'block'; // Show the form
-        } else {
-            formSection.style.display = 'none'; // Hide the form
-        }
-        // scroll to form
-        formSection.scrollIntoView({behavior:"smooth"});
-    });
+// Car sale form toggle function
+document.getElementById('toggle-form-btn').addEventListener('click', function () {
+    const formSection = document.querySelector('.form-section');
+    // Toggle the display property of the form section
+    if (formSection.style.display === 'none' || formSection.style.display === '') {
+        formSection.style.display = 'block'; // Show the form
+    } else {
+        formSection.style.display = 'none'; // Hide the form
+    }
+    // Scroll to form
+    formSection.scrollIntoView({ behavior: "smooth" });
+});
+
+// Get references to the form and close button
+const carForm = document.getElementById('car-form');  // Ensure the form has id="car-form"
+const closeButton = document.getElementById('close-form-btn');  // Ensure the button has id="close-form-btn"
+
+// Function to close the form when the Close button is clicked
+closeButton.addEventListener('click', function() {
+    carForm.style.display = 'none';  // Hide the form
+});
+
+   
 
     
     // Create car item HTML
