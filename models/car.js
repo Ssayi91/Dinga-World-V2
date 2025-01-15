@@ -11,10 +11,12 @@ const carSchema = new Schema({
         type: String, 
         unique: true,
         sparse: true, // Allows null values to bypass the unique constraint
+        default: null,
         validate: {
             validator: function(value) {
                 // Only require registration if the car is not in transit
-                return this.isInTransit || value != null;
+                return this.isInTransit || (value && value.trim() !== '');
+
             },
             message: 'Registration is required for non-imported cars.'
         }
@@ -24,7 +26,7 @@ const carSchema = new Schema({
     transmission: { type: String, required: true },
     mileage: { type: Number, required: true },
     description: { type: String, required: true },
-    images: { type: [String] }, // Array of image paths/URLs
+    images: { type: [String], default:[] }, // Array of image paths/URLs
     isInTransit: { type: Boolean, default: false }, // Indicates if the car is imported and in transit
     isUpdated: { type: Boolean, default: false }
 }, {

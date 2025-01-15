@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const method = carId ? 'PUT' : 'POST'; // Use PUT if editing
     const url = carId ? `/admin/cars/${carId}` : '/admin/cars'; // Dynamic URL
     const importBtn = document.getElementById('import-btn');
-
+    // const car = require('../models/car');
 
     let currentImageIndex = 0;
     let currentImages = [];
@@ -386,10 +386,12 @@ document.getElementById('import-btn').addEventListener('click', async () => {
         if (response.ok) {
             alert('Car imported successfully!');
         } else {
+            const result = await response.json();
             alert('Error: ' + result.error);
         }
     } catch (error) {
         console.error('Error:', error);
+        alert('An unexpected error occurred.');
     }
 });
 
@@ -440,13 +442,23 @@ window.editCar = function(carId) {
             document.getElementById('model').value = car.model;
             document.getElementById('year').value = car.year;
             document.getElementById('price').value = car.price;
-            document.getElementById('registration').value = car.registration;
+            // document.getElementById('registration').value = car.registration;
             document.getElementById('drivetrain').value = car.drivetrain;
             document.getElementById('fuelType').value = car.fuelType;
             document.getElementById('transmission').value = car.transmission;
             document.getElementById('mileage').value = car.mileage;
             document.getElementById('description').value = car.description;
             document.getElementById('car-id').value = car._id;  // Set the car ID for editing mode
+
+
+            // Show registration field only if the car is not imported
+            const registrationField = document.getElementById('registration');
+            if (car.isInTransit) {
+                registrationField.disabled = true; // Disable registration field for imported cars
+            } else {
+                registrationField.disabled = false; // Enable if it's not imported
+                registrationField.value = car.registration;
+            }
 
             // Show existing images with delete option
             const imagePreview = document.getElementById('image-preview');
@@ -551,7 +563,7 @@ document.getElementById('car-form').addEventListener('submit', (event) => {
 
 
 // public car form section // Display these cars with a special marker on the admin side
-car.find({ source: 'public' }).then(carsFromPublic => {
+car.find({ source: 'public' }).then(carsFromPublic => {console.log(carsFromPublic);
 });
 
 const sse = new EventSource('/admin/cars/stream');  // or for the public side

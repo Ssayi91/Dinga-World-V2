@@ -123,13 +123,19 @@ closeButton.addEventListener('click', function() {
         carItem.className = 'car-item';
         carItem.dataset.id = car._id;
 
+        // Create a tag for imported cars
+    const importTag = car.isInTransit
+    ? '<span class="import-tag">Import</span>'
+    : '';
+
         const imagesHtml = car.images?.length ? car.images.map((image, index) => `
             <img src="${image}" alt="${car.brand} ${car.model}" width="150" class="car-image" 
                  data-images='${JSON.stringify(car.images)}' data-index="${index}">
         `).join('') : '';
 
         carItem.innerHTML = `
-            <div class="car-images">${imagesHtml}</div>
+            <div class="car-images">${imagesHtml}
+             ${importTag} <!-- Add the Import tag here --></div>
             <div class="car-summary">
                 <h3>${car.brand} ${car.model}</h3>
                 <p><i class="fa-regular fa-calendar-days"></i>: ${car.year}</p>

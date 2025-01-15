@@ -77,63 +77,108 @@ const upload = multer({
     }
 });
 
-// Unique registration check function
-const isRegistrationUnique = async (registration) => {
-    const car = await CarModel.findOne({ registration });
-    return !car;
-};
+// Ensure that this function is only declared once in your file
+async function isRegistrationUnique(registration, currentId = null) {
+    const existingCar = await CarModel.findOne({ registration });
+    return !existingCar || existingCar._id.toString() === currentId; // Ignore current car's registration if editing
+}
 
-// POST route for adding a new car (admin)
-// admin side form
+// POST route for adding or editing a car (admin)
 app.post('/admin/cars', upload.array('images', 15), async (req, res) => {
     try {
-        const { brand, model, year, price, registration, drivetrain, fuelType, transmission, mileage, description, source } = req.body;
+        const { id, brand, model, year, price, registration, drivetrain, fuelType, transmission, mileage, description, source } = req.body;
 
         if (!brand || !model || !year || !price) {
             return res.status(400).json({ error: 'Brand, model, year, and price are required.' });
         }
 
-        // Check if the car is imported
-        const isImported = source === 'import';
+        const isImported = source === 'import'; // Check if the car is imported
 
-        // Registration is optional for imported cars
-        if (!isImported) {
-            const isUnique = await isRegistrationUnique(registration);
-            if (!isUnique) {
-                return res.status(400).json({ error: 'Registration number must be unique.' });
+        // Initialize images array
+        let images = req.files ? req.files.map(file => `/uploads/${file.filename}`) : [];
+
+        if (id) {
+            // Edit existing car
+            const carToEdit = await CarModel.findById(id);
+            if (!carToEdit) {
+                return res.status(404).json({ error: 'Car not found.' });
             }
+
+            // If no new images, keep existing ones
+            if (images.length === 0) {
+                images = carToEdit.images;
+            }
+
+            // Validate registration only for cars that are not imported or in transit
+            if (!isImported && !carToEdit.isInTransit) {
+                const isUnique = await isRegistrationUnique(registration, id); // Pass id to ignore the current car's registration
+                if (!isUnique) {
+                    return res.status(400).json({ error: 'Registration number must be unique.' });
+                }
+            }
+
+            // Update car details
+            carToEdit.brand = brand;
+            carToEdit.model = model;
+            carToEdit.year = year;
+            carToEdit.price = price;
+
+             // Skip updating registration if the car is imported
+             if (!isImported && !carToEdit.isInTransit) {
+                carToEdit.registration = registration;
+            }
+
+            carToEdit.drivetrain = drivetrain;
+            carToEdit.fuelType = fuelType;
+            carToEdit.transmission = transmission;
+            carToEdit.mileage = mileage;
+            carToEdit.description = description;
+            carToEdit.images = images;
+
+            const updatedCar = await carToEdit.save();
+
+            // Emit real-time event for updates
+            carEventEmitter.emit('carUpdated', updatedCar);
+
+            return res.status(200).json({ message: 'Car updated successfully', car: updatedCar });
+        } else {
+            // Add a new car
+            if (!isImported) {
+                const isUnique = await isRegistrationUnique(registration);
+                if (!isUnique) {
+                    return res.status(400).json({ error: 'Registration number must be unique.' });
+                }
+            }
+
+            const newCar = new CarModel({
+                brand,
+                model,
+                year,
+                price,
+                registration: isImported ? null : registration, // Set registration to null if imported
+                drivetrain,
+                fuelType,
+                transmission,
+                mileage,
+                description,
+                images,
+                isInTransit: isImported, // Mark as imported if source is "import"
+            });
+
+            const car = await newCar.save();
+
+            // Emit real-time event for new car
+            carEventEmitter.emit('carAdded', car);
+
+            return res.status(201).json({ message: 'Car added successfully', car });
         }
-
-        // Process uploaded images
-        const images = req.files ? req.files.map(file => `/uploads/${file.filename}`) : [];
-
-        // Save the car
-        const newCar = new CarModel({
-            brand,
-            model,
-            year,
-            price,
-            registration: isImported ? null : registration, // Null for imported cars
-            drivetrain,
-            fuelType,
-            transmission,
-            mileage,
-            description,
-            images,
-            isInTransit: isImported // Mark as imported if source is "import"
-        });
-
-        const car = await newCar.save();
-
-        // Emit the event for real-time updates
-        carEventEmitter.emit('carAdded', car);
-
-        res.status(201).json(car);
     } catch (err) {
         console.error(err);
-        res.status(400).json({ error: 'Failed to add car', details: err.message });
+        res.status(400).json({ error: 'Failed to save car', details: err.message });
     }
 });
+
+
 
 
 // POST route to add a car from the public side 
@@ -353,17 +398,17 @@ app.delete('/admin/cars/:id', async (req, res) => {
     }
 });
 
-// Import car route - allowing submission without registration (single route version)
+// Import car route - allowing submission without registration
 app.post('/admin/cars/import-cars', upload.array('images'), async (req, res) => {
     const { brand, model, year, price, registration, drivetrain, fuelType, transmission, mileage, description, source } = req.body;
     const images = req.files.map(file => file.path); // Store image paths
 
-    const car = new CarModel({
+    // Construct car data object
+    const carData = {
         brand,
         model,
         year,
         price,
-        registration, // No registration required for imports
         drivetrain,
         fuelType,
         transmission,
@@ -371,17 +416,31 @@ app.post('/admin/cars/import-cars', upload.array('images'), async (req, res) => 
         description,
         images,
         isInTransit: true, // Mark as imported
-        isUpdated: false
-    });
+        isUpdated: false,
+    };
+
+    // Include registration only if it’s provided
+    if (registration) {
+        carData.registration = registration.trim();
+    }
+
+    const car = new CarModel(carData);
 
     try {
         await car.save();
-        res.status(201).json(car);
+        res.status(200).json({ message: "Car imported successfully" });
     } catch (error) {
         console.error('Error saving car:', error);
-        res.status(500).json({ message: 'Error saving car. Please try again.' });
+        
+        // Handle unique constraint error
+        if (error.code === 11000) {
+            res.status(400).json({ message: 'Duplicate registration detected. Each car must have a unique registration.' });
+        } else {
+            res.status(500).json({ message: 'Error saving car. Please try again.' });
+        }
     }
 });
+
 
 
 // GET route to fetch all cars (public side)
