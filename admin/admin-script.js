@@ -25,6 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let removedImages = [];  // Array to store removed images
 
 
+
     // dashoard overview
     async function fetchDashboardCounts() {
         try {
@@ -375,7 +376,7 @@ document.getElementById('car-form').addEventListener('submit', async (e) => {
 document.getElementById('import-btn').addEventListener('click', async () => {
     const form = document.getElementById('car-form');
     const formData = new FormData(form);
-    formData.append('source', 'import'); // Mark as imported
+    formData.append('source', 'import'); // Mark the car as imported
 
     try {
         const response = await fetch('/admin/cars/import-cars', {
@@ -383,17 +384,59 @@ document.getElementById('import-btn').addEventListener('click', async () => {
             body: formData
         });
         const result = await response.json();
+
         if (response.ok) {
+            // Show success message
             alert('Car imported successfully!');
+            
+            // Reset the form after successful import
+            form.reset();
+
+            // Clear any image preview (optional)
+            const imagePreview = document.getElementById('image-preview');
+            if (imagePreview) {
+                imagePreview.innerHTML = ''; // Clear image preview
+            }
+
+            // Close the form/modal (you can modify this based on your modal logic)
+            closeForm();
+
+            // Optionally trigger real-time updates for the admin page (fetch latest imported cars)
+            updateImportedCarList(); // Function to fetch and update the list of imported cars
         } else {
-            const result = await response.json();
-            alert('Error: ' + result.error);
+            // Display error message if something went wrong
+            alert('Error: ' + (result.error || 'Something went wrong.'));
         }
     } catch (error) {
         console.error('Error:', error);
         alert('An unexpected error occurred.');
     }
 });
+
+// Function to close the form/modal (adjust it based on your implementation)
+function closeForm() {
+    const modal = document.getElementById('car-form-container'); // Modify based on your form's wrapper ID or class
+    if (modal) {
+        modal.style.display = 'none'; // Hide the form/modal
+    }
+}
+
+// Optional: Update the imported cars list on the admin page
+function updateImportedCarList() {
+    // Call the appropriate function to fetch and update the car list (you might already have this logic)
+    // Example: you might have a function to refresh the list of imported cars
+    fetch('/admin/cars/get-imported') // Adjust the endpoint based on your actual route for fetching imported cars
+        .then(response => response.json())
+        .then(data => {
+            // Code to update the car list on the page, based on the fetched data
+            // For example, you might update a table or list of imported cars
+            console.log(data); // Handle the imported cars data
+        })
+        .catch(error => {
+            console.error('Error fetching imported cars:', error);
+        });
+}
+
 
 
 // Set up EventSource for real-time updates

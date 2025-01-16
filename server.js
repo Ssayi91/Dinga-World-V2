@@ -13,20 +13,27 @@ const jwt = require("jsonwebtoken");
 const cookieParser = require("cookie-parser");
 const EventEmitter = require('events');
 const { checkAccess } = require("./middleware/roles");
-const car = require('./models/car');
+const { v4: uuidv4 } = require('uuid'); // UUID for uniqueness
+const fs = require('fs'); // File system to store the last used registration
+
+// Counter file path to track the last registration number used
+const counterFilePath = './counter.json';
+
+// Initialize Express app
 const app = express();
+
+
+
 const PORT = process.env.PORT || 3000;
 const jwtSecret = process.env.JWT_SECRET || "default_secret_key";
 const carEventEmitter = new EventEmitter();
 
 const saltRounds = 10;
 
-
+// Middleware setup
 app.use(cors());
 app.use(express.json());
-app.use(cookieParser()); // Middleware to parse cookies
-
-// Middleware for parsing body and JSON
+app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
@@ -279,9 +286,6 @@ app.get('/admin/cars/:id', async (req, res) => {
     }
 });
 
-
-
-
 // SSE endpoint for real-time updates
 app.get('/events', (req, res) => {
     res.setHeader('Content-Type', 'text/event-stream');
@@ -313,23 +317,7 @@ app.get('/events', (req, res) => {
         res.end();
     });
 });
-app.get('/events', (req, res) => {
-    res.setHeader('Content-Type', 'text/event-stream');
-    res.setHeader('Cache-Control', 'no-cache');
-    res.setHeader('Connection', 'keep-alive');
 
-    const listener = (car) => {
-        if (car.isInTransit) {
-            res.write(`data: ${JSON.stringify(car)}\n\n`);
-        }
-    };
-
-    carEventEmitter.on('carAdded', listener);
-
-    req.on('close', () => {
-        carEventEmitter.off('carAdded', listener);
-    });
-});
 
 
 // PUT route to update a car by ID
@@ -398,12 +386,15 @@ app.delete('/admin/cars/:id', async (req, res) => {
     }
 });
 
+
 // Import car route - allowing submission without registration
 app.post('/admin/cars/import-cars', upload.array('images'), async (req, res) => {
-    const { brand, model, year, price, registration, drivetrain, fuelType, transmission, mileage, description, source } = req.body;
+    const { brand, model, year, price, drivetrain, fuelType, transmission, mileage, description, source } = req.body;
     const images = req.files.map(file => file.path); // Store image paths
 
-    // Construct car data object
+    // Generate unique registration number and UUID
+    const { registration: generatedRegistration, uuid: uniqueImportId } = await generateImportCode();
+
     const carData = {
         brand,
         model,
@@ -415,14 +406,11 @@ app.post('/admin/cars/import-cars', upload.array('images'), async (req, res) => 
         mileage,
         description,
         images,
+        registration: generatedRegistration,  // Use the generated registration code
+        uuid: uniqueImportId,  // Use UUID for internal reference
         isInTransit: true, // Mark as imported
         isUpdated: false,
     };
-
-    // Include registration only if it’s provided
-    if (registration) {
-        carData.registration = registration.trim();
-    }
 
     const car = new CarModel(carData);
 
@@ -432,17 +420,41 @@ app.post('/admin/cars/import-cars', upload.array('images'), async (req, res) => 
     } catch (error) {
         console.error('Error saving car:', error);
         
-        // Handle unique constraint error
         if (error.code === 11000) {
-            res.status(400).json({ message: 'Duplicate registration detected. Each car must have a unique registration.' });
+            res.status(400).json({ message: 'Duplicate registration detected.' });
         } else {
             res.status(500).json({ message: 'Error saving car. Please try again.' });
         }
     }
 });
 
+// Function to generate a sequential registration number
+async function generateRegistrationNumber() {
+    let counter = 0;
 
+    // Read the counter from the file or initialize to 1000000
+    if (fs.existsSync(counterFilePath)) {
+        const data = fs.readFileSync(counterFilePath);
+        const counterData = JSON.parse(data);
+        counter = counterData.lastUsed || 1000000; // Start at 1000000 if no counter exists
+    }
 
+    // Increment the counter for the new registration number
+    counter++;
+
+    // Save the updated counter back to the file
+    fs.writeFileSync(counterFilePath, JSON.stringify({ lastUsed: counter }));
+
+    // Return the registration number as a string (7 digits)
+    return `IMPORT ${counter.toString().padStart(3, '0')}`;  // Adjusted to show IMPORT 001, IMPORT 002, etc.
+}
+
+// Function to generate both the sequential registration number and the UUID
+async function generateImportCode() {
+    const registration = await generateRegistrationNumber(); // Sequential registration number
+    const uuid = uuidv4(); // UUID for internal reference
+    return { registration, uuid };
+}
 // GET route to fetch all cars (public side)
 app.get('/public/cars', async (req, res) => {
     try {
@@ -855,9 +867,6 @@ app.get("/admin/user-management.html", checkAccess("super_admin"), (req, res) =>
   });
 
  
-
-  
-  
   
 
 app.listen(PORT, () => {

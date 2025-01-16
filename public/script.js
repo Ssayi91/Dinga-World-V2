@@ -310,6 +310,26 @@ document.getElementById('images').addEventListener('change', function(event) {
     }
 });
 
+// Initialize the SSE connection
+const eventSource = new EventSource('/events');
+
+// Listen for carAdded events
+eventSource.addEventListener('carAdded', (event) => {
+    const car = JSON.parse(event.data);
+    addCarToDOM(car); // Function to add the car to the DOM
+});
+
+// Listen for carUpdated events
+eventSource.addEventListener('carUpdated', (event) => {
+    const car = JSON.parse(event.data);
+    updateCarInDOM(car); // Function to update the car in the DOM
+});
+
+// Listen for carDeleted events
+eventSource.addEventListener('carDeleted', (event) => {
+    const { _id } = JSON.parse(event.data);
+    removeCarFromDOM(_id); // Function to remove the car from the DOM
+});
 
 const sse = new EventSource('/admin/cars/stream');  // or for the public side
 sse.onmessage = function(event) {
