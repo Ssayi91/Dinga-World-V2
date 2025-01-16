@@ -301,6 +301,16 @@ app.get('/admin/cars/:id', async (req, res) => {
         res.status(500).json({ error: 'Failed to fetch car by ID' });
     }
 });
+// Route to get all cars for the admin page
+app.get('/admin/cars', async (req, res) => {
+    try {
+        const cars = await car.find();
+        res.json(cars); // Send the cars as a JSON response
+    } catch (error) {
+        console.error('Error fetching cars:', error);
+        res.status(500).json({ message: 'Error fetching cars' });
+    }
+});
 
 // SSE endpoint for real-time updates
 app.get('/events', (req, res) => {
@@ -888,4 +898,3 @@ app.get("/admin/user-management.html", checkAccess("super_admin"), (req, res) =>
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
 });
-1

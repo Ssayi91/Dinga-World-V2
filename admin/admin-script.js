@@ -376,7 +376,7 @@ document.getElementById('car-form').addEventListener('submit', async (e) => {
 document.getElementById('import-btn').addEventListener('click', async () => {
     const form = document.getElementById('car-form');
     const formData = new FormData(form);
-    formData.append('source', 'import'); // Mark the car as imported
+    formData.append('source', 'import'); // Mark as imported
 
     try {
         const response = await fetch('/admin/cars/import-cars', {
@@ -391,12 +391,6 @@ document.getElementById('import-btn').addEventListener('click', async () => {
             
             // Reset the form after successful import
             form.reset();
-
-            // Clear any image preview (optional)
-            const imagePreview = document.getElementById('image-preview');
-            if (imagePreview) {
-                imagePreview.innerHTML = ''; // Clear image preview
-            }
 
             // Close the form/modal (you can modify this based on your modal logic)
             closeForm();
@@ -413,8 +407,9 @@ document.getElementById('import-btn').addEventListener('click', async () => {
     }
 });
 
-// Function to close the form/modal (adjust it based on your implementation)
+// Function to close the form/modal (you can adjust it based on your implementation)
 function closeForm() {
+    // Assuming you have a modal or form wrapper with a specific class or ID
     const modal = document.getElementById('car-form-container'); // Modify based on your form's wrapper ID or class
     if (modal) {
         modal.style.display = 'none'; // Hide the form/modal
@@ -436,6 +431,7 @@ function updateImportedCarList() {
             console.error('Error fetching imported cars:', error);
         });
 }
+
 
 
 
