@@ -240,6 +240,11 @@ body {
     text-align: center;
 }
 
+#search-form{
+    display: flex;
+    flex-direction: column;
+}
+
 form {
     display: flex;
     flex-direction: column;

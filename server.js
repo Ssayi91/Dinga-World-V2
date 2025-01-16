@@ -15,6 +15,7 @@ const EventEmitter = require('events');
 const { checkAccess } = require("./middleware/roles");
 const { v4: uuidv4 } = require('uuid'); // UUID for uniqueness
 const fs = require('fs'); // File system to store the last used registration
+const car = require('./models/car');
 
 // Counter file path to track the last registration number used
 const counterFilePath = './counter.json';
@@ -235,24 +236,39 @@ app.post('/public/cars/add', upload.array('images', 15), async (req, res) => {
 
 
 // GET route to fetch all cars with sorting and filtering
-app.get('/admin/cars', async (req, res) => {
+app.get('/search', async (req, res) => {
+    const { brand, model, year, priceRange, isInTransit } = req.query;
+
+    // Build query object
+    const query = {};
+
+    // Make each field search case-insensitive
+    if (brand) {
+        query.brand = { $regex: new RegExp(brand, 'i') }; // 'i' for case-insensitivity
+    }
+    if (model) {
+        query.model = { $regex: new RegExp(model, 'i') }; // 'i' for case-insensitivity
+    }
+    if (year) {
+        query.year = year;
+    }
+    if (priceRange) {
+        const [minPrice, maxPrice] = priceRange.split('-').map(Number);
+        query.price = { $gte: minPrice, $lte: maxPrice };
+    }
+    if (isInTransit !== undefined) {
+        query.isInTransit = isInTransit === 'true'; // boolean check
+    }
+
     try {
-        const { brand, model, year, price, sortBy, limit = 100, skip = 0 } = req.query;
-        const query = {};
-        if (brand) query.brand = brand;
-        if (model) query.model = new RegExp(model, 'i');
-        if (year) query.year = year;
-        if (price) {
-            const priceRange = price.split('-');
-            query.price = { $gte: Number(priceRange[0]), $lte: Number(priceRange[1]) };
-        }
-        const sortOptions = sortBy ? { [sortBy]: 1 } : {};
-        const cars = await CarModel.find(query).sort(sortOptions).skip(parseInt(skip)).limit(parseInt(limit));
-        res.json(cars);
-    } catch (err) {
-        res.status(500).send(err);
+        const cars = await car.find(query);
+        res.json(cars); // Send the found cars as a response
+    } catch (error) {
+        console.error('Error fetching cars:', error);
+        res.status(500).json({ message: 'Error fetching search results' });
     }
 });
+
 
 // Route for fetching imported cars
 app.get('/admin/cars/imported', async (req, res) => {

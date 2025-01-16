@@ -76,15 +76,15 @@
     <section class="banner">
         <div class="search-filter">
             <h2>Find Your Car</h2>
-            <form>
-                <div class="input-row">
-                    <input type="text" placeholder="Car Name">
-                    <input type="text" placeholder="Car Model">
-                </div>
-                <div class="input-row">
-                    <input type="text" placeholder="Year">
-                    <input type="text" placeholder="Price Range">
-                </div>
+            <form id="search-form">
+                <input type="text" id="brand" placeholder="Brand" />
+                <input type="text" id="model" placeholder="Model" />
+                <input type="number" id="year" placeholder="Year" />
+                <input type="text" id="priceRange" placeholder="Price Range (e.g., 10000-20000)" />
+                <label>
+                    <input type="checkbox" id="isInTransit" />
+                    Is in Transit
+                </label>
                 <button type="submit">Search</button>
             </form>
         </div>
@@ -93,7 +93,7 @@
             <p class="tagline">Drive Your Dream <br> <span>Car</span></p>
         </div>
     </section>
-   
+    
      <!-- Second Banner Section -->
      <section class="banner">
         <div class="search-filter">

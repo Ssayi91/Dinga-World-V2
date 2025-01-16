@@ -337,6 +337,72 @@ sse.onmessage = function(event) {
     fetchAndDisplayCars(updatedCars);  // Function to update the car list dynamically
 };
 
+// search filter
+document.getElementById('search-form').addEventListener('submit', async function (e) {
+    e.preventDefault();
+
+    // Get search form values
+    const brand = document.getElementById('brand').value;
+    const model = document.getElementById('model').value;
+    const year = document.getElementById('year').value;
+    const priceRange = document.getElementById('priceRange').value;
+    const isInTransit = document.getElementById('isInTransit').checked;
+
+    // Build query string
+    const queryString = new URLSearchParams({
+        brand,
+        model,
+        year,
+        priceRange,
+        isInTransit: isInTransit ? 'true' : 'false'
+    }).toString();
+
+    try {
+        // Fetch search results
+        const response = await fetch(`/search?${queryString}`);
+        if (!response.ok) {
+            throw new Error('Failed to fetch search results.');
+        }
+
+        const cars = await response.json();
+
+        // Update the car list dynamically
+        const carListContainer = document.getElementById('car-list');
+        carListContainer.innerHTML = ''; // Clear current listings
+
+        if (cars.length === 0) {
+            carListContainer.innerHTML = '<p>No cars found for the given search criteria.</p>';
+            return;
+        }
+
+        // Render each car (existing styling applied here)
+        cars.forEach(car => {
+            const carItem = document.createElement('div');
+            carItem.classList.add('car-item');
+            carItem.innerHTML = `
+                <div class="car-card">
+                    <img src="${car.images[0] || 'default-image.jpg'}" alt="${car.brand} ${car.model}" class="car-image">
+                    <div class="car-details">
+                        <h3 class="car-title">${car.brand} ${car.model}</h3>
+                        <p class="car-year">Year: ${car.year}</p>
+                        <p class="car-price">Price: $${car.price}</p>
+                        <p class="car-mileage">Mileage: ${car.mileage} km</p>
+                        <p class="car-fuel-type">Fuel Type: ${car.fuelType}</p>
+                        <p class="car-transmission">Transmission: ${car.transmission}</p>
+                        <p class="car-description">${car.description}</p>
+                    </div>
+                </div>
+            `;
+            carListContainer.appendChild(carItem);
+        });
+    } catch (error) {
+        console.error('Error fetching search results:', error);
+        alert('An error occurred while fetching search results. Please try again.');
+    }
+});
+
+
+
 // blog
 document.addEventListener('DOMContentLoaded', () => {
     fetchBlogs();
