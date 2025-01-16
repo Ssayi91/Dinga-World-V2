@@ -337,6 +337,72 @@ sse.onmessage = function(event) {
     fetchAndDisplayCars(updatedCars);  // Function to update the car list dynamically
 };
 
+// Create car item HTML
+function createCarItem(car) {
+    const carItem = document.createElement('div');
+    carItem.className = 'car-item';
+    carItem.dataset.id = car._id;
+
+    // Create a tag for imported cars
+    const importTag = car.isInTransit
+        ? '<span class="import-tag">Import</span>'
+        : '';
+
+    const imagesHtml = car.images?.length
+        ? car.images.map((image, index) => `
+            <img src="${image}" alt="${car.brand} ${car.model}" width="150" class="car-image" 
+                 data-images='${JSON.stringify(car.images)}' data-index="${index}">
+        `).join('')
+        : '';
+
+    carItem.innerHTML = `
+        <div class="car-images">${imagesHtml}
+         ${importTag} <!-- Add the Import tag here --></div>
+        <div class="car-summary">
+            <h3>${car.brand} ${car.model}</h3>
+            <p><i class="fa-regular fa-calendar-days"></i>: ${car.year}</p>
+            <p><i class="fa-solid fa-money-check-dollar"></i>: Kshs ${car.price.toLocaleString() || "N/A"}</p>
+            <p><i class="fa-solid fa-hashtag"></i>: ${car.registration}</p>
+            <p><i class="fa-solid fa-gas-pump"></i>: ${car.fuelType || 'N/A'}</p>
+            <p><i class="fa-solid fa-gears"></i>: ${car.transmission || 'N/A'}</p>
+            <p><i class="fa-solid fa-car-side"></i>: ${car.drivetrain || 'N/A'}</p>
+            <p><i class="fa-solid fa-gauge"></i>: ${car.mileage.toLocaleString() || 'N/A'} Kms</p>
+            <button class="load-more-btn">Load More</button>
+            <div class="more-info" style="display: none;">
+                <p><i class="fa-solid fa-circle-info"></i>: ${car.description || 'No description available'}</p>
+            </div>
+        </div>
+    `;
+
+    attachLoadMoreFunctionality(carItem);
+    attachImageModalEvents(carItem);
+
+    return carItem;
+}
+
+// Attach "Load More" functionality
+function attachLoadMoreFunctionality(carItem) {
+    const loadMoreBtn = carItem.querySelector('.load-more-btn');
+    const moreInfoDiv = carItem.querySelector('.more-info');
+
+    loadMoreBtn.addEventListener('click', () => {
+        const isHidden = moreInfoDiv.style.display === 'none';
+        moreInfoDiv.style.display = isHidden ? 'block' : 'none';
+        loadMoreBtn.textContent = isHidden ? 'Show Less' : 'Load More';
+    });
+}
+
+// Attach image modal events
+function attachImageModalEvents(carItem) {
+    const images = carItem.querySelectorAll('.car-image');
+    images.forEach(image => {
+        image.addEventListener('click', () => {
+            // Add your modal display logic here
+        });
+    });
+}
+
+
 // search filter
 document.getElementById('search-form').addEventListener('submit', async function (e) {
     e.preventDefault();
@@ -375,31 +441,18 @@ document.getElementById('search-form').addEventListener('submit', async function
             return;
         }
 
-        // Render each car (existing styling applied here)
+        // Render each car using the consistent createCarItem function
         cars.forEach(car => {
-            const carItem = document.createElement('div');
-            carItem.classList.add('car-item');
-            carItem.innerHTML = `
-                <div class="car-card">
-                    <img src="${car.images[0] || 'default-image.jpg'}" alt="${car.brand} ${car.model}" class="car-image">
-                    <div class="car-details">
-                        <h3 class="car-title">${car.brand} ${car.model}</h3>
-                        <p class="car-year">Year: ${car.year}</p>
-                        <p class="car-price">Price: $${car.price}</p>
-                        <p class="car-mileage">Mileage: ${car.mileage} km</p>
-                        <p class="car-fuel-type">Fuel Type: ${car.fuelType}</p>
-                        <p class="car-transmission">Transmission: ${car.transmission}</p>
-                        <p class="car-description">${car.description}</p>
-                    </div>
-                </div>
-            `;
+            const carItem = createCarItem(car); // Use the existing function for consistency
             carListContainer.appendChild(carItem);
+            attachImageModalEvents(carItem);
         });
     } catch (error) {
         console.error('Error fetching search results:', error);
         alert('An error occurred while fetching search results. Please try again.');
     }
 });
+
 
 
 
