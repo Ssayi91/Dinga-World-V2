@@ -286,6 +286,10 @@ button:hover {
     font-weight: 700;
     transition: ease .5s;
 }
+#clear-filter{
+    margin-top: 10px;
+}
+
 /* form selection */
 #toggle-form-btn {
     padding: 8px;

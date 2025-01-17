@@ -438,18 +438,59 @@ document.getElementById('search-form').addEventListener('submit', async function
 
         if (cars.length === 0) {
             carListContainer.innerHTML = '<p>No cars found for the given search criteria.</p>';
+        } else {
+            cars.forEach(car => {
+                const carItem = createCarItem(car); // Use your existing function
+                carListContainer.appendChild(carItem);
+                attachImageModalEvents(carItem); // Add image modal functionality
+            });
+        }
+
+        // Scroll to the search results container
+        carListContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+    } catch (error) {
+        console.error('Error fetching search results:', error);
+        alert('An error occurred while fetching search results. Please try again.');
+    }
+});
+
+// clear search results
+document.getElementById('clear-filter').addEventListener('click', async function () {
+    // Reset form fields
+    document.getElementById('search-form').reset();
+
+    try {
+        // Fetch default car listings (all cars without filters)
+        const response = await fetch('/search');
+        if (!response.ok) {
+            throw new Error('Failed to fetch default car listings.');
+        }
+
+        const cars = await response.json();
+
+        // Update the car list dynamically
+        const carListContainer = document.getElementById('car-list');
+        carListContainer.innerHTML = ''; // Clear current listings
+
+        if (cars.length === 0) {
+            carListContainer.innerHTML = '<p>No cars available.</p>';
             return;
         }
 
         // Render each car using the consistent createCarItem function
         cars.forEach(car => {
-            const carItem = createCarItem(car); // Use the existing function for consistency
+            const carItem = createCarItem(car); // Use your existing function
             carListContainer.appendChild(carItem);
-            attachImageModalEvents(carItem);
+            attachImageModalEvents(carItem); // Add image modal functionality
         });
+
+        
+        // Scroll to the search results container
+        carListContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
     } catch (error) {
-        console.error('Error fetching search results:', error);
-        alert('An error occurred while fetching search results. Please try again.');
+        console.error('Error fetching default car listings:', error);
+        alert('An error occurred while fetching default car listings. Please try again.');
     }
 });
 
