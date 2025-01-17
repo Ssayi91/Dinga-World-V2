@@ -259,7 +259,7 @@ form {
 }
 
 .input-row input {
-    width: 48%;
+    width: 28%;
     padding: 10px;
     font-size: 14px;
     border: 1px solid #ccc; /* Light border for inputs */
@@ -267,6 +267,7 @@ form {
     background-color: #fff;
     color: #000;
 }
+
 
 button {
     padding: 10px 20px;
@@ -289,7 +290,12 @@ button:hover {
 #clear-filter{
     margin-top: 10px;
 }
-
+.input-row p{
+    font-size: 18px;
+    font-weight: 700;
+    text-align: center;
+    margin-right: 50px;
+}
 /* form selection */
 #toggle-form-btn {
     padding: 8px;

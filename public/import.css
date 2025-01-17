@@ -146,7 +146,7 @@ body {
 .search-filter {
     flex: 1;
     margin-right: 20px;
-    border-radius: 8px;
+    border-radius: 5px;
     padding: 20px;
     box-shadow: 0 4px 8px rgba(34, 30, 30, 0.555);
 }
@@ -165,8 +165,12 @@ body {
     font-weight: 800;
     text-align: center; 
 }
-
-
+#search-form{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    padding: 5px;
+}
 form {
     display: flex;
     flex-direction: column;
@@ -187,6 +191,19 @@ form {
     background-color: #fff;
     color: #000;
 }
+.input-row p{
+    font-size: 18px;
+    font-weight: 700;
+    text-align: center;
+    margin-right: 50px;
+    padding-top: 20px;
+    color: var(--main-color);
+}
+#isInTransit {
+    width: 25px;  /* Adjust width */
+    margin-left: 50px;
+
+  }
 
 button {
     padding: 10px 20px;
@@ -206,6 +223,11 @@ button:hover {
     font-weight: 700;
     transition: ease .5s;
 }
+#clear-filter{
+    margin-top: 10px;
+}
+
+
 
 /* Car Image Section */
 .car-image {

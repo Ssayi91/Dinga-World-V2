@@ -133,3 +133,151 @@ document.getElementById('import-car-list').addEventListener('click', (event) => 
         openModal(clickedImage.src, allImages); // Open modal for the clicked image
     }
 });
+
+
+// Handle search functionality
+document.addEventListener('DOMContentLoaded', () => {
+    const searchForm = document.getElementById('search-form');
+    const importCarList = document.getElementById('import-car-list'); // Container for the cars
+    const clearFilterButton = document.getElementById('clear-filter');
+
+    // Function to fetch and display all imported cars
+    async function fetchAllImportedCars() {
+        try {
+            const response = await fetch('/search?type=imported'); // Fetch all imported cars
+            if (!response.ok) {
+                throw new Error('Failed to fetch imported cars.');
+            }
+
+            const cars = await response.json();
+            importCarList.innerHTML = ''; // Clear the container
+
+            if (cars.length === 0) {
+                importCarList.innerHTML = '<p>No imported cars available at the moment.</p>';
+                return;
+            }
+
+            cars.forEach(car => {
+                const carItem = createCarItem(car);
+                importCarList.appendChild(carItem);
+            });
+        } catch (error) {
+            console.error('Error fetching imported cars:', error);
+            importCarList.innerHTML = '<p>An error occurred while loading imported cars. Please try again later.</p>';
+        }
+    }
+
+    // Event listener for search form submission
+    searchForm.addEventListener('submit', async function (e) {
+        e.preventDefault();
+
+        // Get search form values
+        const brand = document.getElementById('brand').value;
+        const model = document.getElementById('model').value;
+        const year = document.getElementById('year').value;
+        const priceRange = document.getElementById('priceRange').value;
+        const isInTransit = document.getElementById('isInTransit').checked;
+
+        // Build query string
+        const queryString = new URLSearchParams({
+            brand,
+            model,
+            year,
+            priceRange,
+            isInTransit: isInTransit ? 'true' : 'false',
+            type: 'imported' // Ensure only imported cars are fetched
+        }).toString();
+
+        try {
+            // Fetch search results
+            const response = await fetch(`/search?${queryString}`);
+            if (!response.ok) {
+                throw new Error('Failed to fetch search results.');
+            }
+
+            const cars = await response.json();
+
+            // Clear current listings
+            importCarList.innerHTML = '';
+
+            if (cars.length === 0) {
+                importCarList.innerHTML = '<p>No imported cars found for the given search criteria.</p>';
+                return;
+            }
+
+            // Populate search results dynamically
+            cars.forEach(car => {
+                const carItem = createCarItem(car);
+                importCarList.appendChild(carItem);
+            });
+
+            // Scroll to results
+            importCarList.scrollIntoView({ behavior: 'smooth' });
+        } catch (error) {
+            console.error('Error fetching search results:', error);
+            alert('An error occurred while fetching search results. Please try again.');
+        }
+    });
+
+    // Event listener for clear filter button
+    clearFilterButton.addEventListener('click', () => {
+        searchForm.reset(); // Reset the search form
+        fetchImportedCars(); // Reload all imported cars
+    });
+
+    // Function to create a car item
+    function createCarItem(car) {
+        const carItem = document.createElement('div');
+        carItem.classList.add('car-item');
+
+        // Create car images
+        const carImages = document.createElement('div');
+        carImages.classList.add('car-images');
+        car.images.forEach(imageUrl => {
+            const img = document.createElement('img');
+            img.src = imageUrl;
+            img.alt = car.model;
+            carImages.appendChild(img);
+        });
+
+        // Create car summary
+        const carSummary = document.createElement('div');
+        carSummary.classList.add('car-summary');
+
+        carSummary.innerHTML = `
+            <h3>${car.brand} ${car.model}</h3>
+            <p><i class="fa-regular fa-calendar-days"></i>: ${car.year}</p>
+            <p><i class="fa-solid fa-money-check-dollar"></i>: Kshs ${car.price}</p>
+            <p><i class="fa-solid fa-hashtag"></i>: ${car.registration || 'Not Registered'}</p>
+            <p><i class="fa-solid fa-gas-pump"></i>: ${car.fuelType}</p>
+            <p><i class="fa-solid fa-gears"></i>: ${car.transmission}</p>
+            <p><i class="fa-solid fa-car-side"></i>: ${car.drivetrain}</p>
+            <p><i class="fa-solid fa-gauge"></i>: ${car.mileage} Kms</p>
+            <button class="load-more-btn">Load More</button>
+        `;
+
+        // Add hidden description
+        const moreInfo = document.createElement('div');
+        moreInfo.classList.add('more-info');
+        moreInfo.style.display = 'none';
+        moreInfo.innerHTML = `
+            <p><i class="fa-solid fa-circle-info"></i>: ${car.description}</p>
+        `;
+        carSummary.appendChild(moreInfo);
+
+        // Attach event listener to "Load More" button
+        const loadMoreBtn = carSummary.querySelector('.load-more-btn');
+        loadMoreBtn.addEventListener('click', () => {
+            moreInfo.style.display = moreInfo.style.display === 'none' ? 'block' : 'none';
+        });
+
+        // Append images and summary to the car item
+        carItem.appendChild(carImages);
+        carItem.appendChild(carSummary);
+
+        return carItem;
+    }
+
+    // Initial load of all imported cars
+    fetchImportedCars();
+});
