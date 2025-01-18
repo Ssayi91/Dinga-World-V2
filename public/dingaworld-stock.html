@@ -76,16 +76,26 @@
     <section class="banner">
         <div class="search-filter">
             <h2>Find Your Car</h2>
-            <form>
+            <form id="search-form">
                 <div class="input-row">
-                    <input type="text" placeholder="Car Name">
-                    <input type="text" placeholder="Car Model">
+                <input type="text" id="brand" placeholder="Brand" />
                 </div>
                 <div class="input-row">
-                    <input type="text" placeholder="Year">
-                    <input type="text" placeholder="Price Range">
+                <input type="text" id="model" placeholder="Model" />
                 </div>
+                <div class="input-row">
+                <input type="number" id="year" placeholder="Year" />
+                </div>
+                <div class="input-row">
+                <input type="text" id="priceRange" placeholder="Price Range (e.g., 10000-20000)" />
+                </div>
+                <div class="input-row">
+                    <input type="checkbox" id="isInTransit" />
+                    <p>Import Cars</p>
+                </div>
+                
                 <button type="submit">Search</button>
+                <button type="button" id="clear-filter">Clear Filters</button>
             </form>
         </div>
         <div class="car-image">

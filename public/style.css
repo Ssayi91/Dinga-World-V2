@@ -254,12 +254,12 @@ form {
 
 .input-row {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
     margin-bottom: 10px;
 }
 
 .input-row input {
-    width: 28%;
+    width: 48%;
     padding: 10px;
     font-size: 14px;
     border: 1px solid #ccc; /* Light border for inputs */

@@ -402,8 +402,7 @@ function attachImageModalEvents(carItem) {
     });
 }
 
-
-// search filter
+// Search filter
 document.getElementById('search-form').addEventListener('submit', async function (e) {
     e.preventDefault();
 
@@ -420,7 +419,7 @@ document.getElementById('search-form').addEventListener('submit', async function
         model,
         year,
         priceRange,
-        isInTransit: isInTransit ? 'true' : 'false'
+        isInTransit: isInTransit ? 'true' : 'false',
     }).toString();
 
     try {
@@ -433,27 +432,42 @@ document.getElementById('search-form').addEventListener('submit', async function
         const cars = await response.json();
 
         // Update the car list dynamically
-        const carListContainer = document.getElementById('car-list');
-        carListContainer.innerHTML = ''; // Clear current listings
+        const carListContainers = [
+            document.getElementById('car-list'),
+            document.getElementById('car-list-stock'),
+        ];
+
+        // Clear current listings for all containers
+        carListContainers.forEach((container) => {
+            if (container) container.innerHTML = ''; // Check if the container exists
+        });
 
         if (cars.length === 0) {
-            carListContainer.innerHTML = '<p>No cars found for the given search criteria.</p>';
+            carListContainers.forEach((container) => {
+                if (container) {
+                    container.innerHTML = '<p>No cars found for the given search criteria.</p>';
+                }
+            });
         } else {
-            cars.forEach(car => {
+            cars.forEach((car) => {
                 const carItem = createCarItem(car); // Use your existing function
-                carListContainer.appendChild(carItem);
-                attachImageModalEvents(carItem); // Add image modal functionality
+                carListContainers.forEach((container) => {
+                    if (container) container.appendChild(carItem.cloneNode(true)); // Append a clone for multiple containers
+                });
             });
         }
 
-        // Scroll to the search results container
-        carListContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
-
+        // Scroll to the first available search results container
+        const firstContainer = carListContainers.find((container) => container !== null);
+        if (firstContainer) {
+            firstContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
     } catch (error) {
         console.error('Error fetching search results:', error);
         alert('An error occurred while fetching search results. Please try again.');
     }
 });
+
 
 // clear search results
 document.getElementById('clear-filter').addEventListener('click', async function () {
@@ -485,7 +499,7 @@ document.getElementById('clear-filter').addEventListener('click', async function
             attachImageModalEvents(carItem); // Add image modal functionality
         });
 
-        
+
         // Scroll to the search results container
         carListContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
     } catch (error) {
