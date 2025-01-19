@@ -16,6 +16,8 @@ const { checkAccess } = require("./middleware/roles");
 const { v4: uuidv4 } = require('uuid'); // UUID for uniqueness
 const fs = require('fs'); // File system to store the last used registration
 const car = require('./models/car');
+const session = require('express-session');
+
 
 // Counter file path to track the last registration number used
 const counterFilePath = './counter.json';
@@ -679,221 +681,75 @@ app.get('/admin/total-blogs', async (req, res) => {
 });
 
 
-// admin-user management
-// admin user
-app.post("/admin/login", async (req, res) => {
-    const { username, password } = req.body;
-  
-    console.log("Received login attempt:", { username, password });
-  
-    // Find the user by username
-    const user = await User.findOne({ username });
-  
-    if (!user) {
-      console.log("User not found");
-      return res.status(401).json({ success: false, message: "Invalid username or password" });
-    }
-  
-    // Verify the password
-    const isPasswordMatch = bcrypt.compareSync(password, user.password);
-    console.log("Password match result:", isPasswordMatch);
-  
-    if (isPasswordMatch) {
-      // Generate JWT token with roles and permissions
-      const token = jwt.sign(
-        {
-          userId: user._id,
-          roles: user.roles, // Include roles such as 'super_admin', 'admin', etc.
-          permissions: user.permissions || [] // Include user-specific permissions
-        },
-        "your_secret_key", // Replace with your secret key from .env or config
-        { expiresIn: "30m" } // Token expires in 30 minutes
-      );
-  
-      // Set the token as a cookie
-      res.cookie("admin-token", token, { httpOnly: true, secure: false, maxAge: 30 * 60 * 1000});
-      console.log("Login successful, redirecting to admin page");
-      // Redirect to the admin dashboard
-      return res.redirect("/admin.html");
+// Set up session management
+app.use(session({
+    secret: 'motorgram202501', // Change this to a strong secret key
+    resave: false,
+    saveUninitialized: true,
+    cookie: { secure: false } // Set to true if using https
+}));
+
+// Hardcoded password (use environment variables or a database in a production environment)
+const ADMIN_PASSWORD = 'Admin123'; // Replace with your actual password
+
+// Serve static files from the 'admin' folder
+app.use('/admin', express.static(path.join(__dirname, 'admin')));
+
+// Serve the login page
+app.get('/admin/login', (req, res) => {
+    res.sendFile(path.join(__dirname, 'admin', 'admin-login.html'));
+});
+
+// Handle login form submission
+app.post('/admin/login', (req, res) => {
+    const { password } = req.body;
+    
+    // Check the password
+    if (password === ADMIN_PASSWORD) {
+        // Create a session for the user
+        req.session.isAdmin = true;
+        res.status(200).send('Login successful');
     } else {
-      console.log("Invalid password");
-      return res.status(401).send("Login failed");
+        res.status(401).send('Incorrect password');
     }
-  });
-  
+});
 
-  // Middleware to authenticate and check the role
-  const authenticateAdmin = (req, res, next) => {
-    const token = req.cookies["admin-token"];
-    if (!token) {
-      console.log("No token found, redirecting to login page");
-      return res.redirect("/admin-login.html");
+// Middleware to check if the user is authenticated
+function isAdmin(req, res, next) {
+    if (req.session.isAdmin) {
+        next(); // Allow access to the requested page
+    } else {
+        res.redirect('/admin/login'); // Redirect to login page if not authenticated
     }
-  
-    try {
-      const decoded = jwt.verify(token, "your_secret_key");
-      req.user = decoded;
+}
 
-       // Permission check for user-management page
-    const requiredPermission = req.originalUrl.includes("user-management")
-    ? "manage-users"
-    : null;
+// Protect the admin dashboard and other pages
+app.get('/admin/dashboard', isAdmin, (req, res) => {
+    res.sendFile(path.join(__dirname, 'admin', 'admin.html'));
+});
 
-  if (requiredPermission && !decoded.permissions.includes(requiredPermission)) {
-    console.log("Access denied. Missing permission:", requiredPermission);
-    return res.redirect("/admin-login.html");
-  }
+app.get('/admin/blog-management', isAdmin, (req, res) => {
+    res.sendFile(path.join(__dirname, 'admin', 'blog-management.html'));
+});
 
-      next(); // Proceed if token is valid
-    } catch (error) {
-      console.log("Invalid token, redirecting to login page");
-      return res.redirect("/admin-login.html");
-    }
-  };
-  
-  // Serve admin login page without protection
-app.get("/admin-login.html", (req, res) => {
-    res.sendFile(path.join(__dirname, "public", "admin-login.html")); // Adjust path if needed
-  });
-  
-  // Apply middleware to protect other admin routes
-  app.use("/admin", authenticateAdmin);
-  
-  
-  // Apply this middleware to protect admin routes
-  app.use("/admin", authenticateAdmin);
-  
-// user management
-app.get("/admin/users", async (req, res) => {
-    try {
-      const users = await User.find({}, { username: 1, email: 1, roles: 1 });
-      res.json(users); // Send only required fields
-    } catch (err) {
-      console.error(err);
-      res.status(500).send("Error fetching users");
-    }
-  });
-  app.post("/admin/update-roles", async (req, res) => {
-    const { userId, roles } = req.body;
-  
-    if (!userId || !roles) {
-      return res.status(400).send("Missing user ID or roles");
-    }
-  
-    try {
-      await User.findByIdAndUpdate(userId, { roles });
-      res.send("Roles updated successfully");
-    } catch (err) {
-      console.error(err);
-      res.status(500).send("Error updating roles");
-    }
-  });
+app.get('/admin/manage-cars', isAdmin, (req, res) => {
+    res.sendFile(path.join(__dirname, 'admin', 'manage-cars.html'));
+});
 
-  app.post("/admin/users/create", async (req, res) => {
-    const { username, password, roles } = req.body;
-  
-    // Default permissions based on roles
-    let permissions = [];
-    if (roles.includes("super_admin")) {
-      permissions = ["manage-cars", "manage-users"];
-    } else if (roles.includes("admin")) {
-      permissions = ["manage-cars"];
-    }
-  
-    const hashedPassword = bcrypt.hashSync(password, 10);
-  
-    const newUser = new User({
-      username,
-      password: hashedPassword,
-      roles,
-      permissions,
-    });
-  
-    try {
-      await newUser.save();
-      res.status(201).json({ success: true, message: "User created successfully" });
-    } catch (error) {
-      console.error("Error creating user:", error);
-      res.status(500).json({ success: false, message: "Failed to create user" });
-    }
-  });
-  
+app.get('/admin/user-management', isAdmin, (req, res) => {
+    res.sendFile(path.join(__dirname, 'admin', 'user-management.html'));
+});
 
-//   add user
-app.post("/admin/add-user", async (req, res) => {
-    try {
-      const { username, email, password, permissions } = req.body;
-  
-      const hashedPassword = await bcrypt.hash(password, 10);
-  
-      const newUser = new User({
-        username,
-        email,
-        password: hashedPassword,
-        roles: ["admin"], // Default role is "admin"
-        permissions, // Permissions assigned from the form
-      });
-  
-      await newUser.save();
-      res.json({ success: true, message: "User added successfully" });
-    } catch (err) {
-      console.error(err);
-      res.status(500).json({ success: false, message: "Failed to add user" });
-    }
-  });
-  
-  const checkPermissions = (requiredPermission) => {
-    return (req, res, next) => {
-      const token = req.cookies["admin-token"];
-      if (!token) {
-        return res.redirect("/admin-login.html");
-      }
-  
-      try {
-        const decoded = jwt.verify(token, "your_secret_key");
-        req.user = decoded;
-
-         // Allow super_admin access to all pages
-      if (decoded.roles && decoded.roles.includes("super_admin")) {
-        return next();
-      }
-           // Allow admin access to all pages
-           if (decoded.roles && decoded.roles.includes("admin")) {
-            return next();
-          }
-  
-        if (!decoded.permissions || !decoded.permissions.includes(requiredPermission)) {
-          return res.status(403).send("Access Denied: You do not have permission to access this page.");
+// Handle logout
+app.get('/admin/logout', (req, res) => {
+    req.session.destroy((err) => {
+        if (err) {
+            return res.status(500).send('Failed to log out');
         }
-  
-        next();
-      } catch (err) {
-        console.error(err);
-        return res.redirect("/admin-login.html");
-      }
-    };
-  };
-  
-  app.get("/admin/manage-cars.html", checkPermissions("manage-cars"), (req, res) => {
-    res.sendFile(__dirname + "/admin/manage-cars.html");
-  });
-  
-  app.get("/admin/blog-management.html", checkPermissions("blog-management"), (req, res) => {
-    res.sendFile(__dirname + "/admin/blog-management.html");
-  });
-  app.get("/admin/manage-cars", authenticateAdmin, (req, res) => {
-    res.render("manage-cars"); // Or render the page, or serve the data
-  });
-  app.get("/admin/user-management", authenticateAdmin, (req, res) => {
-    res.sendFile(path.join(__dirname, "views", "user-management.html"));
-  });
-  // Only super_admins can access the user-management page
-app.get("/admin/user-management.html", checkAccess("super_admin"), (req, res) => {
-    res.sendFile(path.join(__dirname, "admin" , "user-management.html"));
-  });
+        res.redirect('/admin/login');
+    });
+});
 
- 
-  
 
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
