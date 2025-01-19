@@ -434,7 +434,6 @@ document.getElementById('search-form').addEventListener('submit', async function
         // Update the car list dynamically
         const carListContainers = [
             document.getElementById('car-list'),
-            document.getElementById('car-list-stock'),
         ];
 
         // Clear current listings for all containers

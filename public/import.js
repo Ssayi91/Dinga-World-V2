@@ -223,6 +223,12 @@ document.addEventListener('DOMContentLoaded', () => {
     clearFilterButton.addEventListener('click', () => {
         searchForm.reset(); // Reset the search form
         fetchImportedCars(); // Reload all imported cars
+
+          // Scroll to the car list container
+    const carListContainer = document.getElementById('import-car-list');
+    if (carListContainer) {
+        carListContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
     });
 
     // Function to create a car item
