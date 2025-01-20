@@ -95,6 +95,10 @@ body {
 .logo a{
     text-decoration: none;
 }
+.logo img {
+    height: 200px;
+    width: auto;
+  }
 
 .nav-links {
     list-style: none;
