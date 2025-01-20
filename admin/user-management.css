@@ -60,8 +60,8 @@
 
 .sidebar {
     width: 250px;
-    background: #333;
-    color: #fff;
+    background: var(--text-color);
+    color: var(--bg-color);
     padding: 20px;
 }
 
@@ -75,16 +75,20 @@
 }
 
 .sidebar ul li {
-    margin: 10px 0;
+    margin: 15px 0;
 }
 
 .sidebar ul li a {
     color: #fff;
     text-decoration: none;
+    display: block;
+    padding: 10px;
+    border-radius: 5px;
 }
 
-.sidebar ul li a.active {
-    font-weight: bold;
+.sidebar ul li a.active,
+.sidebar ul li a:hover {
+    background-color: var(--main-color);
 }
 
 .main-content {
@@ -93,12 +97,15 @@
 }
 
 .add-user-section {
-    margin-bottom: 20px;
+    display: table-caption;
+    padding: 10px;
 }
 
 .add-user-form label {
     display: block;
     margin: 10px 0;
+    border-radius: 10px;
+    padding: 10px;
 }
 
 #user-table {
