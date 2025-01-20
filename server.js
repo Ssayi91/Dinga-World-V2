@@ -750,6 +750,71 @@ app.get('/admin/logout', (req, res) => {
     });
 });
 
+// admin section and users
+
+// Temporary in-memory user data
+let users = [
+    {
+        id: 1,
+        username: 'admin',
+        email: 'admin@example.com',
+        roles: ['Manage Cars', 'Blog Management']
+    },
+    {
+        id: 2,
+        username: 'user1',
+        email: 'user1@example.com',
+        roles: ['Manage Cars']
+    }
+];
+
+// Route to fetch all users
+app.get('/api/users', (req, res) => {
+    res.json(users);
+});
+
+// Route to add a new user
+app.post('/api/users', (req, res) => {
+    const { username, email, password, permissions } = req.body;
+
+    // Validation
+    if (!username || !email || !password) {
+        return res.status(400).send('All fields are required.');
+    }
+
+    const newUser = {
+        id: users.length + 1,
+        username,
+        email,
+        roles: permissions || []
+    };
+
+    users.push(newUser);
+    res.status(201).send('User added successfully.');
+});
+
+// Route to delete a user
+app.delete('/api/users/:id', (req, res) => {
+    const userId = parseInt(req.params.id);
+    users = users.filter(user => user.id !== userId);
+    res.status(200).send('User deleted successfully.');
+});
+
+// Route to update a user
+app.put('/api/users/:id', (req, res) => {
+    const userId = parseInt(req.params.id);
+    const { username, email, permissions } = req.body;
+
+    const user = users.find(user => user.id === userId);
+    if (user) {
+        user.username = username || user.username;
+        user.email = email || user.email;
+        user.roles = permissions || user.roles;
+        res.status(200).send('User updated successfully.');
+    } else {
+        res.status(404).send('User not found.');
+    }
+});
 
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
