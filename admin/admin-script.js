@@ -20,6 +20,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const importBtn = document.getElementById('import-btn');
     // const car = require('../models/car');
 
+   // Set the base URL depending on the environment
+   const BASE_URL = window.location.hostname === 'localhost'
+   ? 'http://localhost:3000' // Local URL
+   : 'https://dinga-world-v2-production.up.railway.app'; // Production URL (Railway)
+
     let currentImageIndex = 0;
     let currentImages = [];
     let removedImages = [];  // Array to store removed images
@@ -70,7 +75,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Load cars with sorting and filtering functionality
     function loadCars(sortBy = '', brand = '', model = '', year = '', price = '') {
-        const url = `/admin/cars?sortBy=${sortBy}&brand=${brand}&model=${model}&year=${year}&price=${price}`;
+        const url = `${BASE_URL}/admin/cars?sortBy=${sortBy}&brand=${brand}&model=${model}&year=${year}&price=${price}`;
     
         fetch(url)
             .then(handleResponse)
@@ -121,7 +126,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     const method = carId ? 'PUT' : 'POST'; // Use PUT if editing, POST if adding
-    const url = carId ? `/admin/cars/${carId}` : '/admin/cars'; // Dynamic URL based on edit or add
+    const url = carId ? `${BASE_URL}/admin/cars/${carId}` : '/admin/cars'; // Dynamic URL based on edit or add
 
     fetch(url, { method: method, body: formData })
         .then(handleResponse)
@@ -322,7 +327,7 @@ document.getElementById('close-form-btn').addEventListener('click', function () 
         const confirmation = confirm("Are you sure you want to delete this car?");
         if (!confirmation) return;
 
-        fetch(`/admin/cars/${carId}`, { method: 'DELETE' })
+        fetch(`${BASE_URL}/admin/cars/${carId}`, { method: 'DELETE' })
             .then(handleResponse)
             .then(() => {
                 alert('Car deleted successfully!');
@@ -472,8 +477,9 @@ const removedImages = [];
 
 // Move editCar function outside the DOMContentLoaded event listener
 window.editCar = function(carId) {
+    console.log('BASE_URL:', BASE_URL); // Log BASE_URL to verify it's defined
     console.log('Editing car with ID:', carId); // Log the car ID
-    fetch(`/admin/cars/${carId}`)
+    fetch(`${BASE_URL}/admin/cars/${carId}`)
         .then(response => response.json())
         .then(car => {
             // Populate form fields with car data
@@ -546,7 +552,7 @@ document.getElementById('car-form').addEventListener('submit', function(event) {
     const formData = new FormData(this);
     formData.append('removedImages', JSON.stringify(removedImages)); // Send removed images
 
-    fetch(`/admin/cars/${document.getElementById('car-id').value}`, {
+    fetch(`${BASE_URL}/admin/cars/${document.getElementById('car-id').value}`, {
         method: 'PUT',
         body: formData
     })
@@ -586,7 +592,7 @@ document.getElementById('car-form').addEventListener('submit', (event) => {
         }
     }
 
-    fetch(carId ? `/admin/cars/${carId}` : '/admin/cars', {
+    fetch(carId ? `${BASE_URL}/admin/cars/${carId}` : '/admin/cars', {
         method: carId ? 'PUT' : 'POST',
         body: formData,
     })
@@ -669,7 +675,7 @@ function displayBlogs(blogs) {
 
 async function deleteBlog(blogId) {
     try {
-        const response = await fetch(`/admin/blogs/${blogId}`, { method: 'DELETE' });
+        const response = await fetch(`${BASE_URL}/admin/blogs/${blogId}`, { method: 'DELETE' });
         if (response.ok) {
             alert('Blog deleted successfully!');
             fetchBlogs(); // Refresh the admin blog list

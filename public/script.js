@@ -11,6 +11,13 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const importCarList = document.getElementById('import-car-list');  // import.html
 
+    // Set the base URL depending on the environment
+        const BASE_URL = window.location.hostname === 'localhost'
+        ? 'http://localhost:3000' // Local URL
+        : 'https://dinga-world-v2-production.up.railway.app'; // Production URL (Railway)
+
+
+
 
     document.getElementById('menu-toggle').addEventListener('click', function() {
         const navLinks = document.getElementById('nav-links');
@@ -331,7 +338,7 @@ eventSource.addEventListener('carDeleted', (event) => {
     removeCarFromDOM(_id); // Function to remove the car from the DOM
 });
 
-const sse = new EventSource('/admin/cars/stream');  // or for the public side
+const sse = new EventSource('${BASE_URL}/admin/cars/stream');  // or for the public side
 sse.onmessage = function(event) {
     const updatedCars = JSON.parse(event.data);
     fetchAndDisplayCars(updatedCars);  // Function to update the car list dynamically
@@ -424,7 +431,7 @@ document.getElementById('search-form').addEventListener('submit', async function
 
     try {
         // Fetch search results
-        const response = await fetch(`/search?${queryString}`);
+        const response = await fetch(`${BASE_URL}/search?${queryString}`);
         if (!response.ok) {
             throw new Error('Failed to fetch search results.');
         }

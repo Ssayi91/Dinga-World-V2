@@ -25,7 +25,18 @@ const counterFilePath = './counter.json';
 // Initialize Express app
 const app = express();
 
+// Define allowed origins
+const allowedOrigins = [
+    'http://localhost:3000', // Allow localhost for local development
+    'https://your-production-url.com' // Replace with your actual production URL
+];
 
+// CORS options for dynamic handling
+const corsOptions = {
+    origin: ['http://localhost:3000', 'https://dinga-world-v2-production.up.railway.app'], // Allowed origins
+    methods: ['GET', 'POST', 'DELETE', 'PUT'], // Allow only HTTP requests
+    allowedHeaders: ['Content-Type'] // Allow headers you need
+};
 
 const PORT = process.env.PORT || 3000;
 const jwtSecret = process.env.JWT_SECRET || "default_secret_key";
@@ -34,7 +45,7 @@ const carEventEmitter = new EventEmitter();
 const saltRounds = 10;
 
 // Middleware setup
-app.use(cors());
+app.use(cors(corsOptions)); // Use CORS middleware
 app.use(express.json());
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: true }));
