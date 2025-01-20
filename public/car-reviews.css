@@ -53,6 +53,12 @@ body {
 .logo h1 span{
     color: var(--main-color);
 }
+.logo img {
+    height: 70px;
+    width: auto;
+    margin-left: 20px;
+  }
+
 
 .nav-links {
     list-style: none;
@@ -457,6 +463,9 @@ footer {
     .logo h1 {
         margin-top: 5px;
         padding: 5px;
+     }
+     .logo img{
+        margin-left: 5px;
      }
 
      .reviews-grid .container{

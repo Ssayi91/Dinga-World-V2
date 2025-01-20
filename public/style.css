@@ -96,8 +96,9 @@ body {
     text-decoration: none;
 }
 .logo img {
-    height: 200px;
+    height: 70px;
     width: auto;
+    margin-left: 20px;
   }
 
 .nav-links {
@@ -813,6 +814,10 @@ footer {
         margin-top: 5px;
         padding: 5px;
      }
+
+     .logo img {
+        margin-left: 5px; 
+      }
     /* banner */
     .banner {
         flex-direction: column;

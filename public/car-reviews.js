@@ -1,3 +1,7 @@
+
+
+
+
 // blog
 document.addEventListener('DOMContentLoaded', () => {
     fetchBlogs();
