@@ -391,6 +391,29 @@ footer {
 .copyright span{
     color: var(--main-color);
 }
+.design{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+   
+}
+.design h1{
+    font-size: 20px;
+}
+.design p{
+    font-weight: 700;
+    font-size: 16px;
+}
+.design a { 
+    text-decoration: none;
+    color: var(--text-color); 
+} 
+.design span { 
+    color: var(--main-color); 
+}
+
 
 /* Media Queries */
 @media (max-width: 768px) {

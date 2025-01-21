@@ -724,17 +724,21 @@ footer {
     align-items: center;
     text-align: center;
     justify-content: center;
+   
 }
 .design h1{
     font-size: 20px;
 }
 .design p{
-    font-size: 14px;
     font-weight: 700;
-    
+    font-size: 16px;
 }
-.design span{
-    color: var(--main-color);
+.design a { 
+    text-decoration: none;
+    color: var(--text-color); 
+} 
+.design span { 
+    color: var(--main-color); 
 }
 
 
