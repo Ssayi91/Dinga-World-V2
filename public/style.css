@@ -501,7 +501,7 @@ button:hover {
     overflow-x: auto;
     border-radius: 8px;
     margin-bottom: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.534);
+    /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.534); */
 }
 .car-images img {
     width: 100%;
@@ -515,7 +515,7 @@ button:hover {
     padding: 5px;
     flex-grow: 1;
     border: 1px solid rgba(0, 0, 0, 0.322);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.534);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.212);
     border-radius: 8px;
 }
 .car-summary p{
