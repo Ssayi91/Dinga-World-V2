@@ -1,4 +1,12 @@
+document.getElementById('menu-toggle').addEventListener('click', function() {
+    const navLinks = document.getElementById('nav-links');
+    navLinks.classList.toggle('show'); // Toggle the 'show' class
+});
 
+document.getElementById('close-menu').addEventListener('click', function() {
+    const navLinks = document.getElementById('nav-links');
+    navLinks.classList.remove('show'); // Hide the menu when close icon is clicked
+});
 
 
 

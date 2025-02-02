@@ -170,8 +170,8 @@ function handleError(error) {
 
     // Render cars in the container
     function renderCars(cars) {
-        carContainer.innerHTML = '';
-        totalCarsElement.textContent = cars.length;
+        const carContainer = document.getElementById('car-container');
+        carContainer.innerHTML = ''; // Clear existing content
 
         cars.forEach(car => {
             const carItem = createCarItem(car);
@@ -608,14 +608,30 @@ document.getElementById('car-form').addEventListener('submit', (event) => {
 
 
 // public car form section // Display these cars with a special marker on the admin side
-car.find({ source: 'public' }).then(carsFromPublic => {console.log(carsFromPublic);
-});
+// Fetch public car data from the server
+async function fetchPublicCars() {
+    try {
+        const response = await fetch('admin/cars?source=public'); // Adjust the URL as needed
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        const publicCars = await response.json();
+        return publicCars;
+    } catch (error) {
+        console.error('There has been a problem with your fetch operation:', error);
+    }
+}
 
+// Call the function to fetch public car data
+fetchPublicCars().then(publicCars => {
+    // Use the public car data here
+    console.log(publicCars);
 const sse = new EventSource('/admin/cars/stream');  // or for the public side
 sse.onmessage = function(event) {
     const updatedCars = JSON.parse(event.data);
     fetchAndDisplayCars(updatedCars);  // Function to update the car list dynamically
 };
+});
 
 // Blog Post
 document.addEventListener('DOMContentLoaded', () => {
@@ -720,3 +736,78 @@ document.addEventListener("keydown", resetInactivityTimer);
 
 // Start the timer when the page loads
 resetInactivityTimer();
+
+// Function to load cars for the admin page
+async function loadCars() {
+    const BASE_URL = window.location.hostname === 'localhost' || window.location.hostname === '192.168.1.100'
+        ? `http://${window.location.host}`
+        : 'https://dinga-world-v2-production.up.railway.app';
+
+    try {
+        const response = await fetch(`${BASE_URL}/admin/cars`, {
+            credentials: 'include',
+            headers: {
+                'Accept': 'application/json'
+            }
+        });
+
+        console.log('Fetching cars from:', `${BASE_URL}/admin/cars`); // Debugging line
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const cars = await response.json();
+        renderCars(cars); // Call the function to render cars on the page
+        updateTotalCars(cars.length); // Update total cars count
+    } catch (error) {
+        console.error('Error loading cars:', error);
+        const carContainer = document.getElementById('car-container');
+        if (carContainer) {
+            carContainer.innerHTML = '<p>Error loading cars. Please try again later.</p>';
+        }
+    }
+}
+
+// Function to render cars on the page
+function renderCars(cars) {
+    const carContainer = document.getElementById('car-container');
+    carContainer.innerHTML = ''; // Clear existing content
+
+    cars.forEach(car => {
+        const carItem = createCarItem(car); // Assuming createCarItem is defined
+        carContainer.appendChild(carItem);
+    });
+}
+
+// Function to create car item element
+function createCarItem(car) {
+    const carItem = document.createElement('div');
+    carItem.className = 'car-item';
+    carItem.dataset.id = car._id;
+
+    carItem.innerHTML = `
+        <h3>${car.brand} ${car.model}</h3>
+        <p>Year: ${car.year}</p>
+        <p>Price: Kshs ${car.price.toLocaleString()}</p>
+        <p>Registration: ${car.registration}</p>
+        <p>Mileage: ${car.mileage.toLocaleString()} Kms</p>
+        <button onclick="editCar('${car._id}')">Edit</button>
+        <button onclick="deleteCar('${car._id}')">Delete</button>
+    `;
+
+    return carItem;
+}
+
+// Function to update total cars count
+function updateTotalCars(count) {
+    const totalCarsElement = document.getElementById('total-cars');
+    if (totalCarsElement) {
+        totalCarsElement.textContent = `Total Cars: ${count}`;
+    }
+}
+
+// Call loadCars when the page loads
+document.addEventListener('DOMContentLoaded', () => {
+    loadCars(); // Load cars when the admin page is loaded
+});

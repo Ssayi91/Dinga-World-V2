@@ -14,8 +14,16 @@
     --main-color:darkred;
     --text-color:rgb(0, 0, 0);
     --bg-color: white;
+    --color:#1f5b8f;
+    --fg-color:#315a79;
+    --txt-color:#9fb7ca;
+    --tag-color:#ba4989;
+    --tg-color:#db6551;
+    --tg1-color:#e69a54;
+    --tg2-color:#c23e5d;
+    --tg3-color:#e8094b;
+    --tg4-color:#dd2a7d;
 }
-
 body {
     background-color: var(--bg-color);
     color: var(--text-color);
@@ -30,25 +38,39 @@ body {
 .header {
     background-color: var(--bg-color);
     color: var(--text-color);
-    padding: 20px 0;
+    /* border-bottom: 1px solid var(--color); */
+    padding: 10px 0;
+}
+
+.header .logo h1 {
+    font-size: 22px;
+    color: var(--text-color);
+    margin-top: 2px;
 }
 .navbar {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-evenly;
     align-items: center;
-    border-bottom: 2px solid rgb(206, 201, 201);
+    background-color: var(--bg-color);
+    padding: 15px 0;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 .menu-toggle {
-    display: none; /* Hide the menu toggle by default */
+    display: none;
     cursor: pointer;
+    border: 2px solid var(--fg-color);
+    border-radius: 5px;
+    padding: 5px;
 }
 
 .menu-toggle i {
     font-size: 24px;
     color: var(--text-color);
 }
+
+
 .logo h1 {
-    font-size: 24px;
+    font-size: 30px;
     font-weight: 800;
     color: var(--text-color);
     margin-top: -30px;
@@ -57,12 +79,14 @@ body {
 .logo h1 span{
     color: var(--main-color);
 }
+.logo a{
+    text-decoration: none;
+}
 .logo img {
     height: 70px;
     width: auto;
     margin-left: 20px;
   }
-
 
 .nav-links {
     list-style: none;
@@ -89,14 +113,17 @@ body {
 
 .nav-links li a {
     font-weight: 700;
-    color: var(--text-color);
+    color: var(--color);
     text-decoration: none;
-    padding: 5px;
-    transition: border-bottom 0.3s ease;
+    padding: 10px 15px;
+    border-radius: 5px;
+    transition: background-color 0.3s, color 0.3s;
 }
 .nav-links li a.active,
 .nav-links li a:hover {
-    color: var(--main-color);
+    color: var(--bg-color);
+    background-color: var(--tg-color);
+    
 }
 .close-menu {
     display: none; /* Hide by default */
@@ -146,7 +173,7 @@ main {
     padding: 10px 20px;
     border: none;
     border-radius: 5px;
-    background-color: var(--text-color); /* Button background color */
+    background-color: var(--fg-color); /* Button background color */
     color:var(--bg-color); /* Button text color */
     font-size: 16px;
     cursor: pointer;
@@ -157,11 +184,10 @@ main {
     color: var(--bg-color);
 }
 
-/* Footer Styles */
 /* General Footer Styles */
 footer {
-    background-color: var(--text-color);
-    color: var(--bg-color);
+    background-color: var(--fg-color);
+    color: var(--txt-color);
     padding: 20px;
     text-align: center;
 }
@@ -179,44 +205,45 @@ footer {
     margin-top: 20px;
 }
 .contact-details h3{
-    font-size: 20px;
-    font-weight: 700;
+    font-size: 18px;
+    font-weight: 800;
     padding: 10px;
-    color: var(--main-color);
+    color: var(--bg-color);
 }
 .contact-details p{
-    font-size: 18px;
-    font-weight: 600;
+    font-size: 16px;
+    font-weight: 800;
     padding: 5px;
+    color: var(--txt-color);
 }
 .contact-details span{
-    color: var(--main-color);
+    color: var(--tg-color);
 }
 
 .contact-details a {
-    color: #fff;
+    color: var(--txt-color);
     text-decoration: none;
 }
 
 .contact-details a:hover {
-    text-decoration: underline;
+    color: var(--tg-color);
 }
 
 .social-media {
     font-size: 20px;
-    padding: 10px;
-    color: var(--main-color);
+   padding: 10px;
+   color: var(--tg-color);
 }
 
 .social-icon {
-    color: #fff;
+    color: var(--txt-color);
     font-size: 26px;
     text-decoration: none;
     padding: 20px;
 }
 
 .social-icon:hover {
-    color: var(--main-color);
+    color: var(--tg-color);
 }
 
 .map iframe {
@@ -228,26 +255,29 @@ footer {
 .map h3{
     font-size: 24px;
     font-weight: 700;
-    color: var(--main-color);
+    color: var(--tg-color);
 }
-/* copyright */
 .copyright{
     display: flex;
-    flex-direction: column;
-    justify-content: center;
+    flex-direction: row;
     align-items: center;
     text-align: center;
-    padding-bottom: 20px;
+    padding-bottom: 10px;
+    padding: 10px;
+    justify-content: center;
 }
 .copyright h1{
     font-size: 20px;
+    color: var(--fg-color);
 }
 .copyright p{
-    font-size: 18px;
-    font-weight: 800;
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--fg-color);
+    
 }
 .copyright span{
-    color: var(--main-color);
+    color: var(--tg-color);
 }
 .design{
     display: flex;
@@ -255,7 +285,6 @@ footer {
     align-items: center;
     text-align: center;
     justify-content: center;
-    margin-bottom: 10px;
    
 }
 .design h1{
@@ -267,10 +296,13 @@ footer {
 }
 .design a { 
     text-decoration: none;
-    color: var(--text-color); 
+    color: var(--color); 
 } 
+.design a:hover{
+    color: var(--tg-color);
+}
 .design span { 
-    color: var(--main-color); 
+    color: var(--tg-color); 
 }
 
 
