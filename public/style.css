@@ -81,7 +81,7 @@ body {
     justify-content: space-evenly;
     align-items: center;
     background-color: var(--bg-color);
-    padding: 15px 0;
+    padding: 15px 20px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 .menu-toggle {
@@ -119,12 +119,15 @@ body {
 .nav-links {
     list-style: none;
     display: flex;
+    align-items: center;
+    margin: 0;
+    padding: 0;
 }
 
 .nav-links li {
     margin-left: 20px;
-    position: relative;
 }
+
 .nav-links li i{
     font-size: 22px;
     padding: 10px 70px;
@@ -134,10 +137,13 @@ body {
     text-align: center;
 }
 .login-text {
-    font-size: 14px; /* Smaller font size for "Login" text */
-    display: block;
-    text-align: center;
-    margin-top: -50px; /* Space between icon and text */
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+}
+
+.login-text i {
+    margin-right: 5px;
 }
 
 .nav-links li a {
@@ -158,35 +164,37 @@ body {
     display: none; /* Hide by default */
 }
 
-/* Modal styles-login form */
-/* .modal {
-    display: none;
-    position: fixed;
-    z-index: 100;
+
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1000; /* Sit on top */
     left: 0;
     top: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0,0,0,0.6);
-} */
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgba(0, 0, 0, 0.5); /* Black w/ opacity */
+}
 
 .modal-content {
-    margin: 10% auto;
+    background-color:var(--bg-color);
+    margin: 15% auto; /* 15% from the top and centered */
     padding: 20px;
-    border-radius: 10px;
-    width: 20%;
+    border: 1px solid var(--fg-color);
+    width: 80%; /* Could be more or less, depending on screen size */
 }
 
 .close-modal {
     float: right;
     font-size: 50px;
     cursor: pointer;
-    color: var(--main-color);
+    color: var(--tg-color);
 }
 
 .modal-forms h2 {
     text-align: center;
-    color: var(--main-color);
+    color: var(--tg-color);
 }
 
 .modal-forms form {
@@ -210,8 +218,8 @@ body {
 .modal-forms button {
     margin-top: 15px;
     padding: 10px;
-    background-color:var(--text-color);
-    color: white;
+    background-color:var(--fg-color);
+    color: var(--bg-color);
     border: none;
     cursor: pointer;
     border-radius: 5px;
@@ -220,6 +228,7 @@ body {
 
 .modal-forms button:hover {
     background-color: var(--bg-color);
+    color: var(--fg-color);
 }
 
 .modal-forms p {
@@ -406,8 +415,8 @@ button:hover {
 }
 
 .form-section button {
-    background-color: var(--text-color);
-    color: #fff;
+    background-color: var(--fg-color);
+    color: var(--bg-color);
     width: 100%;
     border: none;
     padding: 10px 20px;
@@ -418,7 +427,7 @@ button:hover {
 
 .form-section button:hover {
     background-color: var(--bg-color);
-    color: var(--main-color);
+    color: var(--tg-color);
     border: 1px solid var(--text-color);
 }
 .form-section textarea {
@@ -447,8 +456,8 @@ button:hover {
 }
 /* close form button */
 #close-form-btn {
-    background-color:var(--main-color); /* Red color */
-    color: white;
+    background-color:var(--tg-color); /* Red color */
+    color: var(--bg-color);
     margin-top: 5px;
 }
 
@@ -459,16 +468,26 @@ button:hover {
 }
 
 .car-image img {
-    max-width: 100%;
-    border-radius: 10px;
-    margin-top: 5px;
+    width: 100%;
+    height: auto;
+    mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.897), rgba(0, 0, 0, 0.651));
+    transition: transform 0.3s ease; /* Smooth transition */
+    clip-path: polygon(0% 0%,100% 0% , 100% 100%, 0% 70%); 
+    border-radius: 5px;
+}
+
+.car-image img:hover {
+    transform: scale(1.05); /* Slightly scale up on hover */
 }
 
 .tagline {
-    margin-top: -50px;
-    font-size: 18px;
-    font-weight: 700;
-    color: var(--tg-color);
+    bottom: 20px; /* Position from the bottom */
+    left: 20px; /* Position from the left */
+    color: var(--tg-color); /* Text color */
+    font-size: 24px; /* Font size */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.082); /* Shadow for better readability */
+    z-index: 10; /* Ensure tagline is above the image */
+    font-weight: 800;
 }
 .tagline span{
     color: var(--tg-color);
@@ -568,7 +587,7 @@ button:hover {
 }
 
 .modal-content {
-    margin: auto;
+    margin: 50px auto;
     /* display: flex;
     flex-direction: column;
     justify-content: center;
@@ -780,33 +799,49 @@ footer {
 /* Mobile Styles */
 @media (max-width: 768px) {
     .navbar {
-        flex-direction: column;
-        align-items: flex-start;
-        position: relative;
-        align-items: center;
-        justify-content: center;
+        flex-direction: row;
+        justify-content: space-between;
     }
 
     .nav-links {
-        display: none; /* Hide the nav links by default */
-        position: fixed; /* Position fixed to cover the entire screen */
-        top: 0;
-        left: 0;
-        height: 100vh; /* Full viewport height */
-        width: 100vw; /* Full viewport width */
-        background-color: var(--bg-color);
-        flex-direction: column;
-        justify-content: center; /* Center the items vertically */
-        align-items: center; /* Center the items horizontally */
-        transform: translateX(-100%); /* Initially hidden off-screen */
-        transition: transform 0.3s ease; /* Smooth transition */
-        z-index: 1000;
+        display: none; /* Hide links by default on mobile */
+        flex-direction: column; /* Stack links vertically */
+        width: 100%; /* Full width for mobile */
+        position: fixed; /* Use fixed positioning for full-screen overlay */
+        top: 0; /* Align to the top of the viewport */
+        left: 0; /* Align to the left of the viewport */
+        background-color: rgba(255, 255, 255, 1); /* Solid background color */
+        z-index: 1000; /* Ensure it appears above other content */
+        height: 100%; /* Full height for the overlay */
+        overflow-y: auto; /* Enable scrolling if content exceeds height */
+        padding-top: 10px; /* Add padding to avoid overlap with navbar */
+    }
+
+    .close-menu {
+        position: absolute; /* Position the close button absolutely */
+        top: 10px; /* Distance from the top */
+        right: 20px; /* Distance from the right */
+        font-size: 24px; /* Adjust size as needed */
+        cursor: pointer; /* Change cursor to pointer */
+        z-index: 1001; /* Ensure it appears above other content */
+        color: #000; /* Set color for visibility (black or any contrasting color) */
+        background: none; /* No background */
+        border: none; /* No border */
+    }
+
+    .close-menu i {
+        font-size: 24px; /* Ensure the icon is large enough */
+    }
+
+    .nav-links.active {
+        display: flex; /* Show links when menu is active */
     }
 
     .nav-links li {
-        margin: 10px 0;
-
+        margin-left: 0;
+        margin-bottom: 10px;
     }
+
     .nav-links li i{
         top: 5px;
     }
@@ -824,29 +859,11 @@ footer {
         color: var(--main-color);
     }
     .menu-toggle {
-        display: block; /* Show the menu toggle on mobile */
+        display: block; /* Show menu toggle on mobile */
+        cursor: pointer; /* Change cursor to pointer */
+        margin-bottom: 20px;
     }
 
-    .nav-links.show {
-        display: flex; /* Show the nav links when toggled */
-        transform: translateX(0);
-    }
-    .close-menu {
-        position: absolute;
-        justify-content: center;
-        align-items: center;
-        cursor: pointer;
-        font-size: 24px;
-        color: var(--text-color);
-        top: 100px;
-        left: 110px;
-        display: flex;
-    }
-
-    .close-menu i {
-        font-size: 24px;
-        color: var(--main-color);
-    }
     .logo h1 {
         margin-top: 5px;
         padding: 5px;
@@ -875,17 +892,20 @@ footer {
         width: 100%;
         margin-bottom: 10px;
     }
+    .tagline{
+        margin-top: 5px;
+    }
 /* all cars section */
     .car-container {
         flex-direction: column;
         align-items: center;
 }
     .car-item {
-        width: 100%; /* Full width on mobile */
+        width: 100%;
         display: flex;
-        flex-direction: row; /* Arrange image and details in a row */
+        flex-direction: row;
         justify-content: space-between;
-        margin-bottom: 20px; /* Space between car items */
+        margin-bottom: 20px;
     }
 
     .car-images img {
@@ -895,20 +915,20 @@ footer {
 
 
     .car-details {
-        width: 65%; /* Details take the other half of the width */
+        width: 65%;
         padding: 5px;
     }
 
     .car-details h3 {
-        font-size: 18px; /* Adjust font size for mobile */
+        font-size: 18px;
     }
 
     .car-details p {
-        font-size: 14px; /* Adjust font size for mobile */
+        font-size: 14px;
     }
     .car-description {
-        font-size: 14px; /* Smaller font size for mobile */
-        margin: 5px 0; /* Reduce margin on mobile */
+        font-size: 14px;
+        margin: 5px 0;
     }
     .modal-image {
         max-width: 80%;
@@ -940,19 +960,19 @@ footer {
 
     .map iframe {
         width: 100%;
-        height: 300px; /* Adjust height as needed */
+        height: 300px;
     }
     .contact-details h3{
         font-size: 24px;
     }
 
     .parallax {
-        height: 300px; /* Reduce height for mobile */
+        height: 300px;
     }
 
     .parallax-image {
-        top: 50%; /* Keep centered */
-        transform: translate(-50%, -50%); /* Center the image */
+        top: 50%;
+        transform: translate(-50%, -50%);
     }
 }
 
@@ -960,7 +980,7 @@ footer {
 
 @media (max-width: 480px) {
     .car-item {
-        width: 100%; /* One item per row */
+        width: 100%;
     }
 
     .contact-details h3, .social-media h3, .map h3 {

@@ -19,14 +19,16 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 
-    document.getElementById('menu-toggle').addEventListener('click', function() {
+    document.getElementById('menu-toggle').addEventListener('click', () => {
         const navLinks = document.getElementById('nav-links');
-        navLinks.classList.toggle('show'); // Toggle the 'show' class
+        navLinks.classList.toggle('active'); // Toggle active class to show/hide links
+        console.log('Menu toggle clicked'); // Debugging line
     });
 
-    document.getElementById('close-menu').addEventListener('click', function() {
+    document.getElementById('close-menu').addEventListener('click', () => {
         const navLinks = document.getElementById('nav-links');
-        navLinks.classList.remove('show'); // Hide the menu when close icon is clicked
+        navLinks.classList.remove('active'); // Hide the menu when close button is clicked
+        console.log('Close menu clicked'); // Debugging line
     });
 
     // Car Display and Fetch Logic
@@ -576,3 +578,124 @@ function displayBlogs(blogs) {
         blogList.appendChild(blogItem);
     });
 }
+
+// JavaScript to handle form submissions and switching between forms
+document.getElementById('login-form').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const username = document.getElementById('login-username').value;
+    const password = document.getElementById('login-password').value;
+
+    const response = await fetch('/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username, password }),
+    });
+
+    const data = await response.json();
+    alert(data.message || data.error);
+});
+
+document.getElementById('signup-form').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const username = document.getElementById('signup-username').value;
+    const email = document.getElementById('signup-email').value;
+    const password = document.getElementById('signup-password').value;
+
+    const response = await fetch('/register', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username, email, password }),
+    });
+
+    const data = await response.json();
+    alert(data.message || data.error);
+});
+
+// Switch to Signup Form
+document.getElementById('switch-to-signup').addEventListener('click', (e) => {
+    e.preventDefault();
+    document.getElementById('login-form-container').style.display = 'none';
+    document.getElementById('signup-form-container').style.display = 'block';
+});
+
+// Switch to Login Form
+document.getElementById('switch-to-login').addEventListener('click', (e) => {
+    e.preventDefault();
+    document.getElementById('signup-form-container').style.display = 'none';
+    document.getElementById('login-form-container').style.display = 'block';
+});
+
+// Close Modal (optional)
+document.querySelector('.close-modal').addEventListener('click', () => {
+    document.getElementById('login-signup-modal').style.display = 'none';
+});
+
+// JavaScript to handle modal display
+document.getElementById('open-modal').addEventListener('click', (e) => {
+    e.preventDefault(); // Prevent the default anchor behavior
+    document.getElementById('login-signup-modal').style.display = 'block'; // Show the modal
+});
+
+// Close modal when the close button is clicked
+document.querySelector('.close-modal').addEventListener('click', () => {
+    document.getElementById('login-signup-modal').style.display = 'none'; // Hide the modal
+});
+
+// Close modal when clicking outside of the modal content
+window.addEventListener('click', (event) => {
+    const modal = document.getElementById('login-signup-modal');
+    if (event.target === modal) {
+        modal.style.display = 'none'; // Hide the modal
+    }
+});
+
+// Check login status on page load
+window.addEventListener('DOMContentLoaded', async () => {
+    const response = await fetch('/api/check-login');
+    const data = await response.json();
+
+    if (data.loggedIn) {
+        // User is logged in
+        document.querySelector('.login-text').innerText = 'Logout'; // Change text to Logout
+        document.getElementById('welcome-message').style.display = 'block'; // Show welcome message
+        document.querySelector('.login-text').addEventListener('click', async (e) => {
+            e.preventDefault();
+            const logoutResponse = await fetch('/logout', {
+                method: 'POST',
+            });
+            const logoutData = await logoutResponse.json();
+            alert(logoutData.message);
+            location.reload(); // Reload the page to update the UI
+        });
+    } else {
+        // User is not logged in
+        document.querySelector('.login-text').innerText = 'Login'; // Ensure it shows Login
+    }
+});
+
+// Close the menu when a link is clicked
+const navItems = document.querySelectorAll('.nav-links li a');
+navItems.forEach(item => {
+    item.addEventListener('click', () => {
+        const navLinks = document.getElementById('nav-links');
+        navLinks.classList.remove('active'); // Hide the menu after clicking a link
+        console.log('Menu item clicked'); // Debugging line
+    });
+});
+
+// Ensure nav links are hidden on page load
+window.addEventListener('DOMContentLoaded', () => {
+    const navLinks = document.getElementById('nav-links');
+    navLinks.classList.remove('active'); // Ensure the menu is hidden on load
+});
+
+
+document.getElementById('menu-toggle').addEventListener('click', function() {
+    const navLinks = document.getElementById('nav-links');
+    navLinks.classList.toggle('show'); // Toggle the 'show' class
+});
+
+document.getElementById('close-menu').addEventListener('click', function() {
+    const navLinks = document.getElementById('nav-links');
+    navLinks.classList.remove('show'); // Hide the menu when close icon is clicked
+});

@@ -278,16 +278,26 @@ button:hover {
 }
 
 .car-image img {
-    max-width: 65%;
-    border-radius: 10px;
-    margin-top: 10px;
+    width: 100%; /* Make the image responsive */
+    height: auto; /* Maintain aspect ratio */
+    mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.897), rgba(0, 0, 0, 0.651)); /* Optional mask for gradient effect */
+    transition: transform 0.3s ease; /* Smooth transition */
+    clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 20% 90%); /* Clip from top left going down */
+    border-radius: 5px; /* Rounded corners */
+}
+
+.car-image img:hover {
+    transform: scale(1.05); /* Slightly scale up on hover */
 }
 
 .tagline {
-    margin-top: -5px;
-    font-size: 18px;
-    font-weight: 700;
-    color: var(--tg-color);
+    bottom: 20px; /* Position from the bottom */
+    left: 20px; /* Position from the left */
+    color: var(--tg-color); /* Text color */
+    font-size: 24px; /* Font size */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.082); /* Shadow for better readability */
+    z-index: 10; /* Ensure tagline is above the image */
+    font-weight: 800;
 }
 .tagline span{
     color: var(--tg-color);
@@ -701,8 +711,7 @@ footer {
         border-radius: 10px;
         margin-top: 10px;
     }
-    
-    
+
 /* all cars section */
 .car-item {
     width: 100%;
@@ -722,7 +731,7 @@ footer {
     }
 
     .tagline {
-        margin-top: -5px;
+        margin-top: 10px;
         position: relative;
     }
 

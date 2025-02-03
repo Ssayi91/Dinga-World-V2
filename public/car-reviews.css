@@ -1,4 +1,3 @@
-
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
 
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&display=swap');
@@ -124,21 +123,46 @@ body {
 }
 /* Banner Section */
 .banner {
-    background-color: var(--fg-color);
-    color: #fff;
-    padding: 60px 0;
-    text-align: center;
-    width: 100%;
+    position: relative; /* Position relative for absolute positioning of overlay */
+    background-image: url('Assets/car\ review\ \(2\).png'); /* Replace with your image path */
+    background-size: cover; /* Cover the entire section */
+    background-position: center; /* Center the image */
+    height: 400px; /* Set a height for the banner */
+    color: var(--tg-color); /* Text color */
+    display: flex; /* Use flexbox for centering */
+    align-items: center; /* Center vertically */
+    justify-content: center; /* Center horizontally */
+    text-align: center; /* Center text */
+    overflow: hidden; /* Hide overflow */
 }
 
-.banner h1 {
-    font-size: 36px;
-    margin-bottom: 10px;
+.banner::before {
+    content: ""; /* Create a pseudo-element for the overlay */
+    position: absolute; /* Position it absolutely */
+    top: 0; /* Align to the top */
+    left: 0; /* Align to the left */
+    right: 0; /* Align to the right */
+    bottom: 0; /* Align to the bottom */
+    background: rgba(0, 0, 0, 0.5); /* Semi-transparent black overlay */
+    z-index: 1; /* Ensure it is below the text */
 }
 
-.banner p {
-    font-size: 18px;
-    color: var(--tg-color);
+.container {
+    position: relative; /* Position relative to allow text to be above the overlay */
+    z-index: 2; /* Ensure text is above the overlay */
+}
+
+.container h1 {
+    font-size: 3rem; /* Adjust font size */
+    margin: 0; /* Remove default margin */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7); /* Shadow for better readability */
+}
+
+.container p {
+    font-size: 1.5rem; /* Adjust font size */
+    color: var(--bg-color);
+    margin-top: 10px; /* Space between title and paragraph */
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7); /* Shadow for better readability */
 }
 
 /* Search and Filter Section */
@@ -517,6 +541,9 @@ footer {
     .close-menu i {
         font-size: 24px;
         color: var(--main-color);
+    }
+    .banner {
+        height: 200px; /* Reduce height for mobile */
     }
     .logo h1 {
         margin-top: 5px;
