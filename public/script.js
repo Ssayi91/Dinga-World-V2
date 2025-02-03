@@ -19,17 +19,16 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 
-    document.getElementById('menu-toggle').addEventListener('click', () => {
-        const navLinks = document.getElementById('nav-links');
-        navLinks.classList.toggle('active'); // Toggle active class to show/hide links
-        console.log('Menu toggle clicked'); // Debugging line
-    });
+    
+document.getElementById('menu-toggle').addEventListener('click', function() {
+    const navLinks = document.getElementById('nav-links');
+    navLinks.classList.toggle('show'); // Toggle the 'show' class
+});
 
-    document.getElementById('close-menu').addEventListener('click', () => {
-        const navLinks = document.getElementById('nav-links');
-        navLinks.classList.remove('active'); // Hide the menu when close button is clicked
-        console.log('Close menu clicked'); // Debugging line
-    });
+document.getElementById('close-menu').addEventListener('click', function() {
+    const navLinks = document.getElementById('nav-links');
+    navLinks.classList.remove('show'); // Hide the menu when close icon is clicked
+});
 
     // Car Display and Fetch Logic
     if (importCarList) {
@@ -673,29 +672,3 @@ window.addEventListener('DOMContentLoaded', async () => {
     }
 });
 
-// Close the menu when a link is clicked
-const navItems = document.querySelectorAll('.nav-links li a');
-navItems.forEach(item => {
-    item.addEventListener('click', () => {
-        const navLinks = document.getElementById('nav-links');
-        navLinks.classList.remove('active'); // Hide the menu after clicking a link
-        console.log('Menu item clicked'); // Debugging line
-    });
-});
-
-// Ensure nav links are hidden on page load
-window.addEventListener('DOMContentLoaded', () => {
-    const navLinks = document.getElementById('nav-links');
-    navLinks.classList.remove('active'); // Ensure the menu is hidden on load
-});
-
-
-document.getElementById('menu-toggle').addEventListener('click', function() {
-    const navLinks = document.getElementById('nav-links');
-    navLinks.classList.toggle('show'); // Toggle the 'show' class
-});
-
-document.getElementById('close-menu').addEventListener('click', function() {
-    const navLinks = document.getElementById('nav-links');
-    navLinks.classList.remove('show'); // Hide the menu when close icon is clicked
-});
