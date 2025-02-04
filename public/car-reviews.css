@@ -153,14 +153,14 @@ body {
 }
 
 .container h1 {
-    font-size: 3rem; /* Adjust font size */
+    font-size: 48px; /* Adjust font size */
     margin: 0; /* Remove default margin */
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7); /* Shadow for better readability */
 }
 
 .container p {
     font-size: 1.5rem; /* Adjust font size */
-    color: var(--bg-color);
+    color: var(--tg1-color);
     margin-top: 10px; /* Space between title and paragraph */
     text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7); /* Shadow for better readability */
 }
@@ -261,7 +261,7 @@ h2 {
     font-size: 18px;
     font-weight: 800;
     margin-bottom: 10px;
-    color: var(--fg-color);
+    color: var(--tg-color);
 }
 
 p {
@@ -309,7 +309,7 @@ p {
 
 .read-more-btn:hover {
     background-color: var(--bg-color);
-    color: var(--main-color);
+    color: var(--color);
     border: 1px solid var(--text-color);
 }
 /* Ensure cards with expanded content do not affect other cards */
@@ -372,16 +372,18 @@ footer {
     margin-top: 20px;
 }
 .contact-details h3{
-    font-size: 18px;
+    font-size: 24px;
     font-weight: 800;
     padding: 10px;
-    color: var(--bg-color);
+    color: var(--tg-color);
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
 }
 .contact-details p{
     font-size: 16px;
     font-weight: 800;
     padding: 5px;
     color: var(--txt-color);
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
 }
 .contact-details span{
     color: var(--tg-color);
@@ -397,9 +399,10 @@ footer {
 }
 
 .social-media {
-    font-size: 20px;
+    font-size: 24px;
    padding: 10px;
    color: var(--tg-color);
+   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
 }
 
 .social-icon {
@@ -423,6 +426,7 @@ footer {
     font-size: 24px;
     font-weight: 700;
     color: var(--tg-color);
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
 }
 .copyright{
     display: flex;

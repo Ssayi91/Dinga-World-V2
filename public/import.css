@@ -506,16 +506,18 @@ footer {
     margin-top: 20px;
 }
 .contact-details h3{
-    font-size: 18px;
+    font-size: 24px;
     font-weight: 800;
     padding: 10px;
-    color: var(--bg-color);
+    color: var(--tg-color);
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
 }
 .contact-details p{
     font-size: 16px;
     font-weight: 800;
     padding: 5px;
     color: var(--txt-color);
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
 }
 .contact-details span{
     color: var(--tg-color);
@@ -534,6 +536,7 @@ footer {
     font-size: 20px;
    padding: 10px;
    color: var(--tg-color);
+   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
 }
 
 .social-icon {
@@ -557,6 +560,7 @@ footer {
     font-size: 24px;
     font-weight: 700;
     color: var(--tg-color);
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
 }
 .copyright{
     display: flex;
@@ -707,9 +711,8 @@ footer {
         margin-bottom: 10px;
     }
     .car-image img {
-        max-width: 90%;
+        max-width: 100%;
         border-radius: 10px;
-        margin-top: 10px;
     }
 
 /* all cars section */

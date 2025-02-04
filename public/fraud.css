@@ -134,10 +134,40 @@ main {
     padding: 40px 20px;
 }
 
+.report-frauds {
+    position: relative; /* Position relative for absolute positioning of overlay */
+    background-image: url('Assets/Online-car-sale-scams.jpg'); /* Replace with your image path */
+    background-size: cover; /* Cover the entire section */
+    background-position: center; /* Center the image */
+    height: 50%; /* Set a height for the banner */
+    color: var(--tg-color); /* Text color */
+    display: flex; /* Use flexbox for centering */
+    align-items: center; /* Center vertically */
+    justify-content: center; /* Center horizontally */
+    text-align: center; /* Center text */
+    overflow: hidden; /* Hide overflow */
+}
+
+.report-frauds::before {
+    content: ""; /* Create a pseudo-element for the overlay */
+    position: absolute; /* Position it absolutely */
+    top: 0; /* Align to the top */
+    left: 0; /* Align to the left */
+    right: 0; /* Align to the right */
+    bottom: 0; /* Align to the bottom */
+    background: rgba(0, 0, 0, 0.596); /* Semi-transparent black overlay */
+    z-index: 2; /* Ensure it is below the text */
+}
+
+.container {
+    position: relative; /* Position relative to allow text to be above the overlay */
+    z-index: 2; /* Ensure text is above the overlay */
+}
+
 .report-frauds h2 {
     font-size: 28px;
     margin-bottom: 20px;
-    color: var(--text-color); /* Highlight color */
+    color: var(--color); /* Highlight color */
 }
 
 .report-frauds p {
@@ -205,16 +235,18 @@ footer {
     margin-top: 20px;
 }
 .contact-details h3{
-    font-size: 18px;
+    font-size: 24px;
     font-weight: 800;
     padding: 10px;
-    color: var(--bg-color);
+    color: var(--tg-color);
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
 }
 .contact-details p{
     font-size: 16px;
     font-weight: 800;
     padding: 5px;
     color: var(--txt-color);
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
 }
 .contact-details span{
     color: var(--tg-color);
@@ -230,9 +262,10 @@ footer {
 }
 
 .social-media {
-    font-size: 20px;
+    font-size: 24px;
    padding: 10px;
    color: var(--tg-color);
+   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
 }
 
 .social-icon {
@@ -256,6 +289,7 @@ footer {
     font-size: 24px;
     font-weight: 700;
     color: var(--tg-color);
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
 }
 .copyright{
     display: flex;
