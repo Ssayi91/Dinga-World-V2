@@ -740,47 +740,27 @@ footer {
 
     /* footer */
     .footer-container {
-        display: flex;
         flex-direction: column;
-        justify-content: center;
         align-items: center;
-        text-align: center;
-        gap: 15px;
+        gap: 10px;
+    }
+
+    .contact-details,
+    .social-media,
+    .map {
+        width: 100%;
     }
 
     .social-media {
-        flex-direction: row;
-        justify-content: center;
-    }
-
-    .map iframe {
-        width: 100%;
-        height: 300px; /* Adjust height as needed */
-    }
-    .contact-details h3{
-        font-size: 24px;
-    }
-}
-
-
-
-@media (max-width: 480px) {
-    .car-item {
-        width: 100%; /* One item per row */
-    }
-
-    .contact-details h3, .social-media h3, .map h3 {
         font-size: 18px;
     }
 
-    .contact-details p, .social-media a {
-        font-size: 14px;
+    .social-icon {
+        font-size: 22px;
     }
 
-    .social-icon {
-        font-size: 20px;
-    }
 }
+
 
 
 

@@ -416,6 +416,26 @@ footer {
     .logo img{
         margin-left: 5px;
     }
+    .footer-container {
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .contact-details,
+    .social-media,
+    .map {
+        width: 100%;
+    }
+
+    .social-media {
+        font-size: 18px;
+    }
+
+    .social-icon {
+        font-size: 22px;
+    }
+
 
     /* Hide the close button on desktop view */
     @media (min-width: 769px) {
