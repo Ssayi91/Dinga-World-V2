@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dinga World</title>
     <link rel="stylesheet" href="car-reviews.css">
+    <script src="script.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/remixicon/fonts/remixicon.css" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -44,7 +45,7 @@
     <!-- Search and Filter Section -->
     <section class="search-filter">
         <div class="container">
-            <form>
+            <form onsubmit="return handleReviewSearch()">
                 <input type="text" placeholder="Search reviews...">
                 <select>
                     <option value="">All Categories</option>
@@ -58,7 +59,9 @@
 
     <!-- Reviews Grid Section -->
     <section class="reviews-grid">
-       <div id="public-blog-list" class="blog-list">
+        <div id="public-blog-list" class="blog-list">
+            <!-- Dynamically added review items will be displayed here -->
+
 
        </div>
     </section>

@@ -15,7 +15,7 @@
     <header class="header">
         <nav class="navbar">
             <div class="logo">
-                <a href="#import.html"><img src="./Assets/motorgram 1.jpg" alt="Logo"></a>
+                <a href="index.html"><img src="./Assets/motorgram 1.jpg" alt="Logo"></a>
             </div>
             <div class="menu-toggle" id="menu-toggle">
                 <i class="ri-menu-line"></i>
@@ -23,13 +23,12 @@
             </div>
             <ul class="nav-links" id="nav-links">
                 <li class="close-menu" id="close-menu"><i class="ri-close-line"></i></li>
-                <li><a href="index.html " class="active">All Cars</a></li>
+                <li><a href="index.html" class="active">All Cars</a></li>
                 <li><a href="import.html">Import Your Car</a></li>
                 <li><a href="dingaworld-stock.html">Motorgram Stock</a></li>
                 <li><a href="car-reviews.html">Car Reviews</a></li>
                 <li><a href="fraud.html">Report Frauds</a></li>
-                <li><a href="#"><i class="ri-account-circle-line"></i> <span class="login-text">Login</span>
-                </a></li>
+                <li><a href="#"><i class="ri-account-circle-line"></i> <span class="login-text">Login</span></a></li>
             </ul>
         </nav>
         <!-- Login and Signup Modal Structure -->
@@ -76,63 +75,93 @@
         </div>
     </div>
 </div>
-    </header>
-    <section class="banner">
-        <div class="search-filter">
-            <h2>Find Your Car</h2>
-            <form id="search-form">
-                <div class="input-row">
-                <input type="text" id="brand" placeholder="Brand" />
-                </div>
-                <div class="input-row">
-                <input type="text" id="model" placeholder="Model" />
-                </div>
-                <div class="input-row">
-                <input type="number" id="year" placeholder="Year" />
-                </div>
-                <div class="input-row">
+</header>
+
+
+<div class="hero">
+    <div class="search-filter">
+        <h1>Find Your Perfect Car</h1>
+        <p>Browse thousands of cars from trusted sellers</p>
+        <form id="search-form">
+            <div class="input-row">
+                <input type="text" id="brand" placeholder="Enter Brand" />
+            </div>
+            <div class="input-row">
+                <input type="text" id="model" placeholder="Enter Model" />
+            </div>
+            <div class="input-row">
+                <input type="number" id="year" placeholder="Enter Year" />
+            </div>
+            <div class="input-row">
                 <input type="text" id="priceRange" placeholder="Price Range (e.g., 10000-20000)" />
+            </div>
+            <div class="input-row">
+                <label for="isInTransit">
+                    <input type="checkbox" id="isInTransit" />
+                    <span class="import-cars-text">Import Cars</span>
+                </label>
+            </div>
+            <button type="submit">Search</button>
+            <button type="button" id="clear-filter">Clear Filters</button>
+        </form>
+    </div>
+</div>
+
+<!-- Second Section for Selling Cars -->
+<div class="hero-1">
+    <div class="search-filter">
+        <h2>Sell Your Car</h2>
+        <p>Ready to part ways with your car? Click the button below to start the selling process.</p>
+        <form id="custom-form">
+            <!-- <div class="input-row">
+                <input type="text" placeholder="Click the button" disabled />
+            </div>
+            <div class="input-row">
+                <input type="text" placeholder="To start selling" disabled />
+            </div>
+            <div class="input-row">
+                <input type="text" placeholder="Your car" disabled />
+            </div> -->
+            <button type="button" id="toggle-form-btn">Sell your <br> Car</button>
+        </form>
+    </div>
+</div>
+
+    <!-- <section class="banner">
+        <div class="search-filter"> -->
+            <!-- <h2>Find Your Car</h2>
+            <p>Discover the perfect car that suits your style and budget. 
+                <br>Use our search to explore a wide range of vehicles tailored just for you.</p> -->
+            <!-- <form id="search-form">
+                <div class="input-row">
+                    <input type="text" id="brand" placeholder="Enter Brand" />
                 </div>
                 <div class="input-row">
-                    <input type="checkbox" id="isInTransit" />
-                    <p>Import Cars</p>
+                    <input type="text" id="model" placeholder="Enter Model" />
                 </div>
-                
+                <div class="input-row">
+                    <input type="number" id="year" placeholder="Enter Year" />
+                </div>
+                <div class="input-row">
+                    <input type="text" id="priceRange" placeholder="Price Range (e.g., 10000-20000)" />
+                </div>
+                <div class="input-row">
+                    <label for="isInTransit">
+                        <input type="checkbox" id="isInTransit" />
+                        Import Cars
+                    </label>
+                </div>
                 <button type="submit">Search</button>
                 <button type="button" id="clear-filter">Clear Filters</button>
             </form>
         </div>
-        <div class="car-image">
-            <img src="Assets/fam car.webp" alt="Car Image">
-            <p class="tagline">Drive Your Dream <br> <span>Car</span></p>
-        </div>
-    </section>
-    
-     <!-- Second Banner Section -->
-     <section class="banner">
-        <div class="search-filter">
-            <h2>Sell Your Car</h2>
-            <form>
-                <div class="input-row">
-                    <input type="text" placeholder="click">
-                    <input type="text" placeholder="the button">
-                </div>
-                <div class="input-row">
-                    <input type="text" placeholder="below">
-                    <input type="text" placeholder="to sell">
-                </div>
-                <div class="input-row">
-                    <input type="text" placeholder="your">
-                    <input type="text" placeholder="car">
-                </div>
-                <button type= "button" id="toggle-form-btn">Sell your <br> Car</button>
-            </form>
-        </div>
         <div class="car-image" id="image-car">
-            <img src="Assets/sell.webp" alt="Second Car Image">
-            <p class="tagline"><span>Sell your<br> Car</span></p>
-        </div>
-    </section>
+            <img src="Assets/fam car.webp" alt="Car Image">
+        </div> -->
+    <!-- </section> -->
+    
+    
+   
     <div class="overlay" id="form-overlay" style="display: none;"></div>
     <!-- Form Section (Initially Hidden) -->
     <section id="form-section" class="form-section" style="display: none;">

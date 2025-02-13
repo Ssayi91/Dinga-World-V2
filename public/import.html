@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dinga World</title>
+    <title>Motorgram</title>
     <link rel="stylesheet" href="import.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link href="https://cdn.jsdelivr.net/npm/remixicon/fonts/remixicon.css" rel="stylesheet">
@@ -33,10 +33,10 @@
             </ul>
         </nav>
     </header>
-    <section class="banner">
+    <div class="hero">
         <div class="search-filter">
-            <!-- <h2>Import Your Car</h2> -->
-            <p>find listed imports</p>
+            <h2>find listed imports</h2>
+            <p>Seamless Imports, Hassle-Free Delivery <br> – <br> We Handle It All!</p>
             <form id="search-form">
                 <div class="input-row">
                 <input type="text" id="brand" placeholder="Brand" />
@@ -51,19 +51,16 @@
                 <input type="text" id="priceRange" placeholder="Price Range (e.g., 10000-20000)" />
                 </div>
                 <div class="input-row">
-                    <input type="checkbox" id="isInTransit" />
-                    <p>Import Cars</p>
-                </div>
-                
+                    <label for="isInTransit">
+                        <input type="checkbox" id="isInTransit" />
+                        <span class="import-cars-text">Import Cars</span>
+                    </label>
+                    </div>
                 <button type="submit">Search</button>
                 <button type="button" id="clear-filter">Clear Filters</button>
             </form>
         </div>
-        <div class="car-image">
-            <img src="Assets/imported-car.jpg" alt="Car Image">
-            <p class="tagline">Import Your Dream <br><span>Car</span></p>
-        </div>
-    </section>
+    </div>
     <section class="car-container">
         <h2>Imports</h2>
         <div id="import-car-list" class="import-car-list">

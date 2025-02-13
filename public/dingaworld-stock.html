@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dinga World</title>
+    <title>Motorgram</title>
     <link rel="stylesheet" href="dingaworld-stock.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link href="https://cdn.jsdelivr.net/npm/remixicon/fonts/remixicon.css" rel="stylesheet">
@@ -73,9 +73,10 @@
     </div>
 </div>
     </header>
-    <section class="banner">
+    <div class="hero">
         <div class="search-filter">
-            <h2>Find Your Car</h2>
+            <h2>Drive Away Today</h2>
+            <p>Why wait? Get behind the wheel of your next car today!</p>
             <form id="search-form">
                 <div class="input-row">
                 <input type="text" id="brand" placeholder="Brand" />
@@ -90,23 +91,21 @@
                 <input type="text" id="priceRange" placeholder="Price Range (e.g., 10000-20000)" />
                 </div>
                 <div class="input-row">
-                    <input type="checkbox" id="isInTransit" />
-                    <p>Import Cars</p>
-                </div>
-                
+                    <label for="isInTransit">
+                        <input type="checkbox" id="isInTransit" />
+                        <span class="import-cars-text">Import Cars</span>
+                    </label>
+                    </div>
                 <button type="submit">Search</button>
                 <button type="button" id="clear-filter">Clear Filters</button>
             </form>
         </div>
-        <div class="car-image">
-            <img src="Assets/motorgram stock.jpg" alt="Car Image">
-            <p class="tagline">Search Your Dream <br><span>Car</span></p>
-        </div>
-    </section>
-
+    </div>
+    
     <section class="car-container">
-        <h2>Dingaworld Stock</h2>
+        <h2>Motorgram Stock</h2>
         <div id="car-list-stock" class="car-list-stock">
+            <!-- Dynamically added car items will be displayed here -->
             <!-- Dynamically added car items will be displayed here -->
         </div>
         <!-- <button id="load-more-btn">Load More Cars</button> -->

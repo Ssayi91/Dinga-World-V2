@@ -672,3 +672,20 @@ window.addEventListener('DOMContentLoaded', async () => {
     }
 });
 
+document.addEventListener('scroll', function() {
+    const imageContainer = document.getElementById('image-car');
+    if (!imageContainer) return; // Ensure the element exists
+    const image = imageContainer.querySelector('img');
+    if (!image) return; // Ensure the image exists
+    
+    const rect = image.getBoundingClientRect();
+    const windowHeight = window.innerHeight || document.documentElement.clientHeight;
+    
+    // Check if the image is partially in the viewport
+    if (rect.top < windowHeight && rect.bottom > 0) {
+        image.style.filter = 'blur(0)'; // Remove blur when in view
+    } else {
+        image.style.filter = 'blur(2px) opacity(0.8)'; // Apply blur when out of view
+    }
+});
+
